@@ -1,0 +1,338 @@
+<!DOCTYPE html><html lang="hu" class="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><link rel="preload" href="_next/static/media/68d403cf9f2c68c5-s.p.f9f15f61.woff2" as="font" crossorigin="" type="font/woff2"><link rel="preload" href="_next/static/media/797e433ab948586e-s.p.dbea232f.woff2" as="font" crossorigin="" type="font/woff2"><link rel="preload" href="_next/static/media/caa3a2e1cccd8315-s.p.853070df.woff2" as="font" crossorigin="" type="font/woff2"><link rel="preload" as="image" href="logo.png"><link rel="stylesheet" href="_next/static/chunks/a5f94a35a4f4cbe8.css" data-precedence="next"><link rel="stylesheet" href="_next/static/chunks/2c07a184e6ec78bd.css" data-precedence="next"><meta name="theme-color" content="#000000"><title>Bejelentkezés | AeroHost</title><meta name="description" content="Jelentkezz be AeroHost fiókodba."><link rel="icon" href="logo.png" media="(prefers-color-scheme: light)"><link rel="icon" href="logo.png" media="(prefers-color-scheme: dark)"><link rel="apple-touch-icon" href="logo.png"><style>
+  html{overflow:hidden;height:100%}body{overflow-y:auto;overflow-x:hidden;height:100%}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Geist","Geist Fallback",ui-sans-serif,system-ui,sans-serif;background:#000;color:#fff;min-height:100vh;-webkit-font-smoothing:antialiased}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes gradient-x{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+  @keyframes ping{75%,100%{transform:scale(2);opacity:0}}
+  .animate-gradient-x{background-size:200% auto;animation:gradient-x 4s linear infinite}
+  .animate-ping{animation:ping 1.5s cubic-bezier(0,0,0.2,1) infinite}
+  .animate-pulse{animation:pulse 2s cubic-bezier(0.4,0,0.6,1) infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+  .form-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:32px;backdrop-filter:blur(12px);animation:fadeUp 0.6s ease-out forwards}
+  .form-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.10);border-radius:14px;padding:14px 18px;color:#fff;font-size:0.95rem;font-family:inherit;outline:none;transition:border-color 0.2s,background 0.2s,box-shadow 0.2s}
+  .form-input::placeholder{color:rgba(156,163,175,0.6)}
+  .form-input:focus{border-color:rgba(168,85,247,0.6);background:rgba(255,255,255,0.07);box-shadow:0 0 0 3px rgba(168,85,247,0.10)}
+  .form-input:-webkit-autofill,.form-input:-webkit-autofill:hover,.form-input:-webkit-autofill:focus{-webkit-text-fill-color:#fff;-webkit-box-shadow:0 0 0 1000px rgba(20,10,35,0.95) inset;transition:background-color 5000s ease-in-out 0s}
+  .btn-primary{position:relative;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:50px;font-size:0.95rem;font-weight:700;color:#fff;border:none;cursor:pointer;overflow:hidden;transition:box-shadow 0.3s;box-shadow:0 10px 20px -10px rgba(168,85,247,0.5);letter-spacing:0.02em}
+  .btn-primary:hover{box-shadow:0 20px 40px -10px rgba(168,85,247,0.6)}
+  .btn-primary .bg-base{position:absolute;inset:0;background:linear-gradient(135deg,#1d4ed8,#7c3aed,#4338ca);z-index:0;transition:opacity 0.3s}
+  .btn-primary .bg-hover{position:absolute;inset:0;background:linear-gradient(90deg,#3A29FF,#A855F7,#4f46e5);opacity:0;z-index:0;transition:opacity 0.5s}
+  .btn-primary:hover .bg-hover{opacity:1}
+  .btn-primary .shine-top{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent);z-index:1}
+  .btn-primary .label{position:relative;z-index:2;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.5))}
+  .divider{display:flex;align-items:center;gap:12px;color:rgba(156,163,175,0.5);font-size:0.8rem}
+  .divider::before,.divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.08)}
+  .social-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px 20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.10);border-radius:14px;color:rgba(209,213,219,0.9);font-size:0.9rem;font-weight:500;font-family:inherit;cursor:pointer;transition:background 0.2s,border-color 0.2s,color 0.2s}
+  .social-btn:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.18);color:#fff}
+  .link-purple{color:#a855f7;text-decoration:none;font-weight:600;transition:color 0.2s}
+  .link-purple:hover{color:#c084fc}
+  .input-label{display:block;font-size:0.82rem;font-weight:600;color:rgba(209,213,219,0.8);margin-bottom:8px;letter-spacing:0.03em;text-transform:uppercase}
+  .password-wrapper{position:relative}
+  .password-toggle{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:rgba(156,163,175,0.6);padding:4px;display:flex;align-items:center;justify-content:center;transition:color 0.2s}
+  .password-toggle:hover{color:rgba(255,255,255,0.8)}
+  .tag-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:50px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.10);backdrop-filter:blur(8px);margin-bottom:24px}
+  .glow-orb-left{position:absolute;top:-150px;left:0;width:400px;height:400px;border-radius:50%;background:rgba(88,28,135,0.20);filter:blur(120px);pointer-events:none}
+  .glow-orb-right{position:absolute;bottom:-100px;right:0;width:300px;height:300px;border-radius:50%;background:rgba(67,56,202,0.15);filter:blur(100px);pointer-events:none}
+  .checkbox-custom{width:18px;height:18px;border-radius:5px;border:1.5px solid rgba(255,255,255,0.20);background:rgba(255,255,255,0.04);cursor:pointer;appearance:none;-webkit-appearance:none;flex-shrink:0;transition:border-color 0.2s,background 0.2s;position:relative}
+  .checkbox-custom:checked{background:#7c3aed;border-color:#7c3aed}
+  .checkbox-custom:checked::after{content:'';position:absolute;left:4px;top:2px;width:6px;height:9px;border:2px solid #fff;border-left:none;border-top:none;transform:rotate(45deg)}
+  .error-msg{display:none;font-size:0.78rem;color:#f87171;margin-top:6px;padding-left:4px}
+</style></head>
+<body class="geist_e998ca44-module__8Xr1_G__variable font-sans antialiased bg-black">
+
+<!-- NAV -->
+<nav style="position:fixed;top:20px;left:50%;transform:translateX(-50%);width:95%;max-width:72rem;z-index:50">
+  <div style="border-radius:50px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);box-shadow:0 4px 24px rgba(0,0,0,0.5)">
+    <div style="position:relative;width:100%;overflow:hidden;border-radius:50px;background:rgba(5,5,5,0.85);backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);display:flex;align-items:center;justify-content:center">
+      <div style="width:100%;padding:0 24px;position:relative;z-index:10">
+        <div style="display:flex;justify-content:space-between;align-items:center;height:56px">
+          <a href="index.htm" style="display:flex;align-items:center;gap:8px;text-decoration:none">
+            <img alt="AeroHost logo" width="40" height="40" src="logo.png" style="border-radius:50%;width:40px;height:40px;border:1px solid rgba(255,255,255,0.05)">
+            <span style="font-weight:700;font-size:1.35rem;color:#fff;letter-spacing:-0.02em">AeroHost</span>
+          </a>
+          <div style="display:flex;align-items:center;gap:4px">
+            <a href="index.htm" style="padding:8px 16px;font-size:0.875rem;font-weight:500;color:rgba(209,213,219,0.9);text-decoration:none;border-radius:50px;transition:color 0.2s" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.color='rgba(209,213,219,0.9)';this.style.background='transparent'">Főoldal</a>
+            <a href="games.html" style="padding:8px 16px;font-size:0.875rem;font-weight:500;color:rgba(209,213,219,0.9);text-decoration:none;border-radius:50px;transition:color 0.2s" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.color='rgba(209,213,219,0.9)';this.style.background='transparent'">Játékok</a>
+            <a href="discord.html" style="padding:8px 16px;font-size:0.875rem;font-weight:500;color:rgba(209,213,219,0.9);text-decoration:none;border-radius:50px;transition:color 0.2s" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.color='rgba(209,213,219,0.9)';this.style.background='transparent'">Discord Hosting</a>
+            <a href="web.html" style="padding:8px 16px;font-size:0.875rem;font-weight:500;color:rgba(209,213,219,0.9);text-decoration:none;border-radius:50px;transition:color 0.2s" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.color='rgba(209,213,219,0.9)';this.style.background='transparent'">Webtárhely</a>
+            <a href="about.html" style="padding:8px 16px;font-size:0.875rem;font-weight:500;color:rgba(209,213,219,0.9);text-decoration:none;border-radius:50px;transition:color 0.2s" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.color='rgba(209,213,219,0.9)';this.style.background='transparent'">Rólunk</a>
+            <a href="affiliate.html" style="padding:8px 16px;font-size:0.875rem;font-weight:500;color:rgba(209,213,219,0.9);text-decoration:none;border-radius:50px;transition:color 0.2s" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.color='rgba(209,213,219,0.9)';this.style.background='transparent'">Partner Program</a>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px"><a href="register.html" style="display:inline-flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:8px 20px;border-radius:50px;font-size:0.8rem;font-weight:700;color:#fff;text-decoration:none;letter-spacing:0.02em;box-shadow:0 8px 20px -8px rgba(168,85,247,0.5);" onmouseover="this.style.boxShadow='0 12px 30px -8px rgba(168,85,247,0.7)'" onmouseout="this.style.boxShadow='0 8px 20px -8px rgba(168,85,247,0.5)'"><span style="position:absolute;inset:0;background:linear-gradient(135deg,#1d4ed8,#7c3aed,#4338ca);z-index:0"></span><span style="position:relative;z-index:1">Regisztráció</span></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main>
+  <div style="min-height:100vh;background:#000;position:relative;display:flex;align-items:center;justify-content:center;padding:128px 16px;overflow:clip">
+
+    <!-- background orbs -->
+    <div class="glow-orb-left"></div>
+    <div class="glow-orb-right"></div>
+
+    <!-- subtle grid -->
+    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.015) 1px,transparent 1px);background-size:64px 64px;pointer-events:none;z-index:0"></div>
+
+    <div style="position:relative;z-index:1;width:100%;max-width:460px">
+
+      <!-- badge -->
+      <div style="display:flex;justify-content:center;margin-bottom:12px">
+        <div class="tag-badge">
+          <span style="position:relative;display:inline-flex;width:8px;height:8px">
+            <span class="animate-ping" style="position:absolute;inset:0;border-radius:50%;background:rgba(168,85,247,0.75)"></span>
+            <span style="position:relative;display:block;width:8px;height:8px;border-radius:50%;background:#7c3aed"></span>
+          </span>
+          <span style="color:rgba(196,181,253,0.8);font-size:0.7rem;font-family:'Geist Mono','Geist Mono Fallback',monospace;text-transform:uppercase;letter-spacing:0.2em">AeroHost Platform</span>
+        </div>
+      </div>
+
+      <!-- heading -->
+      <h1 style="text-align:center;font-size:clamp(2rem,5vw,2.6rem);font-weight:800;color:#fff;letter-spacing:-0.03em;margin-bottom:8px;line-height:1.1">
+        Lépj Vissza!
+      </h1>
+      <p style="text-align:center;color:rgba(156,163,175,0.8);margin-bottom:36px;font-size:0.95rem;line-height:1.6">
+        Jelentkezz be a fiókodba a vezérlőpult eléréséhez
+      </p>
+
+      <!-- card -->
+      <div class="form-card" style="padding:36px">
+
+        <!-- Discord login -->
+        <button class="social-btn" type="button" style="margin-bottom:12px" onclick="void(0)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color:#5865F2">
+            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037 3.619 3.619 0 0 0-.74 1.528 18.27 18.27 0 0 0-5.226 0 3.619 3.619 0 0 0-.74-1.528.071.071 0 0 0-.078-.037 19.736 19.736 0 0 0-4.885 1.515.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.086 2.157 2.419 0 1.334-.956 2.419-2.157 2.419zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.086 2.157 2.419 0 1.334-.946 2.419-2.157 2.419z"/>
+          </svg>
+          Folytatás Discorddal
+        </button>
+
+        <!-- divider -->
+        <div class="divider" style="margin-bottom:24px">vagy</div>
+
+        <!-- form -->
+        <form id="loginForm" novalidate>
+          <!-- email -->
+          <div style="margin-bottom:18px">
+            <label class="input-label" for="email">E-mail cím</label>
+            <div style="position:relative">
+              <input class="form-input" type="email" id="email" name="email" placeholder="te@email.hu" autocomplete="email" required>
+            </div>
+            <span class="error-msg" id="emailError">Érvényes e-mail címet adj meg.</span>
+          </div>
+
+          <!-- password -->
+          <div style="margin-bottom:8px">
+            <label class="input-label" for="password">Jelszó</label>
+            <div class="password-wrapper">
+              <input class="form-input" type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required style="padding-right:48px">
+              <button type="button" class="password-toggle" onclick="togglePassword('password','eyeIcon1')" aria-label="Jelszó megjelenítése">
+                <svg id="eyeIcon1" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <span class="error-msg" id="passwordError">A jelszó megadása kötelező.</span>
+          </div>
+
+          <!-- forgot -->
+          <div style="display:flex;justify-content:flex-end;margin-bottom:24px">
+            <a href="#" class="link-purple" style="font-size:0.82rem;font-weight:500" onclick="openForgot(event)">Elfelejtett jelszó?</a>
+          </div>
+
+          <!-- remember me -->
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px">
+            <input type="checkbox" class="checkbox-custom" id="remember" name="remember">
+            <label for="remember" style="font-size:0.88rem;color:rgba(209,213,219,0.8);cursor:pointer">Emlékezz rám ezen az eszközön</label>
+          </div>
+
+          <!-- submit -->
+          <button type="submit" class="btn-primary">
+            <div class="bg-base"></div>
+            <div class="bg-hover"></div>
+            <div class="shine-top"></div>
+            <span class="label" style="display:flex;align-items:center;gap:8px">
+              Bejelentkezés
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </span>
+          </button>
+        </form>
+
+        <!-- register link -->
+        <p style="text-align:center;margin-top:24px;font-size:0.88rem;color:rgba(156,163,175,0.7)">
+          Még nincs fiókod? <a href="register.html" class="link-purple">Regisztrálj ingyen</a>
+        </p>
+      </div>
+
+      <!-- security note -->
+      <p style="text-align:center;margin-top:20px;font-size:0.75rem;color:rgba(107,114,128,0.7);display:flex;align-items:center;justify-content:center;gap:6px">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+        256-bit SSL titkosítással védett
+      </p>
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer style="background:#050505;border-top:1px solid rgba(255,255,255,0.06);padding:48px 24px 32px;position:relative">
+  <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:300px;background:rgba(88,28,135,0.08);filter:blur(80px);border-radius:50%;pointer-events:none"></div>
+  <div style="max-width:1152px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:20px;position:relative;z-index:1">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="width:36px;height:36px;border-radius:10px;overflow:hidden"><img src="logo.png" alt="Logo" style="width:100%;height:100%;object-fit:cover"></div>
+      <span style="font-size:1.15rem;font-weight:700;color:#fff;letter-spacing:-0.01em">AeroHost</span>
+    </div>
+    <div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center">
+      <a href="privacy-policy.html" style="color:rgba(156,163,175,0.7);font-size:0.82rem;text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='#a855f7'" onmouseout="this.style.color='rgba(156,163,175,0.7)'">Adatvédelmi Irányvonalak</a>
+      <a href="terms-of-service.html" style="color:rgba(156,163,175,0.7);font-size:0.82rem;text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='#a855f7'" onmouseout="this.style.color='rgba(156,163,175,0.7)'">Felhasználási Feltételek</a>
+      <a href="about.html" style="color:rgba(156,163,175,0.7);font-size:0.82rem;text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='#a855f7'" onmouseout="this.style.color='rgba(156,163,175,0.7)'">Rólunk</a>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div style="width:7px;height:7px;border-radius:50%;background:#22c55e" class="animate-pulse"></div>
+      <span style="font-size:0.72rem;font-family:'Geist Mono','Geist Mono Fallback',monospace;color:rgba(107,114,128,0.8);text-transform:uppercase;letter-spacing:0.15em">Minden Rendszer Működik</span>
+    </div>
+    <p style="color:rgba(107,114,128,0.6);font-size:0.78rem">© 2025 AeroHost. Minden jog fenntartva.</p>
+  </div>
+</footer>
+
+<script>
+function togglePassword(inputId, iconId) {
+  var input = document.getElementById(inputId);
+  var icon = document.getElementById(iconId);
+  if (input.type === 'password') {
+    input.type = 'text';
+    icon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>';
+  } else {
+    input.type = 'password';
+    icon.innerHTML = '<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>';
+  }
+}
+
+// Ha már be van jelentkezve ÉS érvényes a session, dobja a dashboardra
+try {
+  var _tok = localStorage.getItem('ah_token');
+  var _sess = JSON.parse(localStorage.getItem('ah_session') || 'null');
+  if (_tok && _sess && _sess.email) { window.location.href = 'dashboard.html'; }
+  else { localStorage.clear(); } // törli a félkész session adatokat
+} catch(e) { localStorage.clear(); }
+
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  var emailEl  = document.getElementById('email');
+  var passEl   = document.getElementById('password');
+  var emailErr = document.getElementById('emailError');
+  var passErr  = document.getElementById('passwordError');
+  var btn      = this.querySelector('button[type="submit"]');
+
+  emailErr.style.display = 'none';
+  passErr.style.display  = 'none';
+  emailEl.style.borderColor = '';
+  passEl.style.borderColor  = '';
+
+  if (!emailEl.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value)) {
+    emailErr.textContent = 'Érvényes e-mail címet adj meg.';
+    emailErr.style.display = 'block';
+    emailEl.style.borderColor = 'rgba(248,113,113,0.6)';
+    return;
+  }
+  if (!passEl.value) {
+    passErr.textContent = 'A jelszó megadása kötelező.';
+    passErr.style.display = 'block';
+    passEl.style.borderColor = 'rgba(248,113,113,0.6)';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.querySelector('.label').textContent = 'Bejelentkezés...';
+
+  try {
+    var res = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: emailEl.value, password: passEl.value })
+    });
+    var data = await res.json();
+
+    if (!res.ok) {
+      // Szerver hibaüzenet megjelenítése a megfelelő mezőnél
+      if (data.error && data.error.toLowerCase().includes('jelszó')) {
+        passErr.textContent = data.error;
+        passErr.style.display = 'block';
+        passEl.style.borderColor = 'rgba(248,113,113,0.6)';
+      } else {
+        emailErr.textContent = data.error || 'Bejelentkezési hiba.';
+        emailErr.style.display = 'block';
+        emailEl.style.borderColor = 'rgba(248,113,113,0.6)';
+      }
+      btn.disabled = false;
+      btn.querySelector('.label').innerHTML = 'Bejelentkezés <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
+      return;
+    }
+
+    localStorage.setItem('ah_token', data.token || data.accessToken);
+    if (data.refreshToken) localStorage.setItem('ah_refresh_token', data.refreshToken);
+    localStorage.setItem('ah_session', JSON.stringify(data.user));
+    window.location.href = 'dashboard.html';
+
+  } catch (err) {
+    emailErr.textContent = 'Szerver nem elérhető. Indítsd el a szervert!';
+    emailErr.style.display = 'block';
+    btn.disabled = false;
+    btn.querySelector('.label').innerHTML = 'Bejelentkezés <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
+  }
+});
+
+// ── Elfelejtett jelszó modal ───────────────────────────────────────────────
+function openForgot(e) {
+  e.preventDefault();
+  document.getElementById('forgotOverlay').style.display = 'flex';
+  document.getElementById('forgotEmail').value = document.getElementById('email').value || '';
+  document.getElementById('forgotMsg').className = 'msg';
+  document.getElementById('forgotBtn').disabled = false;
+  document.getElementById('forgotBtn').textContent = 'Link küldése';
+}
+function closeForgot() {
+  document.getElementById('forgotOverlay').style.display = 'none';
+}
+async function submitForgot() {
+  var email = document.getElementById('forgotEmail').value.trim();
+  var msg   = document.getElementById('forgotMsg');
+  var btn   = document.getElementById('forgotBtn');
+  msg.className = 'msg';
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    msg.className = 'msg msg-error'; msg.textContent = 'Érvényes e-mail cím szükséges.'; return;
+  }
+  btn.disabled = true; btn.textContent = 'Küldés...';
+  try {
+    await fetch('/api/auth/forgot-password', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    msg.className = 'msg msg-success';
+    msg.textContent = 'Ha létezik ez a fiók, elküldtük a visszaállító linket.';
+    btn.textContent = 'Elküldve ✓';
+  } catch {
+    msg.className = 'msg msg-error'; msg.textContent = 'Hiba. Próbáld újra.';
+    btn.disabled = false; btn.textContent = 'Link küldése';
+  }
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeForgot(); });
+</script>
+
+<!-- Elfelejtett jelszó modal -->
+<div id="forgotOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center;padding:24px">
+  <div style="background:#0f0f1a;border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:36px 32px;max-width:400px;width:100%">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <h2 style="font-size:1.15rem;font-weight:800;color:#fff">Jelszó visszaállítás</h2>
+      <button onclick="closeForgot()" style="background:none;border:none;color:rgba(156,163,175,0.6);cursor:pointer;font-size:1.4rem;line-height:1;padding:4px">×</button>
+    </div>
+    <p style="color:rgba(148,163,184,0.8);font-size:0.88rem;line-height:1.6;margin-bottom:20px">Add meg az e-mail címedet és küldünk egy visszaállító linket.</p>
+    <input id="forgotEmail" type="email" placeholder="email@pelda.hu" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px 14px;color:#fff;font-size:0.92rem;outline:none;margin-bottom:12px">
+    <div id="forgotMsg" class="msg"></div>
+    <button id="forgotBtn" onclick="submitForgot()" style="width:100%;padding:13px;background:linear-gradient(135deg,#1d4ed8,#7c3aed);border-radius:50px;color:#fff;font-weight:700;font-size:0.9rem;border:none;cursor:pointer;margin-top:8px">Link küldése</button>
+  </div>
+</div>
+<style>
+.msg{font-size:0.84rem;padding:10px 14px;border-radius:8px;margin-bottom:8px;display:none}
+.msg-success{display:block;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.25);color:#4ade80}
+.msg-error{display:block;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);color:#f87171}
+</style>
+</body></html>

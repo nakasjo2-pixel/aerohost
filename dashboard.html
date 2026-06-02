@@ -1,0 +1,2982 @@
+<!DOCTYPE html><html lang="hu" class="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><link rel="preload" href="_next/static/media/68d403cf9f2c68c5-s.p.f9f15f61.woff2" as="font" crossorigin="" type="font/woff2"><link rel="preload" href="_next/static/media/797e433ab948586e-s.p.dbea232f.woff2" as="font" crossorigin="" type="font/woff2"><link rel="preload" href="_next/static/media/caa3a2e1cccd8315-s.p.853070df.woff2" as="font" crossorigin="" type="font/woff2"><link rel="preload" as="image" href="logo.png"><link rel="stylesheet" href="_next/static/chunks/a5f94a35a4f4cbe8.css" data-precedence="next"><link rel="stylesheet" href="_next/static/chunks/2c07a184e6ec78bd.css" data-precedence="next"><meta name="theme-color" content="#000000"><title>Vezérlőpult | AeroHost</title><meta name="description" content="Kezeld AeroHost szolgáltatásaidat."><link rel="icon" href="logo.png" media="(prefers-color-scheme: light)"><link rel="icon" href="logo.png" media="(prefers-color-scheme: dark)"><style>
+  html{overflow:hidden;height:100%}body{overflow-y:auto;overflow-x:hidden;height:100%}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Geist","Geist Fallback",ui-sans-serif,system-ui,sans-serif;background:#000;color:#fff;min-height:100vh;-webkit-font-smoothing:antialiased;display:flex}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes ping{75%,100%{transform:scale(2);opacity:0}}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .animate-ping{animation:ping 1.5s cubic-bezier(0,0,0.2,1) infinite}
+  .animate-pulse{animation:pulse 2s cubic-bezier(0.4,0,0.6,1) infinite}
+  .fade-up{animation:fadeUp 0.5s ease-out forwards}
+
+  /* SIDEBAR */
+  .sidebar{position:fixed;left:0;top:0;bottom:0;width:260px;background:rgba(5,5,5,0.95);border-right:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;z-index:40;backdrop-filter:blur(20px)}
+  .sidebar-logo{padding:20px 20px 16px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:10px}
+  .sidebar-nav{flex:1;padding:12px 10px;overflow-y:auto}
+  .nav-section{margin-bottom:20px}
+  .nav-section-label{font-size:0.65rem;font-weight:700;color:rgba(107,114,128,0.7);text-transform:uppercase;letter-spacing:0.12em;padding:0 10px;margin-bottom:6px}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;color:rgba(156,163,175,0.8);font-size:0.875rem;font-weight:500;text-decoration:none;transition:all 0.15s;cursor:pointer;border:none;background:none;width:100%;text-align:left}
+  .nav-item:hover{background:rgba(255,255,255,0.06);color:#fff}
+  .nav-item.active{background:rgba(168,85,247,0.12);color:#c084fc;border:1px solid rgba(168,85,247,0.18)}
+  .nav-item svg{flex-shrink:0;opacity:0.7}
+  .nav-item.active svg{opacity:1}
+  .nav-badge{margin-left:auto;font-size:0.65rem;font-weight:700;padding:2px 7px;border-radius:99px;background:rgba(168,85,247,0.2);color:#c084fc;border:1px solid rgba(168,85,247,0.25)}
+  .sidebar-bottom{padding:12px 10px;border-top:1px solid rgba(255,255,255,0.06)}
+  .user-card{display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07)}
+  .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#4338ca);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:#fff;flex-shrink:0}
+
+  /* MAIN */
+  .main{margin-left:260px;flex:1;min-height:100vh;display:flex;flex-direction:column}
+  .topbar{position:sticky;top:0;z-index:30;background:rgba(0,0,0,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);padding:0 28px;height:60px;display:flex;align-items:center;justify-content:space-between}
+  .content{flex:1;padding:28px;max-width:1200px}
+
+  /* CARDS */
+  .card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:20px;backdrop-filter:blur(8px)}
+  .card-hover{transition:border-color 0.2s,background 0.2s}
+  .card-hover:hover{border-color:rgba(168,85,247,0.25);background:rgba(255,255,255,0.05)}
+  .stat-card{padding:22px 24px;position:relative;overflow:hidden}
+  .stat-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+  /* STATUS BADGES */
+  .badge{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:99px;font-size:0.7rem;font-weight:600}
+  .badge-green{background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);color:#4ade80}
+  .badge-red{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);color:#f87171}
+  .badge-yellow{background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.2);color:#facc15}
+  .badge-purple{background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.2);color:#c084fc}
+  .badge-blue{background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);color:#60a5fa}
+
+  /* BUTTONS */
+  .btn{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:10px;font-size:0.82rem;font-weight:600;border:none;cursor:pointer;transition:all 0.2s;font-family:inherit}
+  .btn-ghost{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.10);color:rgba(209,213,219,0.9)}
+  .btn-ghost:hover{background:rgba(255,255,255,0.09);color:#fff}
+  .btn-purple{position:relative;overflow:hidden;color:#fff;box-shadow:0 6px 16px -6px rgba(168,85,247,0.45)}
+  .btn-purple .bp-bg{position:absolute;inset:0;background:linear-gradient(135deg,#1d4ed8,#7c3aed,#4338ca);z-index:0}
+  .btn-purple .bp-label{position:relative;z-index:1}
+  .btn-purple:hover{box-shadow:0 10px 24px -6px rgba(168,85,247,0.6)}
+  .btn-danger{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);color:#f87171}
+  .btn-danger:hover{background:rgba(239,68,68,0.15);border-color:rgba(239,68,68,0.35)}
+
+  /* PROGRESS BAR */
+  .progress-track{height:6px;background:rgba(255,255,255,0.07);border-radius:99px;overflow:hidden}
+  .progress-fill{height:100%;border-radius:99px;transition:width 0.4s}
+
+  /* SERVICE ROW */
+  .service-row{display:flex;align-items:center;gap:14px;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.05)}
+  .service-row:last-child{border-bottom:none}
+  .service-icon{width:40px;height:40px;border-radius:12px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+
+  /* TABS */
+  .tabs{display:flex;gap:4px;padding:4px;background:rgba(255,255,255,0.04);border-radius:12px;border:1px solid rgba(255,255,255,0.07)}
+  .tab{padding:7px 16px;border-radius:8px;font-size:0.82rem;font-weight:600;color:rgba(156,163,175,0.7);cursor:pointer;transition:all 0.2s;border:none;background:none;font-family:inherit}
+  .tab.active{background:rgba(168,85,247,0.15);color:#c084fc;border:1px solid rgba(168,85,247,0.2)}
+  .tab:not(.active):hover{color:#fff;background:rgba(255,255,255,0.05)}
+
+  /* MODAL */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+  .modal-backdrop.open{display:flex}
+  .modal{background:#0a0a0a;border:1px solid rgba(255,255,255,0.1);border-radius:24px;width:100%;max-width:480px;padding:32px;animation:fadeUp 0.25s ease-out}
+
+  /* INPUT */
+  .form-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.10);border-radius:12px;padding:11px 16px;color:#fff;font-size:0.9rem;font-family:inherit;outline:none;transition:border-color 0.2s,box-shadow 0.2s}
+  .form-input::placeholder{color:rgba(156,163,175,0.5)}
+  .form-input:focus{border-color:rgba(168,85,247,0.5);box-shadow:0 0 0 3px rgba(168,85,247,0.08)}
+  .input-label{display:block;font-size:0.78rem;font-weight:600;color:rgba(209,213,219,0.75);margin-bottom:7px;letter-spacing:0.03em;text-transform:uppercase}
+
+  /* SELECT */
+  .form-select{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.10);border-radius:12px;padding:11px 16px;color:#fff;font-size:0.9rem;font-family:inherit;outline:none;appearance:none;cursor:pointer;transition:border-color 0.2s}
+  .form-select:focus{border-color:rgba(168,85,247,0.5);box-shadow:0 0 0 3px rgba(168,85,247,0.08)}
+  .form-select option{background:#111;color:#fff}
+
+  /* TOOLTIP */
+  .tooltip-wrap{position:relative;display:inline-flex}
+  .tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:rgba(20,20,20,0.97);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:6px 12px;font-size:0.75rem;color:rgba(209,213,219,0.9);white-space:nowrap;pointer-events:none;opacity:0;transition:opacity 0.15s}
+  .tooltip-wrap:hover .tooltip{opacity:1}
+
+  /* NOTIFICATION TOGGLES */
+  .tog-btn{background:rgba(255,255,255,0.12)}
+  .tog-btn.tog-on{background:rgba(168,85,247,0.7)}
+  .tog-btn .tog-dot{transform:translateX(0)}
+  .tog-btn.tog-on .tog-dot{transform:translateX(17px)}
+
+  /* MOBILE TOGGLE */
+  .sidebar-toggle{display:none;position:fixed;bottom:20px;right:20px;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#4338ca);border:none;cursor:pointer;z-index:60;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(124,58,237,0.4)}
+  @media(max-width:768px){
+    .sidebar{transform:translateX(-100%);transition:transform 0.25s}
+    .sidebar.open{transform:translateX(0)}
+    .main{margin-left:0}
+    .content{padding:16px}
+    .sidebar-toggle{display:flex}
+    .topbar{padding:0 16px}
+    .stat-grid{grid-template-columns:1fr 1fr!important}
+  }
+</style></head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <img src="logo.png" alt="AeroHost" width="36" height="36" style="border-radius:50%;border:1px solid rgba(255,255,255,0.08)">
+    <span style="font-weight:700;font-size:1.2rem;color:#fff;letter-spacing:-0.02em">AeroHost</span>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section">
+      <div class="nav-section-label">Áttekintés</div>
+      <button class="nav-item active" onclick="showPage('dashboard')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+        Vezérlőpult
+      </button>
+      <button class="nav-item" onclick="showPage('services')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        Szolgáltatásaim
+        <span class="nav-badge" id="nav-badge-services">0</span>
+      </button>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Hosting</div>
+      <button class="nav-item" onclick="showPage('game-servers')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></svg>
+        Game Szerverek
+      </button>
+      <button class="nav-item" onclick="showPage('discord-bots')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+        Discord Bot Hosting
+      </button>
+      <button class="nav-item" onclick="showPage('web-hosting')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        Webtárhely
+      </button>
+    </div>
+
+    <!-- Admin szekció — csak adminoknak -->
+    <div class="nav-section" id="admin-nav-section" style="display:none">
+      <div class="nav-section-label" style="color:rgba(168,85,247,0.8)">Admin</div>
+      <button class="nav-item" onclick="showPage('admin')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Admin Panel
+        <span class="nav-badge" style="background:rgba(168,85,247,0.2);color:#c084fc">ADMIN</span>
+      </button>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Közösség</div>
+      <button class="nav-item" onclick="showPage('servers-public')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+        Szerver Kereső
+      </button>
+      <button class="nav-item" onclick="showPage('migration')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Átköltöztetés
+        <span class="nav-badge" style="background:rgba(34,197,94,0.15);color:#4ade80;border-color:rgba(34,197,94,0.2)">INGYENES</span>
+      </button>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Fiók</div>
+      <button class="nav-item" onclick="showPage('billing')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
+        Számlázás
+        <span class="nav-badge" id="nav-badge-tickets" style="background:rgba(239,68,68,0.15);color:#f87171;border-color:rgba(239,68,68,0.2);display:none">0</span>
+      </button>
+      <button class="nav-item" onclick="showPage('tickets')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Támogatás
+      </button>
+      <button class="nav-item" onclick="showPage('settings')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+        Beállítások
+      </button>
+    </div>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <div class="user-card">
+      <div class="avatar" id="sidebar-avatar">?</div>
+      <div style="flex:1;min-width:0">
+        <div id="sidebar-name" style="font-size:0.85rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">–</div>
+        <div id="sidebar-plan" style="font-size:0.72rem;color:rgba(107,114,128,0.8)">–</div>
+      </div>
+      <a href="#" onclick="logout()" style="color:rgba(107,114,128,0.6);display:flex" title="Kijelentkezés">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </a>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button onclick="toggleSidebar()" style="background:none;border:none;cursor:pointer;color:rgba(156,163,175,0.7);display:flex;align-items:center;padding:4px" aria-label="Menü">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+      </button>
+      <div id="pageTitle" style="font-size:1rem;font-weight:700;color:#fff">Vezérlőpult</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <!-- notification bell -->
+      <div style="position:relative">
+        <button id="notif-btn" onclick="toggleNotifPanel()" style="position:relative;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:10px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(156,163,175,0.8);transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(156,163,175,0.8)'">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span id="notif-dot" style="position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:#a855f7;border:1.5px solid #000;display:none"></span>
+        </button>
+        <!-- Értesítés panel — FELFELÉ nyílik -->
+        <div id="notif-panel" style="display:none;position:absolute;top:calc(100% + 10px);right:0;width:320px;background:#0a0a0a;border:1px solid rgba(255,255,255,0.1);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.5);z-index:200;overflow:hidden">
+          <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:0.88rem;font-weight:700;color:#fff">Értesítések</span>
+            <button onclick="clearNotifs()" style="font-size:0.72rem;color:rgba(107,114,128,0.7);background:none;border:none;cursor:pointer;font-family:inherit">Összes törlése</button>
+          </div>
+          <div id="notif-list" style="max-height:280px;overflow-y:auto"></div>
+        </div>
+      </div>
+      <!-- new service button -->
+      <button class="btn btn-purple" onclick="openModal('newServiceModal')">
+        <div class="bp-bg"></div>
+        <span class="bp-label" style="display:flex;align-items:center;gap:6px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          Új Szolgáltatás
+        </span>
+      </button>
+    </div>
+  </header>
+
+  <!-- CONTENT PAGES -->
+  <div class="content">
+
+    <!-- ===== DASHBOARD PAGE ===== -->
+    <div id="page-dashboard" class="fade-up">
+
+      <div style="margin-bottom:24px">
+        <h2 style="font-size:1.5rem;font-weight:800;color:#fff;letter-spacing:-0.02em;margin-bottom:4px">Üdvözöljük, Krisztián!</h2>
+        <p style="color:rgba(156,163,175,0.7);font-size:0.9rem">Áttekintés és gyors műveletek</p>
+      </div>
+
+      <!-- STAT GRID -->
+      <div class="stat-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px">
+
+        <div class="card stat-card card-hover">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px">
+            <div class="stat-icon" style="background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.18)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <span class="badge badge-green">
+              <span style="width:5px;height:5px;border-radius:50%;background:#4ade80"></span>
+              Online
+            </span>
+          </div>
+          <div id="stat-active" style="font-size:2rem;font-weight:800;color:#fff;letter-spacing:-0.03em;line-height:1">0</div>
+          <div style="font-size:0.8rem;color:rgba(156,163,175,0.6);margin-top:4px">Aktív Szolgáltatás</div>
+          <div style="position:absolute;bottom:0;right:0;width:80px;height:80px;border-radius:50%;background:rgba(168,85,247,0.06);filter:blur(20px);pointer-events:none"></div>
+        </div>
+
+        <div class="card stat-card card-hover">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px">
+            <div class="stat-icon" style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.18)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></svg>
+            </div>
+            <span class="badge badge-blue">99.9% uptime</span>
+          </div>
+          <div id="stat-game" style="font-size:2rem;font-weight:800;color:#fff;letter-spacing:-0.03em;line-height:1">0</div>
+          <div style="font-size:0.8rem;color:rgba(156,163,175,0.6);margin-top:4px">Game Szerverek</div>
+        </div>
+
+        <div class="card stat-card card-hover">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px">
+            <div class="stat-icon" style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.18)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
+            </div>
+            <span class="badge badge-green">Fizetve</span>
+          </div>
+          <div id="stat-billing" style="font-size:2rem;font-weight:800;color:#fff;letter-spacing:-0.03em;line-height:1">0 <span style="font-size:1rem;font-weight:500;color:rgba(156,163,175,0.6)">Ft</span></div>
+          <div id="stat-billing-sub" style="font-size:0.8rem;color:rgba(156,163,175,0.6);margin-top:4px">Nincs aktív előfizetés</div>
+        </div>
+
+        <div class="card stat-card card-hover">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px">
+            <div class="stat-icon" style="background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.18)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <span class="badge badge-yellow">Folyamatban</span>
+          </div>
+          <div id="stat-tickets" style="font-size:2rem;font-weight:800;color:#fff;letter-spacing:-0.03em;line-height:1">0</div>
+          <div style="font-size:0.8rem;color:rgba(156,163,175,0.6);margin-top:4px">Nyitott Ticket</div>
+        </div>
+      </div>
+
+      <!-- TWO COLUMN -->
+      <div style="display:grid;grid-template-columns:1fr 380px;gap:20px">
+
+        <!-- SERVICES OVERVIEW -->
+        <div class="card">
+          <div style="padding:20px 20px 0;display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+            <div style="font-size:0.95rem;font-weight:700;color:#fff">Aktív Szolgáltatások</div>
+            <button class="btn btn-ghost" style="padding:6px 12px;font-size:0.77rem" onclick="showPage('services')">Összes</button>
+          </div>
+
+          <div id="dashboard-services-list"></div>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div style="display:flex;flex-direction:column;gap:14px">
+
+          <!-- Összesített erőforrás a megrendelt szerverek alapján -->
+          <div class="card" style="padding:20px" id="resource-card">
+            <div style="font-size:0.88rem;font-weight:700;color:#fff;margin-bottom:16px">Megrendelt Erőforrások</div>
+            <div style="margin-bottom:14px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <span style="font-size:0.78rem;color:rgba(156,163,175,0.7)">Összes RAM</span>
+                <span id="res-ram" style="font-size:0.78rem;font-weight:600;color:#c084fc">0 GB</span>
+              </div>
+              <div class="progress-track">
+                <div id="res-ram-bar" class="progress-fill" style="width:0%;background:linear-gradient(90deg,#7c3aed,#a855f7)"></div>
+              </div>
+            </div>
+            <div style="margin-bottom:14px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <span style="font-size:0.78rem;color:rgba(156,163,175,0.7)">Aktív Szerverek</span>
+                <span id="res-servers" style="font-size:0.78rem;font-weight:600;color:#60a5fa">0 db</span>
+              </div>
+              <div class="progress-track">
+                <div id="res-servers-bar" class="progress-fill" style="width:0%;background:linear-gradient(90deg,#1d4ed8,#3b82f6)"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <span style="font-size:0.78rem;color:rgba(156,163,175,0.7)">Havi Költség</span>
+                <span id="res-cost" style="font-size:0.78rem;font-weight:600;color:#4ade80">0 Ft</span>
+              </div>
+              <div class="progress-track">
+                <div id="res-cost-bar" class="progress-fill" style="width:0%;background:linear-gradient(90deg,#16a34a,#22c55e)"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick actions -->
+          <div class="card" style="padding:20px">
+            <div style="font-size:0.88rem;font-weight:700;color:#fff;margin-bottom:14px">Gyors Műveletek</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <button class="btn btn-ghost" style="width:100%;justify-content:flex-start" onclick="openModal('newServiceModal')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+                Új Szerver Rendelése
+              </button>
+              <button class="btn btn-ghost" style="width:100%;justify-content:flex-start" onclick="showPage('billing')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
+                Számla Megtekintése
+              </button>
+              <button class="btn btn-ghost" style="width:100%;justify-content:flex-start" onclick="showPage('tickets')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Ticket Nyitása
+              </button>
+            </div>
+          </div>
+
+          <!-- Status -->
+          <div class="card" style="padding:16px 20px">
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="width:8px;height:8px;border-radius:50%;background:#22c55e" class="animate-pulse"></div>
+              <div>
+                <div style="font-size:0.82rem;font-weight:600;color:#fff">Minden Rendszer Működik</div>
+                <div style="font-size:0.72rem;color:rgba(107,114,128,0.8)">Utolsó ellenőrzés: 1 perce</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SERVICES PAGE ===== -->
+    <div id="page-services" class="fade-up" style="display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+        <div>
+          <h2 style="font-size:1.5rem;font-weight:800;color:#fff;letter-spacing:-0.02em;margin-bottom:4px">Szolgáltatásaim</h2>
+          <p style="color:rgba(156,163,175,0.7);font-size:0.9rem">Minden aktív és lejárt előfizetés</p>
+        </div>
+        <button class="btn btn-purple" onclick="openModal('newServiceModal')">
+          <div class="bp-bg"></div>
+          <span class="bp-label" style="display:flex;align-items:center;gap:6px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            Új Szolgáltatás
+          </span>
+        </button>
+      </div>
+
+      <!-- filter tabs -->
+      <div class="tabs" style="margin-bottom:20px;width:fit-content">
+        <button class="tab active" id="tab-all" onclick="filterServices(this,'all')">Összes</button>
+        <button class="tab" onclick="filterServices(this,'game')">Game Szerver</button>
+        <button class="tab" onclick="filterServices(this,'discord')">Discord Bot</button>
+        <button class="tab" onclick="filterServices(this,'web')">Webtárhely</button>
+      </div>
+
+      <div id="services-list" style="display:flex;flex-direction:column;gap:12px">
+        <!-- dynamic -->
+      </div>
+    </div>
+
+    <!-- ===== BILLING PAGE ===== -->
+    <div id="page-billing" class="fade-up" style="display:none">
+      <div style="margin-bottom:24px">
+        <h2 style="font-size:1.5rem;font-weight:800;color:#fff;letter-spacing:-0.02em;margin-bottom:4px">Számlázás</h2>
+        <p style="color:rgba(156,163,175,0.7);font-size:0.9rem">Fizetési módok és előzmények</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 340px;gap:20px">
+        <div>
+          <!-- balance card -->
+          <div class="card" style="padding:24px;margin-bottom:16px;position:relative;overflow:hidden">
+            <div style="position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(168,85,247,0.08);filter:blur(40px);pointer-events:none"></div>
+            <div style="font-size:0.78rem;color:rgba(107,114,128,0.8);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px">Egyenleg</div>
+            <div id="billing-balance" style="font-size:2.5rem;font-weight:800;color:#fff;letter-spacing:-0.03em;margin-bottom:16px">0 <span style="font-size:1.2rem;font-weight:500;color:rgba(156,163,175,0.6)">Ft</span></div>
+            <button class="btn btn-purple" onclick="openModal('addFundsModal')">
+              <div class="bp-bg"></div>
+              <span class="bp-label" style="display:flex;align-items:center;gap:6px">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+                Feltöltés
+              </span>
+            </button>
+          </div>
+
+          <!-- invoice list -->
+          <div class="card">
+            <div style="padding:18px 20px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:0.9rem;font-weight:700;color:#fff">Számlák</div>
+            <div id="invoices-list" style="padding:0"></div>
+          </div>
+        </div>
+
+        <!-- payment methods -->
+        <div>
+          <div class="card" style="padding:20px">
+            <div style="font-size:0.9rem;font-weight:700;color:#fff;margin-bottom:16px">Fizetési Módok</div>
+            <div id="cards-list" style="margin-bottom:10px"></div>
+            <button class="btn btn-ghost" style="width:100%;justify-content:center" onclick="openModal('addCardModal')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+              Kártya Hozzáadása
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TICKETS PAGE ===== -->
+    <div id="page-tickets" class="fade-up" style="display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+        <div>
+          <h2 style="font-size:1.5rem;font-weight:800;color:#fff;letter-spacing:-0.02em;margin-bottom:4px">Támogatás</h2>
+          <p style="color:rgba(156,163,175,0.7);font-size:0.9rem">Technikai segítség és kérdések</p>
+        </div>
+        <button class="btn btn-purple" onclick="openModal('newTicketModal')">
+          <div class="bp-bg"></div>
+          <span class="bp-label" style="display:flex;align-items:center;gap:6px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            Új Ticket
+          </span>
+        </button>
+      </div>
+
+      <div class="card" id="tickets-list"></div>
+    </div>
+
+    <!-- ===== SETTINGS PAGE ===== -->
+    <div id="page-settings" class="fade-up" style="display:none">
+      <div style="margin-bottom:24px">
+        <h2 style="font-size:1.5rem;font-weight:800;color:#fff;letter-spacing:-0.02em;margin-bottom:4px">Beállítások</h2>
+        <p style="color:rgba(156,163,175,0.7);font-size:0.9rem">Fiók és értesítési preferenciák</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+
+        <div class="card" style="padding:24px">
+          <div style="font-size:0.95rem;font-weight:700;color:#fff;margin-bottom:20px">Profil</div>
+          <div style="margin-bottom:16px">
+            <label class="input-label">Felhasználónév</label>
+            <input class="form-input" id="set-username" type="text" value="" placeholder="@felhasznalonev">
+          </div>
+          <div style="margin-bottom:16px">
+            <label class="input-label">E-mail</label>
+            <input class="form-input" id="set-email" type="email" value="" placeholder="te@email.hu">
+          </div>
+          <div style="margin-bottom:20px">
+            <label class="input-label">Discord fiók</label>
+            <div style="display:flex;gap:8px">
+              <input class="form-input" id="set-discord" type="text" value="" readonly style="flex:1;opacity:0.6">
+              <button class="btn btn-ghost" onclick="unlinkDiscord()">Lekapcsol</button>
+            </div>
+          </div>
+          <button class="btn btn-purple" style="width:100%;justify-content:center" onclick="saveSettings()">
+            <div class="bp-bg"></div>
+            <span class="bp-label">Mentés</span>
+          </button>
+        </div>
+
+        <div class="card" style="padding:24px">
+          <div style="font-size:0.95rem;font-weight:700;color:#fff;margin-bottom:20px">Jelszó Módosítás</div>
+          <div style="margin-bottom:16px">
+            <label class="input-label">Jelenlegi Jelszó</label>
+            <input class="form-input" id="pw-current" type="password" placeholder="••••••••">
+          </div>
+          <div style="margin-bottom:16px">
+            <label class="input-label">Új Jelszó</label>
+            <input class="form-input" id="pw-new" type="password" placeholder="••••••••">
+          </div>
+          <div style="margin-bottom:20px">
+            <label class="input-label">Megerősítés</label>
+            <input class="form-input" id="pw-confirm" type="password" placeholder="••••••••">
+          </div>
+          <button class="btn btn-ghost" style="width:100%;justify-content:center" onclick="changePassword()">Jelszó Módosítása</button>
+        </div>
+
+        <div class="card" style="padding:24px;grid-column:span 2">
+          <div style="font-size:0.95rem;font-weight:700;color:#fff;margin-bottom:20px">Értesítések</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px">
+              <span style="font-size:0.85rem;color:rgba(209,213,219,0.9)">Szerver leállás e-mail</span>
+              <button id="tog-server" onclick="toggleNotif('server')" class="tog-btn tog-on" style="width:38px;height:21px;border-radius:99px;border:none;cursor:pointer;position:relative;transition:background 0.2s,border-color 0.2s;flex-shrink:0"><span class="tog-dot" style="position:absolute;left:2px;top:2px;width:17px;height:17px;border-radius:50%;background:#fff;transition:transform 0.2s;display:block"></span></button>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px">
+              <span style="font-size:0.85rem;color:rgba(209,213,219,0.9)">Számla értesítő</span>
+              <button id="tog-invoice" onclick="toggleNotif('invoice')" class="tog-btn tog-on" style="width:38px;height:21px;border-radius:99px;border:none;cursor:pointer;position:relative;transition:background 0.2s;flex-shrink:0"><span class="tog-dot" style="position:absolute;left:2px;top:2px;width:17px;height:17px;border-radius:50%;background:#fff;transition:transform 0.2s;display:block"></span></button>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px">
+              <span style="font-size:0.85rem;color:rgba(209,213,219,0.9)">Ticket válasz e-mail</span>
+              <button id="tog-ticket" onclick="toggleNotif('ticket')" class="tog-btn" style="width:38px;height:21px;border-radius:99px;border:none;cursor:pointer;position:relative;transition:background 0.2s;flex-shrink:0"><span class="tog-dot" style="position:absolute;left:2px;top:2px;width:17px;height:17px;border-radius:50%;background:#fff;transition:transform 0.2s;display:block"></span></button>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px">
+              <span style="font-size:0.85rem;color:rgba(209,213,219,0.9)">Marketing hírek</span>
+              <button id="tog-marketing" onclick="toggleNotif('marketing')" class="tog-btn" style="width:38px;height:21px;border-radius:99px;border:none;cursor:pointer;position:relative;transition:background 0.2s;flex-shrink:0"><span class="tog-dot" style="position:absolute;left:2px;top:2px;width:17px;height:17px;border-radius:50%;background:#fff;transition:transform 0.2s;display:block"></span></button>
+            </div>
+            <!-- Heti összefoglaló email -->
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(168,85,247,0.05);border:1px solid rgba(168,85,247,0.15);border-radius:12px;grid-column:span 2">
+              <div>
+                <div style="font-size:0.85rem;color:rgba(209,213,219,0.9)">Heti szerver összefoglaló</div>
+                <div style="font-size:0.72rem;color:rgba(107,114,128,0.6);margin-top:2px">Minden hétfőn emailt küldünk: uptime, státusz, költségek</div>
+              </div>
+              <button class="btn btn-ghost" style="font-size:0.78rem;padding:6px 14px;flex-shrink:0" onclick="sendWeeklyReportNow()">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                Teszt küldés most
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== GAME SERVERS PAGE ===== -->
+    <div id="page-game-servers" class="fade-up" style="display:none">
+      <div style="margin-bottom:24px">
+        <h2 style="font-size:1.5rem;font-weight:800;color:#fff;letter-spacing:-0.02em;margin-bottom:4px">Game Szerverek</h2>
+        <p style="color:rgba(156,163,175,0.7);font-size:0.9rem">Menedzseld játékszervereidet</p>
+      </div>
+      <div id="game-servers-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px"></div>
+    </div>
+
+    <!-- ===== DISCORD BOTS PAGE ===== -->
+    <div id="page-discord-bots" class="fade-up" style="display:none">
+      <div style="margin-bottom:24px">
+        <h2 style="font-size:1.5rem;font-weight:800;color:#fff;letter-spacing:-0.02em;margin-bottom:4px">Discord Bot Hosting</h2>
+        <p style="color:rgba(156,163,175,0.7);font-size:0.9rem">Bot szerverId és logok kezelése</p>
+      </div>
+      <div id="discord-bots-list" style="display:flex;flex-direction:column;gap:12px"></div>
+    </div>
+
+    <!-- ===== WEB HOSTING PAGE ===== -->
+    <div id="page-web-hosting" class="fade-up" style="display:none">
+      <div style="margin-bottom:24px">
+        <h2 style="font-size:1.5rem;font-weight:800;color:#fff;letter-spacing:-0.02em;margin-bottom:4px">Webtárhely</h2>
+        <p style="color:rgba(156,163,175,0.7);font-size:0.9rem">Weboldalak és domain kezelése</p>
+      </div>
+      <div class="card" style="padding:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border:1px dashed rgba(255,255,255,0.12)">
+        <div style="width:60px;height:60px;border-radius:18px;background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        </div>
+        <div style="font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:8px">Még nincs webtárhelyed</div>
+        <p style="font-size:0.88rem;color:rgba(156,163,175,0.7);margin-bottom:20px;max-width:340px">Rendelj webtárhelyet és tedd közzé weboldalad percek alatt.</p>
+        <button class="btn btn-purple" onclick="openModal('newServiceModal')">
+          <div class="bp-bg"></div>
+          <span class="bp-label" style="display:flex;align-items:center;gap:6px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            Webtárhely Rendelése
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ===== ADMIN PAGE ===== -->
+    <div id="page-admin" class="fade-up" style="display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+        <div>
+          <div style="display:inline-flex;align-items:center;gap:8px;padding:4px 12px;border-radius:50px;background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.2);margin-bottom:10px">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span style="font-size:0.7rem;font-weight:700;color:#a855f7;text-transform:uppercase;letter-spacing:0.1em">Admin hozzáférés</span>
+          </div>
+          <h2 style="font-size:1.5rem;font-weight:800;color:#fff;letter-spacing:-0.02em;margin-bottom:4px">Admin Panel</h2>
+          <p style="color:rgba(156,163,175,0.7);font-size:0.9rem">Felhasználók, szolgáltatások és ticketek kezelése</p>
+        </div>
+        <button class="btn btn-ghost" onclick="loadAdminData()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          Frissítés
+        </button>
+      </div>
+
+      <!-- Stat kártyák -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:24px">
+        <div class="card stat-card"><div style="font-size:1.8rem;font-weight:800;color:#fff;line-height:1" id="adm-users">–</div><div style="font-size:0.78rem;color:rgba(156,163,175,0.6);margin-top:6px">Felhasználók</div></div>
+        <div class="card stat-card"><div style="font-size:1.8rem;font-weight:800;color:#fff;line-height:1" id="adm-services">–</div><div style="font-size:0.78rem;color:rgba(156,163,175,0.6);margin-top:6px">Szolgáltatások</div></div>
+        <div class="card stat-card"><div style="font-size:1.8rem;font-weight:800;color:#4ade80;line-height:1" id="adm-active">–</div><div style="font-size:0.78rem;color:rgba(156,163,175,0.6);margin-top:6px">Aktív</div></div>
+        <div class="card stat-card"><div style="font-size:1.8rem;font-weight:800;color:#facc15;line-height:1" id="adm-pending">–</div><div style="font-size:0.78rem;color:rgba(156,163,175,0.6);margin-top:6px">Függőben</div></div>
+        <div class="card stat-card"><div style="font-size:1.8rem;font-weight:800;color:#f87171;line-height:1" id="adm-open-tickets">–</div><div style="font-size:0.78rem;color:rgba(156,163,175,0.6);margin-top:6px">Nyitott Ticket</div></div>
+        <div class="card stat-card"><div style="font-size:1.5rem;font-weight:800;color:#c084fc;line-height:1" id="adm-revenue">–</div><div style="font-size:0.78rem;color:rgba(156,163,175,0.6);margin-top:6px">Bevétel (Ft)</div></div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs" style="margin-bottom:20px;width:fit-content">
+        <button class="tab active" onclick="adminTab(this,'adm-tab-tickets')">Ticketek</button>
+        <button class="tab" onclick="adminTab(this,'adm-tab-services')">Szolgáltatások</button>
+        <button class="tab" onclick="adminTab(this,'adm-tab-users')">Felhasználók</button>
+      </div>
+
+      <div id="adm-tab-tickets">
+        <div class="card"><div style="padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:0.9rem;font-weight:700;color:#fff">Ticketek</div><div id="adm-tickets-list"></div></div>
+      </div>
+      <div id="adm-tab-services" style="display:none">
+        <div class="card"><div style="padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:0.9rem;font-weight:700;color:#fff">Szolgáltatások</div><div id="adm-services-list"></div></div>
+      </div>
+      <div id="adm-tab-users" style="display:none">
+        <div class="card"><div style="padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:0.9rem;font-weight:700;color:#fff">Felhasználók</div><div id="adm-users-list"></div></div>
+      </div>
+
+      <!-- TESZT SZERVER -->
+      <div style="margin-top:20px">
+        <div class="card" style="padding:24px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+            <div style="width:36px;height:36px;border-radius:10px;background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.2);display:flex;align-items:center;justify-content:center">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+            <div>
+              <div style="font-size:0.95rem;font-weight:700;color:#fff">Teszt Szerver Létrehozás</div>
+              <div style="font-size:0.75rem;color:rgba(107,114,128,0.7)">Fizetés nélkül, azonnal aktiválódik a Pterodactylen</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+            <div>
+              <label class="input-label">Szerver neve</label>
+              <input class="form-input" id="test-name" type="text" placeholder="pl. Test MC Server">
+            </div>
+            <div>
+              <label class="input-label">Típus</label>
+              <select class="form-select" id="test-type" onchange="updateTestGameSelect()">
+                <option value="game">Game Szerver</option>
+                <option value="discord">Discord Bot</option>
+                <option value="web">Webtárhely</option>
+              </select>
+            </div>
+            <div id="test-game-wrap">
+              <label class="input-label">Játék</label>
+              <select class="form-select" id="test-game">
+                <option value="minecraft">Minecraft</option>
+                <option value="rust">Rust</option>
+                <option value="cs2">CS2</option>
+                <option value="palworld">Palworld</option>
+                <option value="valheim">Valheim</option>
+                <option value="ark">ARK</option>
+              </select>
+            </div>
+            <div>
+              <label class="input-label">Csomag</label>
+              <select class="form-select" id="test-plan">
+                <option value="starter">Starter (4GB RAM)</option>
+                <option value="pro">Pro (8GB RAM)</option>
+                <option value="elite">Elite (16GB RAM)</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-bottom:16px">
+            <label class="input-label">Felhasználó (üres = saját fiók)</label>
+            <select class="form-select" id="test-user">
+              <option value="">Saját fiók</option>
+            </select>
+          </div>
+          <div id="test-result" style="display:none;margin-bottom:12px"></div>
+          <button class="btn btn-purple" style="width:100%;justify-content:center;padding:12px" onclick="createTestServer()">
+            <div class="bp-bg"></div>
+            <span class="bp-label" style="display:flex;align-items:center;gap:6px">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              Szerver Létrehozása
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SERVERS PUBLIC PAGE ===== -->
+    <div id="page-servers-public" class="fade-up" style="display:none">
+      <div style="margin-bottom:24px">
+        <h2 style="font-size:1.5rem;font-weight:800;color:#fff;letter-spacing:-0.02em;margin-bottom:4px">Szerver Kereső</h2>
+        <p style="color:rgba(156,163,175,0.7);font-size:0.9rem">Nyilvánosan megosztott szerverek — csatlakozz egynek, vagy tedd nyilvánossá a sajátodat</p>
+      </div>
+
+      <!-- Filter -->
+      <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap">
+        <div class="tabs" style="width:fit-content">
+          <button class="tab active" onclick="filterPublicServers(this,'')">Mind</button>
+          <button class="tab" onclick="filterPublicServers(this,'minecraft')">Minecraft</button>
+          <button class="tab" onclick="filterPublicServers(this,'rust')">Rust</button>
+          <button class="tab" onclick="filterPublicServers(this,'cs2')">CS2</button>
+          <button class="tab" onclick="filterPublicServers(this,'palworld')">Palworld</button>
+        </div>
+      </div>
+
+      <div id="public-servers-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px">
+        <div style="grid-column:1/-1;padding:60px;text-align:center;color:rgba(107,114,128,0.5);font-size:0.88rem">Betöltés...</div>
+      </div>
+    </div>
+
+    <!-- ===== MIGRATION PAGE ===== -->
+    <div id="page-migration" class="fade-up" style="display:none">
+      <div style="margin-bottom:24px">
+        <h2 style="font-size:1.5rem;font-weight:800;color:#fff;letter-spacing:-0.02em;margin-bottom:4px">Ingyenes Átköltöztetés</h2>
+        <p style="color:rgba(156,163,175,0.7);font-size:0.9rem">Hozd át a szerveredet másik hostingról — mi csináljuk, adatvesztés nélkül</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 340px;gap:20px">
+        <div>
+          <!-- info sáv -->
+          <div style="padding:16px 20px;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.18);border-radius:16px;margin-bottom:20px;display:flex;align-items:flex-start;gap:14px">
+            <div style="width:36px;height:36px;border-radius:10px;background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            </div>
+            <div>
+              <div style="font-size:0.9rem;font-weight:700;color:#4ade80;margin-bottom:4px">Teljesen ingyenes és adatvesztés nélkül</div>
+              <div style="font-size:0.82rem;color:rgba(156,163,175,0.8);line-height:1.6">Csapatunk 24-48 órán belül felveszi veled a kapcsolatot, és átveszi a backup fájlt. A régi szerveredet csak akkor kell törölni, ha már az AeroHoston fut minden.</div>
+            </div>
+          </div>
+
+          <div class="card" style="padding:28px">
+            <div style="font-size:0.95rem;font-weight:700;color:#fff;margin-bottom:20px">Migráció kérés indítása</div>
+            <div style="margin-bottom:16px">
+              <label class="input-label">Jelenlegi hoster neve *</label>
+              <input class="form-input" id="mig-fromhost" type="text" placeholder="pl. Nitrado, Akliz, G-Portal, saját VPS...">
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+              <div>
+                <label class="input-label">Játék</label>
+                <select class="form-select" id="mig-game">
+                  <option value="">Válassz...</option>
+                  <option value="minecraft">Minecraft</option>
+                  <option value="rust">Rust</option>
+                  <option value="cs2">CS2</option>
+                  <option value="palworld">Palworld</option>
+                  <option value="valheim">Valheim</option>
+                  <option value="ark">ARK</option>
+                  <option value="project-zomboid">Project Zomboid</option>
+                </select>
+              </div>
+              <div>
+                <label class="input-label">Kívánt csomag</label>
+                <select class="form-select" id="mig-plan">
+                  <option value="">Még nem döntöttem</option>
+                  <option value="starter">Starter — 4GB / 2 490 Ft/hó</option>
+                  <option value="pro">Pro — 8GB / 3 990 Ft/hó</option>
+                  <option value="elite">Elite — 16GB / 6 990 Ft/hó</option>
+                </select>
+              </div>
+            </div>
+            <div style="margin-bottom:16px">
+              <label class="input-label">Backup / letöltési link (opcionális)</label>
+              <input class="form-input" id="mig-backup" type="text" placeholder="Google Drive, WeTransfer, SFTP link...">
+            </div>
+            <div style="margin-bottom:24px">
+              <label class="input-label">Megjegyzés</label>
+              <textarea class="form-input" id="mig-notes" rows="3" placeholder="Plugins, mods listája, speciális beállítások..." style="resize:vertical"></textarea>
+            </div>
+            <button class="btn btn-purple" style="width:100%;justify-content:center;padding:13px" onclick="submitMigration()">
+              <div class="bp-bg"></div>
+              <span class="bp-label" style="display:flex;align-items:center;gap:7px;font-size:0.92rem">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                Migráció Kérés Küldése
+              </span>
+            </button>
+          </div>
+
+          <!-- Korábbi kérések -->
+          <div id="mig-history" style="margin-top:20px"></div>
+        </div>
+
+        <!-- Jobb oszlop: lépések -->
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div class="card" style="padding:22px">
+            <div style="font-size:0.88rem;font-weight:700;color:#fff;margin-bottom:18px">Hogyan működik?</div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;gap:12px">
+                <div style="width:28px;height:28px;border-radius:8px;background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.2);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#c084fc;flex-shrink:0">1</div>
+                <div><div style="font-size:0.85rem;font-weight:600;color:#fff;margin-bottom:2px">Töltsd ki az űrlapot</div><div style="font-size:0.78rem;color:rgba(107,114,128,0.8)">Add meg, honnan jössz és milyen szervered van.</div></div>
+              </div>
+              <div style="display:flex;gap:12px">
+                <div style="width:28px;height:28px;border-radius:8px;background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.2);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#c084fc;flex-shrink:0">2</div>
+                <div><div style="font-size:0.85rem;font-weight:600;color:#fff;margin-bottom:2px">Csapatunk kapcsolatba lép</div><div style="font-size:0.78rem;color:rgba(107,114,128,0.8)">24-48 órán belül ticketen keresztül.</div></div>
+              </div>
+              <div style="display:flex;gap:12px">
+                <div style="width:28px;height:28px;border-radius:8px;background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.2);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#c084fc;flex-shrink:0">3</div>
+                <div><div style="font-size:0.85rem;font-weight:600;color:#fff;margin-bottom:2px">Backup feltöltés</div><div style="font-size:0.78rem;color:rgba(107,114,128,0.8)">Elküldjük az SFTP adatokat, te feltöltöd a backupot.</div></div>
+              </div>
+              <div style="display:flex;gap:12px">
+                <div style="width:28px;height:28px;border-radius:8px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#4ade80;flex-shrink:0">✓</div>
+                <div><div style="font-size:0.85rem;font-weight:600;color:#fff;margin-bottom:2px">Kész! Szervered fut</div><div style="font-size:0.78rem;color:rgba(107,114,128,0.8)">Minden beállítás, plugin, világ megmarad.</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="padding:18px 20px">
+            <div style="font-size:0.78rem;color:rgba(107,114,128,0.6);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px">Támogatott hosterek</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px">
+              <span style="padding:4px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;font-size:0.75rem;color:rgba(156,163,175,0.8)">Nitrado</span>
+              <span style="padding:4px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;font-size:0.75rem;color:rgba(156,163,175,0.8)">Akliz</span>
+              <span style="padding:4px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;font-size:0.75rem;color:rgba(156,163,175,0.8)">G-Portal</span>
+              <span style="padding:4px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;font-size:0.75rem;color:rgba(156,163,175,0.8)">Shockbyte</span>
+              <span style="padding:4px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;font-size:0.75rem;color:rgba(156,163,175,0.8)">Apex Hosting</span>
+              <span style="padding:4px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;font-size:0.75rem;color:rgba(156,163,175,0.8)">Saját VPS</span>
+              <span style="padding:4px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;font-size:0.75rem;color:rgba(156,163,175,0.8)">Bármi más</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== MODALS ===== -->
+
+<!-- New Service Modal -->
+<div class="modal-backdrop" id="newServiceModal">
+  <div class="modal">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+      <h3 style="font-size:1.15rem;font-weight:800;color:#fff;letter-spacing:-0.02em">Új Szolgáltatás</h3>
+      <button onclick="closeModal('newServiceModal')" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(156,163,175,0.7)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div style="margin-bottom:18px">
+      <label class="input-label">Szolgáltatás típusa</label>
+      <select class="form-select" onchange="updateServiceForm(this.value)">
+        <option value="">Válassz...</option>
+        <option value="game">Game Szerver</option>
+        <option value="discord">Discord Bot</option>
+        <option value="web">Webtárhely</option>
+      </select>
+    </div>
+    <div id="serviceFormFields" style="display:none">
+      <div style="margin-bottom:18px">
+        <label class="input-label">Szerver Neve</label>
+        <input class="form-input" type="text" placeholder="pl. My Minecraft SMP">
+      </div>
+      <div style="margin-bottom:18px">
+        <label class="input-label" id="gameTypeLabel">Játék</label>
+        <select class="form-select" id="gameTypeSelect">
+          <option value="minecraft">Minecraft</option>
+          <option value="rust">Rust</option>
+          <option value="cs2">CS2</option>
+          <option value="palworld">Palworld</option>
+          <option value="valheim">Valheim</option>
+        </select>
+      </div>
+      <div style="margin-bottom:24px">
+        <label class="input-label">Csomag</label>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(168,85,247,0.3);border-radius:12px;cursor:pointer">
+            <input type="radio" name="plan" value="starter" checked style="accent-color:#a855f7">
+            <div style="flex:1">
+              <div style="font-size:0.88rem;font-weight:600;color:#fff">Starter — 4GB RAM</div>
+              <div style="font-size:0.75rem;color:rgba(107,114,128,0.7)">2 vCPU · 20GB SSD</div>
+            </div>
+            <span style="font-size:0.9rem;font-weight:700;color:#c084fc">2 490 Ft/hó</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;cursor:pointer">
+            <input type="radio" name="plan" value="pro" style="accent-color:#a855f7">
+            <div style="flex:1">
+              <div style="font-size:0.88rem;font-weight:600;color:#fff">Pro — 8GB RAM</div>
+              <div style="font-size:0.75rem;color:rgba(107,114,128,0.7)">4 vCPU · 50GB SSD</div>
+            </div>
+            <span style="font-size:0.9rem;font-weight:700;color:#c084fc">3 990 Ft/hó</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;cursor:pointer">
+            <input type="radio" name="plan" value="elite" style="accent-color:#a855f7">
+            <div style="flex:1">
+              <div style="font-size:0.88rem;font-weight:600;color:#fff">Elite — 16GB RAM</div>
+              <div style="font-size:0.75rem;color:rgba(107,114,128,0.7)">6 vCPU · 100GB SSD</div>
+            </div>
+            <span style="font-size:0.9rem;font-weight:700;color:#c084fc">6 990 Ft/hó</span>
+          </label>
+        </div>
+      </div>
+      <button class="btn btn-purple" style="width:100%;justify-content:center;padding:12px" onclick="buyService()">
+        <div class="bp-bg"></div>
+        <span class="bp-label" style="display:flex;align-items:center;gap:6px;font-size:0.9rem">
+          Megrendelés
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Server Control Modal -->
+<div class="modal-backdrop" id="serverControlModal">
+  <div class="modal" style="max-width:560px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <h3 style="font-size:1.1rem;font-weight:800;color:#fff" id="serverControlTitle">Szerver Kezelés</h3>
+      <button onclick="closeModal('serverControlModal')" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(156,163,175,0.7)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <!-- státusz + resources -->
+    <div style="display:flex;gap:12px;margin-bottom:16px;padding:12px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px">
+      <div style="flex:1"><div style="font-size:0.68rem;color:rgba(107,114,128,0.7);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">Státusz</div><div style="font-size:0.88rem;font-weight:600;color:#fff" id="svc-control-status">Betöltés...</div></div>
+      <div style="flex:1"><div style="font-size:0.68rem;color:rgba(107,114,128,0.7);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">RAM</div><div style="font-size:0.88rem;font-weight:600;color:#fff" id="svc-control-ram">—</div></div>
+      <div style="flex:1"><div style="font-size:0.68rem;color:rgba(107,114,128,0.7);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">CPU</div><div style="font-size:0.88rem;font-weight:600;color:#fff" id="svc-control-cpu">—</div></div>
+    </div>
+    <!-- power buttons -->
+    <div style="display:flex;gap:8px;margin-bottom:20px">
+      <button class="btn" style="flex:1;justify-content:center;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);color:#4ade80" onclick="serverAction('start')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Indítás
+      </button>
+      <button class="btn" style="flex:1;justify-content:center;background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.2);color:#facc15" onclick="serverAction('restart')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+        Újraindítás
+      </button>
+      <button class="btn" style="flex:1;justify-content:center;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);color:#f87171" onclick="serverAction('stop')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="5" y="5"/></svg>
+        Leállítás
+      </button>
+      <button class="btn" style="flex:1;justify-content:center;background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.15);color:#f87171;opacity:0.7" onclick="if(confirm('Kényszerített leállítás? Az adatok elveszhetnek!'))serverAction('kill')" title="Kényszerített leállítás">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64A9 9 0 0 1 20.77 15"/><path d="M6.16 6.16a9 9 0 1 0 12.68 12.68"/><path d="M12 2v4"/><path d="m2 2 20 20"/></svg>
+        Kill
+      </button>
+    </div>
+    <!-- console -->
+    <div style="background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px;height:180px;overflow-y:auto;font-family:'Geist Mono','Courier New',monospace;font-size:0.75rem;line-height:1.7;margin-bottom:16px">
+      <div style="color:#4ade80">[INFO] Server started on port 25565</div>
+      <div style="color:rgba(156,163,175,0.7)">[INFO] Loading world... done (2.4s)</div>
+      <div style="color:rgba(156,163,175,0.7)">[INFO] DDoS protection active via Path.net</div>
+      <div style="color:#60a5fa">[INFO] Player KriszA joined (12/20)</div>
+      <div style="color:rgba(156,163,175,0.7)">[INFO] Autosave complete</div>
+      <div style="color:rgba(156,163,175,0.7)">[INFO] <span id="consoleCursor">_</span></div>
+    </div>
+    <!-- console input -->
+    <div style="display:flex;gap:8px;margin-bottom:16px">
+      <input class="form-input" type="text" id="consoleInput" placeholder="Parancs küldése..." style="flex:1" onkeydown="if(event.key==='Enter')sendConsoleCmd()">
+      <button class="btn btn-ghost" onclick="sendConsoleCmd()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+    </div>
+    <!-- Extra funkciók -->
+    <div style="border-top:1px solid rgba(255,255,255,0.07);padding-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+      <button id="svc-pause-btn" class="btn btn-ghost" style="flex:1;justify-content:center;min-width:120px" onclick="togglePauseServer()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        <span id="svc-pause-label">Szüneteltetés</span>
+      </button>
+      <button class="btn btn-ghost" style="flex:1;justify-content:center;min-width:120px" onclick="openPublicProfileModal()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+        Publikus oldal
+      </button>
+      <button class="btn btn-ghost" style="flex:1;justify-content:center;min-width:120px" onclick="openComingSoonModal()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg>
+        Coming Soon
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Funds Modal -->
+<div class="modal-backdrop" id="addFundsModal">
+  <div class="modal" style="max-width:400px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+      <h3 style="font-size:1.1rem;font-weight:800;color:#fff">Egyenleg Feltöltése</h3>
+      <button onclick="closeModal('addFundsModal')" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(156,163,175,0.7)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:18px">
+      <button class="btn btn-ghost" style="flex:1;justify-content:center" onclick="setAmount(2000,this)">2 000 Ft</button>
+      <button class="btn btn-ghost" style="flex:1;justify-content:center" onclick="setAmount(5000,this)">5 000 Ft</button>
+      <button class="btn btn-ghost" style="flex:1;justify-content:center" onclick="setAmount(10000,this)">10 000 Ft</button>
+    </div>
+    <div style="margin-bottom:20px">
+      <label class="input-label">Egyéni összeg (Ft)</label>
+      <input class="form-input" type="number" id="customAmount" placeholder="0" min="500">
+    </div>
+    <button class="btn btn-purple" style="width:100%;justify-content:center;padding:12px" onclick="addFunds()">
+      <div class="bp-bg"></div>
+      <span class="bp-label">Feltöltés</span>
+    </button>
+  </div>
+</div>
+
+<!-- New Ticket Modal -->
+<div class="modal-backdrop" id="newTicketModal">
+  <div class="modal">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+      <h3 style="font-size:1.1rem;font-weight:800;color:#fff">Ticket Nyitása</h3>
+      <button onclick="closeModal('newTicketModal')" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(156,163,175,0.7)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div style="margin-bottom:16px">
+      <label class="input-label">Kategória</label>
+      <select class="form-select">
+        <option>Technikai probléma</option>
+        <option>Számlázás</option>
+        <option>Általános kérdés</option>
+        <option>Szerver konfigurációs kérés</option>
+      </select>
+    </div>
+    <div style="margin-bottom:16px">
+      <label class="input-label">Tárgy</label>
+      <input class="form-input" type="text" placeholder="Rövid leírás">
+    </div>
+    <div style="margin-bottom:20px">
+      <label class="input-label">Üzenet</label>
+      <textarea class="form-input" rows="4" placeholder="Részletes leírás..." style="resize:vertical"></textarea>
+    </div>
+    <button class="btn btn-purple" style="width:100%;justify-content:center;padding:12px" onclick="submitTicket()">
+      <div class="bp-bg"></div>
+      <span class="bp-label" style="display:flex;align-items:center;gap:6px">Ticket Küldése
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </span>
+    </button>
+  </div>
+</div>
+
+<!-- Add Card Modal -->
+<div class="modal-backdrop" id="addCardModal">
+  <div class="modal" style="max-width:400px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+      <h3 style="font-size:1.1rem;font-weight:800;color:#fff">Kártya Hozzáadása</h3>
+      <button onclick="closeModal('addCardModal')" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(156,163,175,0.7)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div style="margin-bottom:16px">
+      <label class="input-label">Kártyaszám</label>
+      <input class="form-input" id="card-number" type="text" placeholder="1234 5678 9012 3456" maxlength="19">
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+      <div>
+        <label class="input-label">Lejárat</label>
+        <input class="form-input" id="card-expiry" type="text" placeholder="MM/YY" maxlength="5">
+      </div>
+      <div>
+        <label class="input-label">CVC</label>
+        <input class="form-input" id="card-cvc" type="text" placeholder="•••" maxlength="4">
+      </div>
+    </div>
+    <button class="btn btn-purple" style="width:100%;justify-content:center;padding:12px" onclick="saveCard()">
+      <div class="bp-bg"></div>
+      <span class="bp-label">Kártya Mentése</span>
+    </button>
+  </div>
+</div>
+
+<!-- Ticket View Modal -->
+<div class="modal-backdrop" id="ticketViewModal">
+  <div class="modal" style="max-width:560px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div>
+        <div style="font-size:0.72rem;color:rgba(107,114,128,0.7);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Ticket részletek</div>
+        <h3 id="tv-id" style="font-size:1.05rem;font-weight:800;color:#fff"></h3>
+      </div>
+      <button onclick="closeModal('ticketViewModal')" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(156,163,175,0.7)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Meta -->
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+      <span id="tv-badge"></span>
+      <span style="font-size:0.75rem;color:rgba(107,114,128,0.7)" id="tv-meta"></span>
+    </div>
+
+    <!-- Üzenet szál -->
+    <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:14px;margin-bottom:12px;max-height:300px;overflow-y:auto" id="tv-messages-wrap">
+      <div id="tv-message"></div>
+    </div>
+
+    <!-- Lezárás oka (ha van) -->
+    <div id="tv-resolution-wrap" style="display:none;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15);border-radius:12px;padding:12px 14px;margin-bottom:12px">
+      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#4ade80;margin-bottom:4px">Lezárás oka</div>
+      <div id="tv-resolution" style="font-size:0.82rem;color:rgba(209,213,219,0.85);white-space:pre-wrap"></div>
+    </div>
+
+    <!-- Válasz írása -->
+    <div style="margin-bottom:12px">
+      <textarea id="tv-reply-input" class="form-input" rows="3" placeholder="Írd ide a válaszodat..." style="resize:none;border-radius:12px"
+        onkeydown="if(event.ctrlKey&&event.key==='Enter')sendTicketMessage()"></textarea>
+      <div style="font-size:0.7rem;color:rgba(107,114,128,0.5);margin-top:4px">Ctrl+Enter a küldéshez</div>
+    </div>
+
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-ghost" style="justify-content:center" onclick="closeModal('ticketViewModal')">Bezárás</button>
+      <button id="tv-send-btn" class="btn btn-purple" style="flex:1;justify-content:center" onclick="sendTicketMessage()">
+        <div class="bp-bg"></div>
+        <span class="bp-label" style="display:flex;align-items:center;gap:6px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+          Küldés
+        </span>
+      </button>
+      <button id="tv-close-btn" class="btn btn-danger" style="justify-content:center" onclick="closeTicket()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        Lezárás
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Public Profile Modal -->
+<div class="modal-backdrop" id="publicProfileModal">
+  <div class="modal" style="max-width:500px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div>
+        <h3 style="font-size:1.1rem;font-weight:800;color:#fff">Publikus Szerver Oldal</h3>
+        <div style="font-size:0.75rem;color:rgba(107,114,128,0.7);margin-top:2px">Játékosok megtalálhatják és csatlakozhatnak</div>
+      </div>
+      <button onclick="closeModal('publicProfileModal')" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(156,163,175,0.7)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <!-- Toggle -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;margin-bottom:16px">
+      <span style="font-size:0.88rem;color:rgba(209,213,219,0.9)">Publikus listán legyen</span>
+      <button id="pub-toggle" onclick="togglePublicProfile()" class="tog-btn tog-on" style="width:38px;height:21px;border-radius:99px;border:none;cursor:pointer;position:relative;transition:background 0.2s;flex-shrink:0"><span class="tog-dot" style="position:absolute;left:2px;top:2px;width:17px;height:17px;border-radius:50%;background:#fff;transition:transform 0.2s;display:block"></span></button>
+    </div>
+    <div id="pub-form-fields">
+      <div style="margin-bottom:14px">
+        <label class="input-label">Megjelenített név</label>
+        <input class="form-input" id="pub-title" type="text" placeholder="pl. KriszA SMP Szerver">
+      </div>
+      <div style="margin-bottom:14px">
+        <label class="input-label">Leírás (opcionális)</label>
+        <textarea class="form-input" id="pub-desc" rows="2" placeholder="Mik a szabályok? Milyen közösség?" style="resize:none"></textarea>
+      </div>
+      <div style="margin-bottom:14px">
+        <label class="input-label">Tagek (vesszővel elválasztva)</label>
+        <input class="form-input" id="pub-tags" type="text" placeholder="pl. survival, 18+, whitelist">
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;margin-bottom:16px">
+        <span style="font-size:0.85rem;color:rgba(209,213,219,0.9)">IP megjelenítése a publikus oldalon</span>
+        <button id="pub-showip-toggle" onclick="this.classList.toggle('tog-on')" class="tog-btn tog-on" style="width:38px;height:21px;border-radius:99px;border:none;cursor:pointer;position:relative;transition:background 0.2s;flex-shrink:0"><span class="tog-dot" style="position:absolute;left:2px;top:2px;width:17px;height:17px;border-radius:50%;background:#fff;transition:transform 0.2s;display:block"></span></button>
+      </div>
+      <!-- URL preview -->
+      <div id="pub-url-preview" style="display:none;padding:10px 14px;background:rgba(168,85,247,0.06);border:1px solid rgba(168,85,247,0.2);border-radius:10px;margin-bottom:16px">
+        <div style="font-size:0.7rem;color:#a855f7;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Publikus URL</div>
+        <div id="pub-url-text" style="font-size:0.82rem;color:#fff;font-family:monospace;word-break:break-all"></div>
+        <button onclick="copyPubUrl()" style="margin-top:6px;background:none;border:none;color:#c084fc;font-size:0.75rem;cursor:pointer;padding:0">Másolás</button>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-ghost" style="flex:1;justify-content:center" onclick="closeModal('publicProfileModal')">Mégsem</button>
+      <button class="btn btn-purple" style="flex:1;justify-content:center" onclick="savePublicProfile()">
+        <div class="bp-bg"></div>
+        <span class="bp-label">Mentés</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Coming Soon Modal -->
+<div class="modal-backdrop" id="comingSoonModal">
+  <div class="modal" style="max-width:500px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div>
+        <h3 style="font-size:1.1rem;font-weight:800;color:#fff">Coming Soon Oldal</h3>
+        <div style="font-size:0.75rem;color:rgba(107,114,128,0.7);margin-top:2px">Visszaszámláló a szervered megnyitásáig</div>
+      </div>
+      <button onclick="closeModal('comingSoonModal')" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(156,163,175,0.7)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;margin-bottom:16px">
+      <span style="font-size:0.88rem;color:rgba(209,213,219,0.9)">Coming soon oldal aktív legyen</span>
+      <button id="cs-active-toggle" onclick="this.classList.toggle('tog-on')" class="tog-btn tog-on" style="width:38px;height:21px;border-radius:99px;border:none;cursor:pointer;position:relative;transition:background 0.2s;flex-shrink:0"><span class="tog-dot" style="position:absolute;left:2px;top:2px;width:17px;height:17px;border-radius:50%;background:#fff;transition:transform 0.2s;display:block"></span></button>
+    </div>
+    <div style="margin-bottom:14px">
+      <label class="input-label">Főcím</label>
+      <input class="form-input" id="cs-headline" type="text" placeholder="Hamarosan nyitunk!" value="Hamarosan nyitunk!">
+    </div>
+    <div style="margin-bottom:14px">
+      <label class="input-label">Alcím / leírás</label>
+      <textarea class="form-input" id="cs-subtext" rows="2" placeholder="Csatlakozz a Discordunkhoz az értesítésekért!" style="resize:none"></textarea>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+      <div>
+        <label class="input-label">Nyitás dátuma</label>
+        <input class="form-input" id="cs-launch" type="datetime-local">
+      </div>
+      <div>
+        <label class="input-label">Discord link</label>
+        <input class="form-input" id="cs-discord" type="text" placeholder="https://discord.gg/...">
+      </div>
+    </div>
+    <!-- Preview URL -->
+    <div id="cs-url-preview" style="display:none;padding:10px 14px;background:rgba(168,85,247,0.06);border:1px solid rgba(168,85,247,0.2);border-radius:10px;margin-bottom:16px">
+      <div style="font-size:0.7rem;color:#a855f7;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Megosztható link</div>
+      <div id="cs-url-text" style="font-size:0.82rem;color:#fff;font-family:monospace;word-break:break-all"></div>
+      <button onclick="copyCsUrl()" style="margin-top:6px;background:none;border:none;color:#c084fc;font-size:0.75rem;cursor:pointer;padding:0">Másolás</button>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-ghost" style="flex:1;justify-content:center" onclick="closeModal('comingSoonModal')">Mégsem</button>
+      <button class="btn btn-purple" style="flex:1;justify-content:center" onclick="saveComingSoon()">
+        <div class="bp-bg"></div>
+        <span class="bp-label">Mentés</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Pause Confirm Modal -->
+<div class="modal-backdrop" id="pauseConfirmModal">
+  <div class="modal" style="max-width:420px">
+    <div style="text-align:center;padding:8px 0 20px">
+      <div style="width:56px;height:56px;border-radius:16px;background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+      </div>
+      <h3 style="font-size:1.15rem;font-weight:800;color:#fff;margin-bottom:8px">Szerver szüneteltetése</h3>
+      <p style="font-size:0.85rem;color:rgba(156,163,175,0.8);line-height:1.6;max-width:320px;margin:0 auto">A szerver <strong style="color:#fff">teljesen leáll</strong> — Pterodactyl panelen nem lesz elérhető, nem lehet elindítani addig. Billing szünetel.</p>
+    </div>
+    <div style="margin-bottom:16px">
+      <label class="input-label">Meddig szeretnéd szüneteltetni? (opcionális)</label>
+      <input class="form-input" id="pause-until" type="datetime-local">
+    </div>
+    <div style="margin-bottom:20px">
+      <label class="input-label">Indok (opcionális)</label>
+      <input class="form-input" id="pause-reason" type="text" placeholder="pl. Nyaralás, szünet...">
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-ghost" style="flex:1;justify-content:center" onclick="closeModal('pauseConfirmModal')">Mégsem</button>
+      <button class="btn" style="flex:1;justify-content:center;background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.25);color:#facc15" onclick="confirmPause()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        Szüneteltetés
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" style="position:fixed;bottom:24px;right:24px;z-index:200;background:rgba(10,10,10,0.95);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:14px 18px;display:flex;align-items:center;gap:10px;opacity:0;transform:translateY(10px);transition:all 0.3s;pointer-events:none;max-width:320px">
+  <div id="toastIcon" style="width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(168,85,247,0.15)">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+  </div>
+  <span id="toastMsg" style="font-size:0.85rem;color:rgba(209,213,219,0.9);font-weight:500"></span>
+</div>
+
+<script>
+// auth guard — token + session validáció
+var _ahUser = null;
+try {
+  var _tok = localStorage.getItem('ah_token');
+  var _sess = localStorage.getItem('ah_session');
+  if (!_tok || !_sess) { localStorage.clear(); window.location.href = 'login.html'; }
+  _ahUser = JSON.parse(_sess);
+  if (!_ahUser || !_ahUser.email) { localStorage.clear(); window.location.href = 'login.html'; }
+} catch(e) { localStorage.clear(); window.location.href = 'login.html'; }
+
+// ── API fetch helper — automatikus token refresh + 401 logout ─────────────
+async function ahFetch(url, opts) {
+  opts = opts || {};
+  opts.headers = opts.headers || {};
+  opts.headers['Authorization'] = 'Bearer ' + (localStorage.getItem('ah_token') || '');
+  var res = await fetch(url, opts);
+  if (res.status === 401) {
+    var rt = localStorage.getItem('ah_refresh_token');
+    if (rt) {
+      try {
+        var rr = await fetch('/api/auth/refresh', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({refreshToken: rt}) });
+        if (rr.ok) {
+          var rd = await rr.json();
+          localStorage.setItem('ah_token', rd.accessToken);
+          if (rd.refreshToken) localStorage.setItem('ah_refresh_token', rd.refreshToken);
+          opts.headers['Authorization'] = 'Bearer ' + rd.accessToken;
+          return fetch(url, opts);
+        }
+      } catch(e) {}
+    }
+    localStorage.clear(); window.location.href = 'login.html'; return;
+  }
+  return res;
+}
+
+// ── Szerver szinkron — services + tickets betöltése API-ból ──────────────
+async function syncFromServer() {
+  try {
+    var sr = await ahFetch('/api/services');
+    if (sr && sr.ok) { var svcs = await sr.json(); saveServices(svcs); }
+  } catch(e) {}
+  try {
+    var tr = await ahFetch('/api/tickets');
+    if (tr && tr.ok) { var tkts = await tr.json(); saveTickets(tkts); }
+  } catch(e) {}
+  try {
+    var br = await ahFetch('/api/billing/summary');
+    if (br && br.ok) { var bdata = await br.json(); saveBalance(bdata.monthlyTotal || 0); }
+  } catch(e) {}
+  renderStats();
+  renderServicesPage && renderServicesPage();
+  renderTicketsPage && renderTicketsPage();
+}
+
+// ── Email verifikáció banner ──────────────────────────────────────────────
+function showVerifyBanner() {
+  if (!_ahUser || _ahUser.isVerified) return;
+  var existing = document.getElementById('verifyBanner');
+  if (existing) return;
+  var banner = document.createElement('div');
+  banner.id = 'verifyBanner';
+  banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:linear-gradient(90deg,#1d4ed8,#7c3aed);color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:center;gap:12px;font-size:0.88rem;font-weight:500';
+  banner.innerHTML = '<span>📧 Erősítsd meg az e-mail címedet a fiókod aktiválásához.</span>' +
+    '<button onclick="resendVerify()" style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);border-radius:20px;color:#fff;padding:4px 14px;font-size:0.82rem;cursor:pointer;font-weight:600">Új link küldése</button>' +
+    '<button onclick="this.parentElement.remove()" style="background:none;border:none;color:rgba(255,255,255,0.7);cursor:pointer;font-size:1.2rem;padding:0 4px">×</button>';
+  document.body.prepend(banner);
+}
+async function resendVerify() {
+  try {
+    var r = await ahFetch('/api/auth/resend-verify', {method:'POST'});
+    if (r && r.ok) {
+      var b = document.getElementById('verifyBanner');
+      if (b) b.innerHTML = '<span>✅ Elküldtük az új megerősítő emailt! Ellenőrizd a postaládádat.</span><button onclick="this.parentElement.remove()" style="background:none;border:none;color:rgba(255,255,255,0.7);cursor:pointer;font-size:1.2rem;padding:0 4px">×</button>';
+    }
+  } catch(e) {}
+}
+
+// ---- helpers ----
+function saveUser(u) { localStorage.setItem('ah_user', JSON.stringify(u)); }
+function getServices() { try { return JSON.parse(localStorage.getItem('ah_services')) || []; } catch(e) { return []; } }
+function saveServices(s) { localStorage.setItem('ah_services', JSON.stringify(s)); }
+function getTickets() { try { return JSON.parse(localStorage.getItem('ah_tickets')) || []; } catch(e) { return []; } }
+function saveTickets(t) { localStorage.setItem('ah_tickets', JSON.stringify(t)); }
+function getBalance() { try { return parseFloat(localStorage.getItem('ah_balance')) || 0; } catch(e) { return 0; } }
+function saveBalance(b) { localStorage.setItem('ah_balance', b); }
+
+// ---- render user info ----
+function renderUser() {
+  if (!_ahUser) return;
+  var name      = _ahUser.name || _ahUser.email || 'Felhasználó';
+  var firstName = name.split(' ')[0];
+  var initials  = name.split(' ').map(function(w){ return w[0] || ''; }).join('').toUpperCase().slice(0, 2) || '?';
+  var plan      = _ahUser.plan || 'Alap csomag';
+
+  // Avatar monogram
+  document.querySelectorAll('.avatar').forEach(function(el){ el.textContent = initials; });
+
+  // Sidebar user kártya
+  var sidebarName = document.getElementById('sidebar-name');
+  var sidebarPlan = document.getElementById('sidebar-plan');
+  var sidebarAvatar = document.getElementById('sidebar-avatar');
+  if (sidebarName) sidebarName.textContent = name;
+  if (sidebarPlan) sidebarPlan.textContent = plan;
+  if (sidebarAvatar) sidebarAvatar.textContent = initials;
+
+  // Dashboard üdvözlés
+  var greet = document.querySelector('#page-dashboard h2');
+  if (greet) greet.textContent = 'Üdvözöljük, ' + firstName + '!';
+
+  // Settings form
+  var uname = document.getElementById('set-username');
+  if (uname) uname.value = _ahUser.username ? '@' + _ahUser.username : '';
+  var uemail = document.getElementById('set-email');
+  if (uemail) uemail.value = _ahUser.email || '';
+  var udc = document.getElementById('set-discord');
+  if (udc) udc.value = _ahUser.discord || 'Nincs kapcsolva';
+}
+
+// ---- render dashboard stats ----
+function renderStats() {
+  var svcs = getServices();
+  var tickets = getTickets();
+  var balance = getBalance();
+  var activeCount = svcs.filter(function(s){return s.status==='running';}).length;
+  var gameCount = svcs.filter(function(s){return s.type==='game';}).length;
+  var openTickets = tickets.filter(function(t){return t.status!=='closed';}).length;
+  var monthly = svcs.reduce(function(a,s){return a+(s.price||0);},0);
+
+  var el = document.getElementById('stat-active'); if(el) el.textContent = activeCount;
+  var el2 = document.getElementById('stat-game'); if(el2) el2.textContent = gameCount;
+  var el3 = document.getElementById('stat-billing');
+  if(el3) {
+    if(monthly===0) { el3.innerHTML = '0 <span style="font-size:1rem;font-weight:500;color:rgba(156,163,175,0.6)">Ft</span>'; }
+    else { el3.innerHTML = monthly.toLocaleString('hu-HU') + ' <span style="font-size:1rem;font-weight:500;color:rgba(156,163,175,0.6)">Ft</span>'; }
+  }
+  var el4 = document.getElementById('stat-tickets'); if(el4) el4.textContent = openTickets;
+  var el5 = document.getElementById('stat-billing-sub');
+  if(el5) el5.textContent = monthly===0 ? 'Nincs aktív előfizetés' : 'Havi összköltség';
+
+  // balance in billing page
+  var balEl = document.getElementById('billing-balance');
+  if(balEl) balEl.innerHTML = balance.toLocaleString('hu-HU') + ' <span style="font-size:1.2rem;font-weight:500;color:rgba(156,163,175,0.6)">Ft</span>';
+
+  // nav badge
+  var nb = document.getElementById('nav-badge-services');
+  if(nb) { nb.textContent = svcs.length; nb.style.display = svcs.length ? '' : 'none'; }
+  var nb2 = document.getElementById('nav-badge-tickets');
+  if(nb2) { nb2.textContent = openTickets || ''; nb2.style.display = openTickets ? '' : 'none'; }
+
+  // Erőforrás kártya — valós adatok a megrendelt szerverekből
+  var totalRam = svcs.reduce(function(a,s){ return a + (parseFloat(s.ram)||0); }, 0);
+  var maxRam   = 64; // max skála GB
+  var ramPct   = Math.min(Math.round(totalRam / maxRam * 100), 100);
+  var maxSvcs  = 10;
+  var svcsPct  = Math.min(Math.round(svcs.length / maxSvcs * 100), 100);
+  var maxCost  = 20000;
+  var costPct  = Math.min(Math.round(monthly / maxCost * 100), 100);
+
+  var r = document.getElementById('res-ram'); if(r) r.textContent = totalRam + ' GB';
+  var rb = document.getElementById('res-ram-bar'); if(rb) rb.style.width = ramPct + '%';
+  var rs = document.getElementById('res-servers'); if(rs) rs.textContent = svcs.length + ' db';
+  var rsb = document.getElementById('res-servers-bar'); if(rsb) rsb.style.width = svcsPct + '%';
+  var rc = document.getElementById('res-cost'); if(rc) rc.textContent = monthly.toLocaleString('hu-HU') + ' Ft';
+  var rcb = document.getElementById('res-cost-bar'); if(rcb) rcb.style.width = costPct + '%';
+}
+
+// ---- render services list ----
+var SERVICE_ICONS = {
+  game: function(s) {
+    var imgs = {minecraft:'games/minecraft-bg.jpg',rust:'games/rust-bg.jpg',cs2:'games/cs2-bg.jpg',palworld:'games/palworld-bg.jpg',valheim:'games/valheim-bg.jpg',ark:'games/ark-bg.jpg',satisfactory:'games/satisfactory-bg.jpg','project-zomboid':'games/zomboid-bg.jpg'};
+    var src = imgs[s.game] || 'Backgrounds/game-bg.png';
+    return '<img src="'+src+'" alt="'+s.game+'" style="width:100%;height:100%;object-fit:cover;border-radius:12px">';
+  },
+  discord: function() { return '<svg width="22" height="22" viewBox="0 0 24 24" fill="#5865F2"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>'; },
+  web: function() { return '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>'; }
+};
+var SERVICE_TYPE_LABELS = {game:'Game Szerver',discord:'Discord Bot',web:'Webtárhely'};
+var GAME_LABELS = {minecraft:'Minecraft',rust:'Rust',cs2:'CS2',palworld:'Palworld',valheim:'Valheim',ark:'ARK',satisfactory:'Satisfactory','project-zomboid':'Project Zomboid'};
+
+function statusBadge(s) {
+  if(s==='running') return '<span class="badge badge-green"><span style="width:5px;height:5px;border-radius:50%;background:#4ade80" class="animate-pulse"></span>Fut</span>';
+  if(s==='stopped') return '<span class="badge badge-red">Leállítva</span>';
+  return '<span class="badge badge-yellow">Ismeretlen</span>';
+}
+
+function renderServicesList(containerId, showControls) {
+  var svcs = getServices();
+  var el = document.getElementById(containerId);
+  if (!el) return;
+  if (svcs.length === 0) {
+    el.innerHTML = '<div style="padding:40px;text-align:center;color:rgba(107,114,128,0.6);font-size:0.88rem">Még nincs szolgáltatásod. Rendelj egyet!</div>';
+    return;
+  }
+  el.innerHTML = svcs.map(function(s, i) {
+    var iconHtml = SERVICE_ICONS[s.type] ? SERVICE_ICONS[s.type](s) : '';
+    var iconBg = s.type==='discord' ? 'background:rgba(88,101,242,0.12);border:1px solid rgba(88,101,242,0.2)' : (s.type==='web' ? 'background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.2)' : 'background:rgba(255,255,255,0.05)');
+    var sublabel = s.type==='game' ? ((GAME_LABELS[s.game]||s.game)+' · '+(s.ram||'4')+'GB RAM') : (s.type==='discord' ? 'Discord Bot · '+(s.ram||'512')+'MB RAM' : 'Webtárhely · '+(s.domain||''));
+    var ctrlBtn = showControls ? '<button class="btn btn-ghost" style="padding:6px 10px;margin-left:8px" onclick="openServerControl('+i+')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button>' : '';
+    return '<div class="service-row"><div style="width:40px;height:40px;border-radius:12px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;'+iconBg+'">'+iconHtml+'</div><div style="flex:1;min-width:0"><div style="font-size:0.88rem;font-weight:600;color:#fff;margin-bottom:2px">'+s.name+'</div><div style="font-size:0.75rem;color:rgba(107,114,128,0.8)">'+sublabel+'</div></div><div style="text-align:right">'+statusBadge(s.status)+'<div style="font-size:0.72rem;color:rgba(107,114,128,0.7);margin-top:3px">'+(s.price||0).toLocaleString('hu-HU')+' Ft/hó</div></div>'+ctrlBtn+'</div>';
+  }).join('');
+}
+
+function renderServicesPage() {
+  var svcs = getServices();
+  var el = document.getElementById('services-list');
+  if (!el) return;
+  if (svcs.length === 0) {
+    el.innerHTML = '<div class="card" style="padding:48px;text-align:center;color:rgba(107,114,128,0.6)">Még nincs szolgáltatásod. Kattints az "Új Szolgáltatás" gombra!</div>';
+    return;
+  }
+  el.innerHTML = svcs.map(function(s, i) {
+    var iconHtml = SERVICE_ICONS[s.type] ? SERVICE_ICONS[s.type](s) : '';
+    var iconBg = s.type==='discord' ? 'background:rgba(88,101,242,0.12);border:1px solid rgba(88,101,242,0.2)' : (s.type==='web' ? 'background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.2)' : '');
+    var sublabel = s.type==='game' ? ((GAME_LABELS[s.game]||s.game)+' · '+(s.ram||'4')+'GB RAM · 2 vCPU') : (s.type==='discord' ? 'Discord Bot · '+(s.ram||'512')+'MB RAM' : 'Webtárhely');
+    return '<div class="card card-hover" style="padding:20px;display:flex;align-items:center;gap:16px" data-type="'+s.type+'">'
+      +'<div style="width:52px;height:52px;border-radius:14px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;'+iconBg+'">'+iconHtml+'</div>'
+      +'<div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-size:1rem;font-weight:700;color:#fff">'+s.name+'</span>'+statusBadge(s.status)+'</div>'
+      +'<div style="font-size:0.8rem;color:rgba(107,114,128,0.8);margin-bottom:10px">'+sublabel+'</div>'
+      +'<div style="display:flex;gap:16px"><div><div style="font-size:0.68rem;color:rgba(107,114,128,0.7);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px">Típus</div><div style="font-size:0.82rem;font-weight:600;color:#fff">'+(SERVICE_TYPE_LABELS[s.type]||s.type)+'</div></div>'
+      +'<div><div style="font-size:0.68rem;color:rgba(107,114,128,0.7);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px">Csomag</div><div style="font-size:0.82rem;font-weight:600;color:#fff">'+(s.price||0).toLocaleString('hu-HU')+' Ft/hó</div></div></div></div>'
+      +'<div style="display:flex;gap:8px;flex-shrink:0"><button class="btn btn-ghost" onclick="openServerControl('+i+')">Kezelés</button>'
+      +'<button class="btn btn-danger" onclick="cancelService('+i+')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M10 11v6M14 11v6M9 6V4h6v2"/></svg>Lemondás</button></div></div>';
+  }).join('');
+}
+
+function renderTicketsPage() {
+  var tickets = getTickets();
+  var el = document.getElementById('tickets-list');
+  if (!el) return;
+  if (tickets.length === 0) {
+    el.innerHTML = '<div style="padding:40px;text-align:center;color:rgba(107,114,128,0.6);font-size:0.88rem">Még nincs ticketed. Nyiss egyet a jobb felső gombbal!</div>';
+    return;
+  }
+  el.innerHTML = tickets.map(function(t, i) {
+    var badge = t.status === 'closed'
+      ? '<span class="badge badge-green">Lezárva</span>'
+      : '<span class="badge badge-yellow">Folyamatban</span>';
+    var date = t.date || (t.createdAt ? t.createdAt.slice(0,10) : '');
+    return '<div class="service-row" style="padding:16px 20px;cursor:pointer" onclick="openTicketById('+t.id+')" onmouseover="this.style.background=\'rgba(255,255,255,0.03)\'" onmouseout="this.style.background=\'\'">'
+      +'<div style="flex:1;min-width:0">'
+      +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap">'
+      +'<span style="font-size:0.88rem;font-weight:600;color:#fff">#'+t.id+' — '+t.subject+'</span>'+badge
+      +'</div>'
+      +'<div style="font-size:0.75rem;color:rgba(107,114,128,0.7)">'+(t.category||'Általános')+' · '+date+'</div>'
+      +'</div>'
+      +'<button class="btn btn-ghost" style="flex-shrink:0" onclick="event.stopPropagation();openTicket('+i+')">'
+      +'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>'
+      +' Megtekintés</button>'
+      +'</div>';
+  }).join('');
+}
+
+var _currentTicketId = null;
+
+async function openTicket(i) {
+  var tickets = getTickets();
+  var t = tickets[i];
+  if (!t) return;
+  await openTicketById(t.id);
+}
+
+async function openTicketById(ticketId) {
+  _currentTicketId = ticketId;
+
+  // Mindig szerverről töltjük
+  try {
+    var r = await ahFetch('/api/tickets/' + ticketId);
+    if (r.ok) {
+      var fresh = await r.json();
+      var tickets = getTickets();
+      var idx = tickets.findIndex(function(t){ return String(t.id) === String(ticketId); });
+      if (idx >= 0) { tickets[idx] = Object.assign(tickets[idx], fresh); saveTickets(tickets); }
+      renderTicketModal(fresh);
+      openModal('ticketViewModal');
+      return;
+    }
+    // 404 → csak localStorage-ban van (régi ticket)
+    if (r.status === 404) {
+      var tickets2 = getTickets();
+      var local = tickets2.find(function(t){ return String(t.id) === String(ticketId); });
+      if (local) {
+        renderTicketModal(local);
+        openModal('ticketViewModal');
+        return;
+      }
+    }
+    var err = await r.json().catch(function(){ return {}; });
+    showToast(err.error || 'Betöltési hiba (' + r.status + ')', 'warn');
+  } catch(e) {
+    // Szerver nem elérhető → localStorage fallback
+    var tickets3 = getTickets();
+    var local2 = tickets3.find(function(t){ return String(t.id) === String(ticketId); });
+    if (local2) {
+      renderTicketModal(local2);
+      openModal('ticketViewModal');
+    } else {
+      showToast('Hálózati hiba: ' + (e.message || ''), 'warn');
+    }
+  }
+}
+
+function renderTicketModal(t) {
+  document.getElementById('tv-id').textContent = '#' + t.id + ' — ' + t.subject;
+  document.getElementById('tv-meta').textContent = (t.category||'Általános') + ' · ' + (t.date || (t.createdAt ? t.createdAt.slice(0,10) : ''));
+
+  // Üzenetek lista (eredeti message + messages tömb)
+  var msgContainer = document.getElementById('tv-message');
+  var html = '';
+  // Eredeti üzenet
+  if (t.message) {
+    html += '<div style="padding:10px 12px;background:rgba(255,255,255,0.03);border-radius:10px;margin-bottom:8px">'
+      + '<div style="font-size:0.7rem;color:rgba(107,114,128,0.7);margin-bottom:4px">Rendszer / Nyitó üzenet</div>'
+      + '<div style="font-size:0.85rem;color:rgba(209,213,219,0.9);white-space:pre-wrap;line-height:1.6">' + escHtml(t.message) + '</div>'
+      + '</div>';
+  }
+  // Válasz üzenetek
+  if (t.messages && t.messages.length) {
+    t.messages.forEach(function(m) {
+      var isAdm = m.isAdmin;
+      html += '<div style="padding:10px 12px;border-radius:10px;margin-bottom:8px;'
+        + (isAdm ? 'background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.15)' : 'background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07)')
+        + '">'
+        + '<div style="display:flex;align-items:center;gap:6px;margin-bottom:5px">'
+        + '<span style="font-size:0.75rem;font-weight:700;color:' + (isAdm ? '#c084fc' : '#fff') + '">' + escHtml(m.author) + '</span>'
+        + (isAdm ? '<span class="badge badge-purple" style="font-size:0.6rem;padding:1px 6px">ADMIN</span>' : '')
+        + '<span style="font-size:0.7rem;color:rgba(107,114,128,0.6);margin-left:auto">' + (m.createdAt ? m.createdAt.slice(0,16).replace('T',' ') : '') + '</span>'
+        + '</div>'
+        + '<div style="font-size:0.85rem;color:rgba(209,213,219,0.9);white-space:pre-wrap;line-height:1.6">' + escHtml(m.message) + '</div>'
+        + '</div>';
+    });
+  }
+  if (!html) html = '<div style="color:rgba(107,114,128,0.6);font-size:0.85rem">(Nincs üzenet)</div>';
+  msgContainer.innerHTML = html;
+  // Scroll to bottom
+  var parent = msgContainer.parentElement;
+  if (parent) setTimeout(function(){ parent.scrollTop = parent.scrollHeight; }, 50);
+
+  var badge = document.getElementById('tv-badge');
+  badge.className = 'badge ' + (t.status === 'closed' ? 'badge-green' : 'badge-yellow');
+  badge.textContent = t.status === 'closed' ? 'Lezárva' : 'Folyamatban';
+
+  var resWrap = document.getElementById('tv-resolution-wrap');
+  if (t.resolution) {
+    document.getElementById('tv-resolution').textContent = t.resolution;
+    resWrap.style.display = 'block';
+  } else {
+    resWrap.style.display = 'none';
+  }
+
+  var isClosed = t.status === 'closed';
+
+  // Lezárás gomb
+  var closeBtn = document.getElementById('tv-close-btn');
+  if (closeBtn) closeBtn.style.display = isClosed ? 'none' : 'flex';
+
+  // Ha lezárt: reply box elrejtése
+  var replyWrap = document.querySelector('#ticketViewModal .reply-wrap');
+  if (replyWrap) replyWrap.style.display = isClosed ? 'none' : 'block';
+  var sendBtn = document.getElementById('tv-send-btn');
+  if (sendBtn) sendBtn.style.display = isClosed ? 'none' : 'flex';
+
+  if (isClosed) {
+    var inp = document.getElementById('tv-reply-input');
+    if (inp) inp.closest('div').style.display = 'none';
+  } else {
+    var inp2 = document.getElementById('tv-reply-input');
+    if (inp2) inp2.closest('div').style.display = 'block';
+  }
+}
+
+function escHtml(str) {
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+async function sendTicketMessage() {
+  var input = document.getElementById('tv-reply-input');
+  var msg = input ? input.value.trim() : '';
+  if (!msg || !_currentTicketId) return;
+  var btn = document.getElementById('tv-send-btn');
+  if (btn) btn.disabled = true;
+
+  try {
+    var r = await ahFetch('/api/tickets/' + _currentTicketId + '/message', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: msg })
+    });
+    var d = await r.json();
+    if (d.success) {
+      if (input) input.value = '';
+      // Frissítjük a localStorage-t is
+      var tickets = getTickets();
+      var idx = tickets.findIndex(function(t){ return String(t.id) === String(_currentTicketId); });
+      if (idx >= 0) { tickets[idx] = d.ticket; saveTickets(tickets); renderTicketsPage(); }
+      renderTicketModal(d.ticket);
+    } else {
+      showToast(d.error || 'Hiba az üzenet küldésekor.', 'warn');
+    }
+  } catch(e) {
+    showToast('Hiba: ' + (e.message || 'ismeretlen'), 'warn');
+    console.error('sendTicketMessage hiba:', e);
+  }
+  if (btn) btn.disabled = false;
+}
+
+async function closeTicket() {
+  if (!_currentTicketId) return;
+  try {
+    await ahFetch('/api/admin/tickets/' + _currentTicketId + '/close', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ resolution: 'Lezárva.' })
+    });
+  } catch(e) {}
+  // localStorage frissítés
+  var tickets = getTickets();
+  var idx = tickets.findIndex(function(t){ return String(t.id) === String(_currentTicketId); });
+  if (idx >= 0) { tickets[idx].status = 'closed'; saveTickets(tickets); }
+  closeModal('ticketViewModal');
+  renderAll();
+  showToast('Ticket lezárva.', 'success');
+}
+function cancelService(i) {
+  var svcs = getServices();
+  if (!confirm('Biztosan lemondod: ' + svcs[i].name + '?')) return;
+  svcs.splice(i, 1);
+  saveServices(svcs);
+  renderAll();
+  showToast('Szolgáltatás lemondva.', 'warn');
+}
+
+function renderAll() {
+  renderUser();
+  renderStats();
+  renderServicesList('dashboard-services-list', true);
+  renderServicesPage();
+  renderTicketsPage();
+}
+
+var pages = ['dashboard','services','billing','tickets','settings','game-servers','discord-bots','web-hosting'];
+var navLabels = {
+  'dashboard':'Vezérlőpult','services':'Szolgáltatásaim','billing':'Számlázás',
+  'tickets':'Támogatás','settings':'Beállítások','game-servers':'Game Szerverek',
+  'discord-bots':'Discord Bot Hosting','web-hosting':'Webtárhely'
+};
+
+function showPage(id) {
+  pages.forEach(function(p) {
+    var el = document.getElementById('page-' + p);
+    if (el) el.style.display = p === id ? 'block' : 'none';
+  });
+  document.querySelectorAll('.nav-item').forEach(function(b) {
+    b.classList.remove('active');
+    if (b.getAttribute('onclick') && b.getAttribute('onclick').indexOf("'"+id+"'") !== -1) b.classList.add('active');
+  });
+  document.getElementById('pageTitle').textContent = navLabels[id] || 'Vezérlőpult';
+  if (window.innerWidth < 768) {
+    document.getElementById('sidebar').classList.remove('open');
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+  // Billing oldal megnyitásakor frissítjük az adatokat
+  if (id === 'billing') renderInvoices();
+  // Services oldal megnyitásakor szinkronizálunk
+  if (id === 'services' || id === 'game-servers' || id === 'discord-bots' || id === 'web-hosting') syncFromServer();
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.querySelectorAll('.modal-backdrop').forEach(function(el) {
+  el.addEventListener('click', function(e) {
+    if (e.target === el) closeModal(el.id);
+  });
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-backdrop.open').forEach(function(el) {
+      closeModal(el.id);
+    });
+  }
+});
+
+function showToast(msg, type) {
+  // Értesítés panelbe is bekerül
+  if (typeof addNotif === 'function') addNotif(msg, type);
+  var t = document.getElementById('toast');
+  var icon = document.getElementById('toastIcon');
+  document.getElementById('toastMsg').textContent = msg;
+  if (type === 'success') {
+    icon.style.background = 'rgba(34,197,94,0.15)';
+    icon.querySelector('svg').setAttribute('stroke','#4ade80');
+  } else if (type === 'warn') {
+    icon.style.background = 'rgba(234,179,8,0.15)';
+    icon.querySelector('svg').setAttribute('stroke','#facc15');
+  } else {
+    icon.style.background = 'rgba(168,85,247,0.15)';
+    icon.querySelector('svg').setAttribute('stroke','#a855f7');
+  }
+  t.style.opacity = '1';
+  t.style.transform = 'translateY(0)';
+  setTimeout(function() {
+    t.style.opacity = '0';
+    t.style.transform = 'translateY(10px)';
+  }, 3000);
+}
+
+var _controlSvcId = null;
+
+function openServerControl(idx) {
+  var svcs = getServices();
+  var s = typeof idx === 'number' ? svcs[idx] : null;
+  if (!s) return;
+  _controlSvcId = s.id;
+  document.getElementById('serverControlTitle').textContent = s.name + ' — Kezelés';
+  // Státusz frissítése
+  var statusEl = document.getElementById('svc-control-status');
+  if (statusEl) {
+    statusEl.textContent = '...';
+    ahFetch('/api/services/' + s.id + '/status').then(function(r) {
+      if (!r) return;
+      r.json().then(function(d) {
+        var st = d.pteroStatus || d.status || 'unknown';
+        var stateMap = { running:'Fut ✅', stopping:'Leállítás...', starting:'Indítás...', offline:'Offline ⚫', unknown:'Ismeretlen' };
+        statusEl.textContent = stateMap[st] || st;
+        // RAM/CPU ha van
+        if (d.resources) {
+          var ramEl = document.getElementById('svc-control-ram');
+          var cpuEl = document.getElementById('svc-control-cpu');
+          if (ramEl) ramEl.textContent = Math.round((d.resources.memory_bytes||0)/1024/1024) + ' MB';
+          if (cpuEl) cpuEl.textContent = ((d.resources.cpu_absolute||0).toFixed(1)) + '%';
+        }
+      });
+    }).catch(function(){});
+  }
+  openModal('serverControlModal');
+}
+
+async function serverAction(action) {
+  if (!_controlSvcId) { showToast('Nincs kijelölt szerver.', 'warn'); return; }
+  var labels = { start:'Szerver elindítva!', restart:'Szerver újraindítva!', stop:'Szerver leállítva!', kill:'Szerver kényszerítve leállítva!' };
+  var types  = { start:'success', restart:'warn', stop:'warn', kill:'warn' };
+  try {
+    var r = await ahFetch('/api/services/' + _controlSvcId + '/power', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: action })
+    });
+    if (!r) return;
+    var d = await r.json();
+    if (!r.ok) { showToast(d.error || 'Hiba történt.', 'warn'); return; }
+    showToast(labels[action] || 'Kész!', types[action] || 'success');
+    closeModal('serverControlModal');
+    setTimeout(syncFromServer, 2000);
+  } catch(e) { showToast('Hálózati hiba.', 'warn'); }
+}
+
+function restartServer(name) {
+  showToast(name + ' újraindítás folyamatban...', 'warn');
+}
+
+function sendConsoleCmd() {
+  var input = document.getElementById('consoleInput');
+  var val = input.value.trim();
+  if (!val) return;
+  var console = document.querySelector('#serverControlModal .modal div[style*="height:180px"]');
+  var line = document.createElement('div');
+  line.style.color = '#c084fc';
+  line.textContent = '> ' + val;
+  console.appendChild(line);
+  console.scrollTop = console.scrollHeight;
+  input.value = '';
+}
+
+function filterServices(btn, type) {
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+  btn.classList.add('active');
+  var svcs = getServices();
+  var el = document.getElementById('services-list');
+  if (!el) return;
+  var filtered = type === 'all' ? svcs : svcs.filter(function(s){ return s.type === type; });
+  var tabAll = document.getElementById('tab-all');
+  if (tabAll) tabAll.textContent = 'Összes (' + svcs.length + ')';
+  // re-render with filtered indices mapped back to original
+  if (filtered.length === 0) {
+    el.innerHTML = '<div class="card" style="padding:32px;text-align:center;color:rgba(107,114,128,0.6)">Ebben a kategóriában nincs szolgáltatás.</div>';
+    return;
+  }
+  el.innerHTML = filtered.map(function(s) {
+    var i = svcs.indexOf(s);
+    var iconHtml = SERVICE_ICONS[s.type] ? SERVICE_ICONS[s.type](s) : '';
+    var iconBg = s.type==='discord' ? 'background:rgba(88,101,242,0.12);border:1px solid rgba(88,101,242,0.2)' : (s.type==='web' ? 'background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.2)' : '');
+    var sublabel = s.type==='game' ? ((GAME_LABELS[s.game]||s.game||'Game')+' · '+(s.ram||'4')+'GB RAM') : (s.type==='discord' ? 'Discord Bot · '+(s.ram||'512')+'MB RAM' : 'Webtárhely');
+    return '<div class="card card-hover" style="padding:20px;display:flex;align-items:center;gap:16px" data-type="'+s.type+'">'
+      +'<div style="width:52px;height:52px;border-radius:14px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;'+iconBg+'">'+iconHtml+'</div>'
+      +'<div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-size:1rem;font-weight:700;color:#fff">'+s.name+'</span>'+statusBadge(s.status)+'</div>'
+      +'<div style="font-size:0.8rem;color:rgba(107,114,128,0.8)">'+sublabel+' · '+(s.price||0).toLocaleString('hu-HU')+' Ft/hó</div></div>'
+      +'<div style="display:flex;gap:8px;flex-shrink:0"><button class="btn btn-ghost" onclick="openServerControl('+i+')">Kezelés</button>'
+      +'<button class="btn btn-danger" onclick="cancelService('+i+')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M10 11v6M14 11v6M9 6V4h6v2"/></svg>Lemondás</button></div></div>';
+  }).join('');
+}
+
+function updateServiceForm(val) {
+  var fields = document.getElementById('serviceFormFields');
+  var gameSelect = document.getElementById('gameTypeSelect');
+  var gameLabel = document.getElementById('gameTypeLabel');
+  fields.style.display = val ? 'block' : 'none';
+  if (val === 'game') {
+    gameLabel.textContent = 'Játék';
+    gameSelect.style.display = 'block';
+    gameSelect.parentElement.style.display = 'block';
+  } else if (val === 'discord') {
+    gameLabel.textContent = 'Runtime';
+    gameSelect.innerHTML = '<option>Node.js v20</option><option>Python 3.12</option>';
+    gameSelect.parentElement.style.display = 'block';
+  } else if (val === 'web') {
+    gameSelect.parentElement.style.display = 'none';
+  }
+}
+
+function setAmount(val, btn) {
+  document.getElementById('customAmount').value = val;
+  document.querySelectorAll('#addFundsModal .btn-ghost').forEach(function(b) {
+    b.style.borderColor = '';
+    b.style.color = '';
+  });
+  btn.style.borderColor = 'rgba(168,85,247,0.5)';
+  btn.style.color = '#c084fc';
+}
+
+// ---- buy service ----
+function buyService() {
+  var typeEl = document.querySelector('#newServiceModal select');
+  var nameEl = document.querySelector('#newServiceModal input[type="text"]');
+  var planEl = document.querySelector('#newServiceModal input[name="plan"]:checked');
+  var gameEl = document.getElementById('gameTypeSelect');
+  var type = typeEl ? typeEl.value : '';
+  var name = nameEl ? nameEl.value.trim() : '';
+  if (!type) { showToast('Válassz szolgáltatás típust!','warn'); return; }
+  if (!name) { showToast('Add meg a szerver nevét!','warn'); return; }
+  var planPrices = {starter:2490, pro:3990, elite:6990};
+  var plan = planEl ? planEl.value : 'starter';
+  var price = planPrices[plan] || 2490;
+  var ramMap = {starter:'4', pro:'8', elite:'16'};
+  var svc = {
+    name: name,
+    type: type,
+    status: 'running',
+    price: price,
+    plan: plan,
+    ram: type==='discord' ? '512' : ramMap[plan],
+    game: (type==='game' && gameEl) ? gameEl.value : undefined,
+    created: new Date().toLocaleDateString('hu-HU')
+  };
+  var svcs = getServices();
+  svcs.push(svc);
+  saveServices(svcs);
+  closeModal('newServiceModal');
+  // reset form
+  if (typeEl) typeEl.value = '';
+  if (nameEl) nameEl.value = '';
+  document.getElementById('serviceFormFields').style.display = 'none';
+  renderAll();
+  showToast(name + ' sikeresen megrendelve!', 'success');
+}
+
+// ---- add funds ----
+function addFunds() {
+  var amountEl = document.getElementById('customAmount');
+  var amount = parseFloat(amountEl ? amountEl.value : 0) || 0;
+  if (amount < 500) { showToast('Minimum 500 Ft tölthető fel!','warn'); return; }
+  var bal = getBalance() + amount;
+  saveBalance(bal);
+  closeModal('addFundsModal');
+  if (amountEl) amountEl.value = '';
+  renderAll();
+  showToast(amount.toLocaleString('hu-HU') + ' Ft hozzáadva!', 'success');
+}
+
+// ---- submit ticket ----
+async function submitTicket() {
+  var catEl  = document.querySelector('#newTicketModal select');
+  var subjEl = document.querySelector('#newTicketModal input[type="text"]');
+  var msgEl  = document.querySelector('#newTicketModal textarea');
+  var subject = subjEl ? subjEl.value.trim() : '';
+  var message = msgEl  ? msgEl.value.trim()  : '';
+  if (!subject) { showToast('Add meg a ticket tárgyát!', 'warn'); return; }
+
+  try {
+    var r = await ahFetch('/api/tickets/new', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ subject: subject, category: catEl ? catEl.value : 'Általános', message: message })
+    });
+    var d = await r.json();
+    if (d.success) {
+      // localStorage-ba is beletesszük
+      var tickets = getTickets();
+      tickets.unshift({ id: d.ticket.id, subject: d.ticket.subject, category: d.ticket.category, status: 'open', date: new Date().toLocaleDateString('hu-HU') });
+      saveTickets(tickets);
+      closeModal('newTicketModal');
+      if (subjEl) subjEl.value = '';
+      if (msgEl)  msgEl.value  = '';
+      renderAll();
+      showToast('#' + d.ticket.id + ' ticket megnyitva!', 'success');
+      return;
+    }
+  } catch(e) {}
+
+  // Fallback: csak localStorage (ha szerver nem fut)
+  var tickets2 = getTickets();
+  var id = 1000 + tickets2.length + 1;
+  tickets2.unshift({ id: id, subject: subject, category: catEl ? catEl.value : 'Általános', status: 'open', date: new Date().toLocaleDateString('hu-HU'), message: message });
+  saveTickets(tickets2);
+  closeModal('newTicketModal');
+  if (subjEl) subjEl.value = '';
+  if (msgEl)  msgEl.value  = '';
+  renderAll();
+  showToast('#' + id + ' ticket megnyitva!', 'success');
+}
+
+// ---- save settings ----
+async function saveSettings() {
+  var uEl = document.getElementById('set-username');
+  if (!_ahUser) return;
+  var uname = uEl ? uEl.value.replace(/^@/,'').trim() : '';
+  try {
+    var r = await ahFetch('/api/me', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: uname || undefined })
+    });
+    if (!r) return;
+    var d = await r.json();
+    if (!r.ok) { showToast(d.error || 'Hiba történt.', 'warn'); return; }
+    _ahUser = Object.assign(_ahUser, d.user);
+    localStorage.setItem('ah_session', JSON.stringify(_ahUser));
+    renderUser();
+    showToast('Beállítások mentve!', 'success');
+  } catch(e) { showToast('Hálózati hiba.', 'warn'); }
+}
+
+// ════════ ÉRTESÍTÉSEK ════════
+function getNotifItems() { try { return JSON.parse(localStorage.getItem('ah_notif_items')) || []; } catch(e){ return []; } }
+function saveNotifItems(n) { localStorage.setItem('ah_notif_items', JSON.stringify(n)); }
+
+function addNotif(text, type) {
+  var items = getNotifItems();
+  items.unshift({ text: text, type: type || 'info', time: new Date().toLocaleTimeString('hu-HU', {hour:'2-digit',minute:'2-digit'}), read: false });
+  if (items.length > 20) items = items.slice(0, 20);
+  saveNotifItems(items);
+  renderNotifDot();
+}
+
+function renderNotifDot() {
+  var items = getNotifItems();
+  var unread = items.filter(function(n){ return !n.read; }).length;
+  var dot = document.getElementById('notif-dot');
+  if (dot) dot.style.display = unread > 0 ? 'block' : 'none';
+}
+
+function renderNotifPanel() {
+  var items = getNotifItems();
+  var el = document.getElementById('notif-list');
+  if (!el) return;
+  if (!items.length) {
+    el.innerHTML = '<div style="padding:24px;text-align:center;color:rgba(107,114,128,0.6);font-size:0.85rem">Nincs értesítés.</div>';
+    return;
+  }
+  var icons = { success:'#4ade80', warn:'#facc15', info:'#60a5fa' };
+  el.innerHTML = items.map(function(n) {
+    return '<div style="padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:flex-start;gap:10px;'+(n.read?'opacity:0.5':'')+'">'
+      +'<div style="width:8px;height:8px;border-radius:50%;background:'+(icons[n.type]||'#a855f7')+';margin-top:5px;flex-shrink:0"></div>'
+      +'<div style="flex:1"><div style="font-size:0.82rem;color:#fff;line-height:1.4">'+escHtml(n.text)+'</div>'
+      +'<div style="font-size:0.7rem;color:rgba(107,114,128,0.6);margin-top:2px">'+n.time+'</div></div></div>';
+  }).join('');
+}
+
+function toggleNotifPanel() {
+  var panel = document.getElementById('notif-panel');
+  if (!panel) return;
+  var isOpen = panel.style.display === 'block';
+  panel.style.display = isOpen ? 'none' : 'block';
+  if (!isOpen) {
+    // Olvasottnak jelöl
+    var items = getNotifItems();
+    items.forEach(function(n){ n.read = true; });
+    saveNotifItems(items);
+    renderNotifDot();
+    renderNotifPanel();
+  }
+}
+
+function clearNotifs() {
+  saveNotifItems([]);
+  renderNotifDot();
+  renderNotifPanel();
+}
+
+// Kattintás panelen kívül → bezárja
+document.addEventListener('click', function(e) {
+  var panel = document.getElementById('notif-panel');
+  var btn   = document.getElementById('notif-btn');
+  if (panel && panel.style.display === 'block' && !panel.contains(e.target) && e.target !== btn && !btn.contains(e.target)) {
+    panel.style.display = 'none';
+  }
+});
+
+function logout() {
+  var rt = localStorage.getItem('ah_refresh_token');
+  if (rt) {
+    fetch('/api/auth/logout', { method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+(localStorage.getItem('ah_token')||'')}, body:JSON.stringify({refreshToken:rt}) }).catch(function(){});
+  }
+  localStorage.removeItem('ah_token');
+  localStorage.removeItem('ah_refresh_token');
+  localStorage.removeItem('ah_session');
+  window.location.href = 'login.html';
+}
+
+// blinking cursor in console
+setInterval(function() {
+  var c = document.getElementById('consoleCursor');
+  if (c) c.style.opacity = c.style.opacity === '0' ? '1' : '0';
+}, 600);
+
+// ---- helper storage ----
+function getCards()    { try { return JSON.parse(localStorage.getItem('ah_cards'))   || []; } catch(e){ return []; } }
+function saveCards(c)  { localStorage.setItem('ah_cards', JSON.stringify(c)); }
+function getInvoices() { try { return JSON.parse(localStorage.getItem('ah_invoices'))|| []; } catch(e){ return []; } }
+function saveInvoices(i){ localStorage.setItem('ah_invoices', JSON.stringify(i)); }
+function getNotifs()   { try { return JSON.parse(localStorage.getItem('ah_notifs')) || {server:true,invoice:true,ticket:false,marketing:false}; } catch(e){ return {server:true,invoice:true,ticket:false,marketing:false}; } }
+function saveNotifs(n) { localStorage.setItem('ah_notifs', JSON.stringify(n)); }
+
+// ---- render cards ----
+function renderCards() {
+  var cards = getCards();
+  var el = document.getElementById('cards-list');
+  if (!el) return;
+  if (cards.length === 0) {
+    el.innerHTML = '<div style="font-size:0.82rem;color:rgba(107,114,128,0.6);padding:8px 0 12px">Nincs mentett kártya.</div>';
+    return;
+  }
+  el.innerHTML = cards.map(function(c, i) {
+    var bg = c.type === 'MASTERCARD' ? 'background:linear-gradient(135deg,#c62828,#e53935)' : 'background:linear-gradient(135deg,#1e3a8a,#3b82f6)';
+    return '<div class="card" style="padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px">'
+      +'<div style="width:42px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:800;color:#fff;letter-spacing:0.05em;'+bg+'">'+(c.type||'VISA')+'</div>'
+      +'<div style="flex:1"><div style="font-size:0.85rem;font-weight:600;color:#fff">•••• •••• •••• '+c.last4+'</div><div style="font-size:0.72rem;color:rgba(107,114,128,0.7)">Lejár: '+c.expiry+'</div></div>'
+      +(i===0 ? '<span class="badge badge-purple">Alapért.</span>' : '')
+      +'<button class="btn btn-danger" style="padding:5px 8px;font-size:0.72rem" onclick="deleteCard('+i+')">Törlés</button></div>';
+  }).join('');
+}
+
+// ---- delete card ----
+function deleteCard(i) {
+  var cards = getCards();
+  cards.splice(i, 1);
+  saveCards(cards);
+  renderCards();
+  showToast('Kártya törölve.', 'warn');
+}
+
+// ---- save card ----
+function saveCard() {
+  var numEl    = document.getElementById('card-number');
+  var expEl    = document.getElementById('card-expiry');
+  var cvcEl    = document.getElementById('card-cvc');
+  var num = (numEl ? numEl.value.replace(/\s/g,'') : '');
+  var exp = expEl ? expEl.value.trim() : '';
+  var cvc = cvcEl ? cvcEl.value.trim() : '';
+  if (num.length < 13 || num.length > 19 || !/^\d+$/.test(num)) {
+    showToast('Érvénytelen kártyaszám.', 'warn'); return;
+  }
+  if (!/^\d{2}\/\d{2}$/.test(exp)) {
+    showToast('Érvénytelen lejárati dátum. (MM/YY)', 'warn'); return;
+  }
+  if (cvc.length < 3) {
+    showToast('Érvénytelen CVC.', 'warn'); return;
+  }
+  var cards = getCards();
+  cards.push({ last4: num.slice(-4), expiry: exp, type: num.startsWith('5') ? 'MASTERCARD' : 'VISA' });
+  saveCards(cards);
+  closeModal('addCardModal');
+  if (numEl) numEl.value = '';
+  if (expEl) expEl.value = '';
+  if (cvcEl) cvcEl.value = '';
+  renderCards();
+  showToast('Kártya mentve!', 'success');
+}
+
+// ---- render invoices (billing API-ból) ----
+async function renderInvoices() {
+  var el = document.getElementById('invoices-list');
+  if (!el) return;
+  el.innerHTML = '<div style="padding:20px;text-align:center;color:rgba(107,114,128,0.5);font-size:0.82rem">Betöltés...</div>';
+  try {
+    var r = await ahFetch('/api/billing/summary');
+    if (!r || !r.ok) throw new Error('API hiba');
+    var data = await r.json();
+    var orders = data.recentOrders || [];
+    var active = data.activeServices || [];
+
+    // Frissítjük a havi összeget
+    saveBalance(data.monthlyTotal || 0);
+
+    // Aktív előfizetések összesítő
+    var subHtml = '';
+    if (active.length > 0) {
+      subHtml = '<div style="margin-bottom:16px">'
+        + '<div style="font-size:0.72rem;font-weight:700;color:rgba(107,114,128,0.5);text-transform:uppercase;letter-spacing:0.1em;padding:0 20px 8px">Aktív Előfizetések</div>'
+        + active.map(function(s) {
+          return '<div class="service-row" style="padding:12px 20px">'
+            + '<div style="flex:1"><div style="font-size:0.85rem;font-weight:600;color:#fff">' + s.name + '</div>'
+            + '<div style="font-size:0.72rem;color:rgba(107,114,128,0.7)">' + (s.type==='discord'?'Discord Bot':s.type==='web'?'Webtárhely':'Game Szerver') + ' · ' + (s.plan||'starter') + '</div></div>'
+            + '<div style="font-size:0.9rem;font-weight:700;color:#fff">' + (s.price||0).toLocaleString('hu-HU') + ' Ft/hó</div>'
+            + '</div>';
+        }).join('')
+        + '<div style="padding:8px 20px 4px;font-size:0.8rem;color:rgba(148,163,184,0.7);display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.05);margin-top:4px">'
+        + '<span>Összesen / hó</span><span style="font-weight:700;color:#fff">' + (data.monthlyTotal||0).toLocaleString('hu-HU') + ' Ft</span></div>'
+        + '</div>';
+    }
+
+    // Tranzakciók
+    var ordHtml = '';
+    if (orders.length > 0) {
+      ordHtml = '<div style="margin-bottom:4px">'
+        + '<div style="font-size:0.72rem;font-weight:700;color:rgba(107,114,128,0.5);text-transform:uppercase;letter-spacing:0.1em;padding:0 20px 8px">Tranzakciók</div>'
+        + orders.map(function(o) {
+          var dt = o.activatedAt ? o.activatedAt.slice(0,10) : '';
+          return '<div class="service-row" style="padding:12px 20px">'
+            + '<div style="flex:1"><div style="font-size:0.85rem;font-weight:600;color:#fff">PayPal fizetés</div>'
+            + '<div style="font-size:0.72rem;color:rgba(107,114,128,0.7)">' + dt + (o.refCode?' · '+o.refCode:'') + '</div></div>'
+            + '<div style="font-size:0.9rem;font-weight:700;color:#fff;margin-right:12px">' + (o.amount||0).toLocaleString('hu-HU') + ' Ft</div>'
+            + '<span class="badge badge-green">Fizetve</span>'
+            + '</div>';
+        }).join('') + '</div>';
+    }
+
+    if (!subHtml && !ordHtml) {
+      el.innerHTML = '<div style="padding:32px;text-align:center;color:rgba(107,114,128,0.6);font-size:0.85rem">Még nincs tranzakció vagy aktív előfizetés.</div>';
+    } else {
+      el.innerHTML = subHtml + ordHtml;
+    }
+
+    renderStats(); // refresh monthly összeg a dashboardon
+  } catch(e) {
+    el.innerHTML = '<div style="padding:32px;text-align:center;color:rgba(107,114,128,0.6);font-size:0.85rem">Nem sikerült betölteni a számlázási adatokat.</div>';
+  }
+}
+
+// ---- render toggles ----
+function renderToggles() {
+  var n = getNotifs();
+  ['server','invoice','ticket','marketing'].forEach(function(k) {
+    var btn = document.getElementById('tog-'+k);
+    if (!btn) return;
+    if (n[k]) { btn.classList.add('tog-on'); }
+    else { btn.classList.remove('tog-on'); }
+  });
+}
+
+// ---- toggle notif ----
+function toggleNotif(key) {
+  var n = getNotifs();
+  n[key] = !n[key];
+  saveNotifs(n);
+  var btn = document.getElementById('tog-'+key);
+  if (btn) btn.classList.toggle('tog-on', n[key]);
+  showToast((n[key] ? 'Értesítés bekapcsolva.' : 'Értesítés kikapcsolva.'), 'success');
+}
+
+// ---- password change ----
+async function changePassword() {
+  var curEl = document.getElementById('pw-current');
+  var newEl = document.getElementById('pw-new');
+  var conEl = document.getElementById('pw-confirm');
+  var cur = curEl ? curEl.value : '';
+  var nw  = newEl ? newEl.value : '';
+  var con = conEl ? conEl.value : '';
+  if (!cur || !nw || !con) { showToast('Tölts ki minden mezőt!', 'warn'); return; }
+  if (nw.length < 8) { showToast('Az új jelszó legalább 8 karakter kell!', 'warn'); return; }
+  if (nw !== con) { showToast('A két jelszó nem egyezik!', 'warn'); return; }
+  try {
+    var r = await ahFetch('/api/me', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ currentPassword: cur, newPassword: nw })
+    });
+    if (!r) return;
+    var d = await r.json();
+    if (!r.ok) { showToast(d.error || 'Hiba.', 'warn'); return; }
+    if (curEl) curEl.value = '';
+    if (newEl) newEl.value = '';
+    if (conEl) conEl.value = '';
+    // Jelszóváltás után új tokenek kellenek
+    localStorage.removeItem('ah_refresh_token');
+    showToast('Jelszó megváltoztatva! Kérjük jelentkezz be újra.', 'success');
+    setTimeout(function(){ logout(); }, 2000);
+  } catch(e) { showToast('Hálózati hiba.', 'warn'); }
+}
+
+// ---- discord unlink ----
+function unlinkDiscord() {
+  if (!_ahUser) return;
+  _ahUser.discord = '';
+  localStorage.setItem('ah_session', JSON.stringify(_ahUser));
+  var dcEl = document.getElementById('set-discord');
+  if (dcEl) dcEl.value = 'Nincs kapcsolva';
+  showToast('Discord fiók lekapcsolva.', 'warn');
+}
+
+// ---- render game servers grid ----
+function renderGameServersGrid() {
+  var svcs = getServices().filter(function(s){ return s.type === 'game'; });
+  var grid = document.getElementById('game-servers-grid');
+  if (!grid) return;
+  var imgs = {minecraft:'games/minecraft-bg.jpg',rust:'games/rust-bg.jpg',cs2:'games/cs2-bg.jpg',palworld:'games/palworld-bg.jpg',valheim:'games/valheim-bg.jpg',ark:'games/ark-bg.jpg',satisfactory:'games/satisfactory-bg.jpg','project-zomboid':'games/zomboid-bg.jpg'};
+  var allSvcs = getServices();
+  var html = svcs.map(function(s) {
+    var i = allSvcs.indexOf(s);
+    var img = imgs[s.game] || 'Backgrounds/game-bg.png';
+    return '<div class="card card-hover" style="overflow:hidden">'
+      +'<div style="height:100px;overflow:hidden;position:relative">'
+      +'<img src="'+img+'" alt="'+s.name+'" style="width:100%;height:100%;object-fit:cover">'
+      +'<div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,0.8))"></div>'
+      +statusBadge(s.status).replace('class="badge', 'style="position:absolute;top:10px;right:10px" class="badge')
+      +'</div><div style="padding:16px">'
+      +'<div style="font-size:1rem;font-weight:700;color:#fff;margin-bottom:4px">'+s.name+'</div>'
+      +'<div style="font-size:0.78rem;color:rgba(107,114,128,0.8);margin-bottom:12px">'+(GAME_LABELS[s.game]||s.game||'')+(s.ram?' · '+s.ram+'GB RAM':'')+'</div>'
+      +'<div style="display:flex;gap:8px">'
+      +'<button class="btn btn-ghost" style="flex:1;justify-content:center" onclick="openServerControl('+i+')">Kezelés</button>'
+      +'<button class="btn btn-ghost" style="padding:8px 10px" title="Újraindítás" onclick="restartServer('+i+')">'
+      +'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>'
+      +'</button></div></div></div>';
+  }).join('');
+  html += '<div class="card card-hover" style="border:1px dashed rgba(255,255,255,0.12);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;cursor:pointer;min-height:200px" onclick="openModal(\'newServiceModal\')">'
+    +'<div style="width:48px;height:48px;border-radius:14px;background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:12px">'
+    +'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></div>'
+    +'<div style="font-size:0.88rem;font-weight:600;color:rgba(156,163,175,0.8)">Új Szerver Rendelése</div></div>';
+  grid.innerHTML = html;
+}
+
+// ---- render discord bots ----
+function renderDiscordBots() {
+  var svcs = getServices().filter(function(s){ return s.type === 'discord'; });
+  var el = document.getElementById('discord-bots-list');
+  if (!el) return;
+  var allSvcs = getServices();
+  if (svcs.length === 0) {
+    el.innerHTML = '<div class="card" style="padding:40px;text-align:center;border:1px dashed rgba(255,255,255,0.12)">'
+      +'<div style="color:rgba(107,114,128,0.7);font-size:0.88rem;margin-bottom:16px">Még nincs Discord bot előfizetésed.</div>'
+      +'<button class="btn btn-purple" onclick="openModal(\'newServiceModal\')">'
+      +'<div class="bp-bg"></div><span class="bp-label">Új Bot Rendelése</span></button></div>';
+    return;
+  }
+  var dcIcon = '<svg width="26" height="26" viewBox="0 0 24 24" fill="#5865F2"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>';
+  el.innerHTML = svcs.map(function(s) {
+    var i = allSvcs.indexOf(s);
+    return '<div class="card" style="padding:20px"><div style="display:flex;align-items:center;gap:16px">'
+      +'<div style="width:52px;height:52px;border-radius:14px;background:rgba(88,101,242,0.12);border:1px solid rgba(88,101,242,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">'+dcIcon+'</div>'
+      +'<div style="flex:1"><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">'
+      +'<span style="font-size:1rem;font-weight:700;color:#fff">'+s.name+'</span>'+statusBadge(s.status)+'</div>'
+      +'<div style="font-size:0.8rem;color:rgba(107,114,128,0.8)">'+(s.ram||'512')+'MB RAM · '+(s.game||'Node.js v20')+'</div></div>'
+      +'<div style="display:flex;gap:8px">'
+      +'<button class="btn btn-ghost" onclick="openServerControl('+i+')">Konzol</button>'
+      +'<button class="btn btn-ghost" onclick="restartServer('+i+')">'
+      +'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg> Újraindítás'
+      +'</button></div></div></div>';
+  }).join('');
+}
+
+// ---- generate invoice on service purchase ----
+function generateInvoice(svc) {
+  var invoices = getInvoices();
+  var svcs = getServices();
+  var id = 'INV-' + new Date().getFullYear() + '-' + String(invoices.length + 1).padStart(3,'0');
+  invoices.unshift({ id: id, date: svc.created, services: svcs.length, amount: svc.price || 0 });
+  saveInvoices(invoices);
+}
+
+// ---- override renderAll to include new renders ----
+var _origRenderAll = renderAll;
+renderAll = function() {
+  _origRenderAll();
+  renderCards();
+  renderInvoices();
+  renderToggles();
+  renderGameServersGrid();
+  renderDiscordBots();
+};
+
+// ---- buyService → checkout oldalra irányítás ----
+buyService = function() {
+  var typeEl = document.querySelector('#newServiceModal select');
+  var nameEl = document.querySelector('#newServiceModal input[type="text"]');
+  var planEl = document.querySelector('#newServiceModal input[name="plan"]:checked');
+  var gameEl = document.getElementById('gameTypeSelect');
+  if (!typeEl || !typeEl.value) { showToast('Válassz szolgáltatás típust!','warn'); return; }
+  if (!nameEl || !nameEl.value.trim()) { showToast('Add meg a szerver nevét!','warn'); return; }
+  var plan = planEl ? planEl.value : 'starter';
+  var type = typeEl.value;
+  var name = nameEl.value.trim();
+  var game = (type === 'game' && gameEl) ? gameEl.value : (type === 'discord' && gameEl ? gameEl.value : '');
+  // Checkout oldalra küldés URL paraméterekkel
+  window.location.href = 'checkout.html?plan='+encodeURIComponent(plan)+'&type='+encodeURIComponent(type)+'&name='+encodeURIComponent(name)+'&game='+encodeURIComponent(game);
+};
+
+// ---- override restartServer to accept index ----
+var _origRestartServer = restartServer;
+restartServer = function(idx) {
+  var svcs = getServices();
+  var name = typeof idx === 'number' ? (svcs[idx] ? svcs[idx].name : '') : idx;
+  showToast((name || 'Szerver') + ' újraindítás folyamatban...', 'warn');
+};
+
+// ════════════════════════════════════════════════════════
+// ADMIN
+// ════════════════════════════════════════════════════════
+
+var _isAdmin = false;
+
+async function checkAdminStatus() {
+  try {
+    var r = await ahFetch('/api/admin/check');
+    var d = await r.json();
+    _isAdmin = !!d.isAdmin;
+  } catch(e) { _isAdmin = false; }
+
+  var adminNav = document.getElementById('admin-nav-section');
+  if (adminNav) adminNav.style.display = _isAdmin ? 'block' : 'none';
+}
+
+function adminTab(btn, tabId) {
+  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+  btn.classList.add('active');
+  ['adm-tab-tickets','adm-tab-services','adm-tab-users'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) el.style.display = id === tabId ? 'block' : 'none';
+  });
+}
+
+async function loadAdminData() {
+  if (!_isAdmin) return;
+  // Stats
+  try {
+    var sr = await ahFetch('/api/admin/stats');
+    var s = await sr.json();
+    var setText = function(id, val) { var e = document.getElementById(id); if(e) e.textContent = val; };
+    setText('adm-users', s.users);
+    setText('adm-services', s.services);
+    setText('adm-active', s.activeServices);
+    setText('adm-pending', s.pendingServices);
+    setText('adm-open-tickets', s.openTickets);
+    setText('adm-revenue', (s.revenue||0).toLocaleString('hu-HU'));
+  } catch(e) {}
+
+  // Tickets
+  try {
+    var tr = await ahFetch('/api/admin/tickets');
+    var tickets = await tr.json();
+    var tel = document.getElementById('adm-tickets-list');
+    if (tel) {
+      if (!tickets.length) { tel.innerHTML = '<div style="padding:32px;text-align:center;color:rgba(107,114,128,0.6)">Nincs ticket.</div>'; }
+      else tel.innerHTML = tickets.map(function(t) {
+        var badge = t.status === 'closed'
+          ? '<span class="badge badge-green">Lezárva</span>'
+          : '<span class="badge badge-yellow">Nyitott</span>';
+        var msgCount = (t.messages && t.messages.length) ? '<span style="font-size:0.7rem;color:rgba(107,114,128,0.6);margin-left:4px">'+t.messages.length+' üzenet</span>' : '';
+        return '<div class="service-row" style="padding:14px 20px;cursor:pointer" onclick="adminOpenTicket(\''+t.id+'\')" onmouseover="this.style.background=\'rgba(255,255,255,0.03)\'" onmouseout="this.style.background=\'\'">'
+          +'<div style="flex:1;min-width:0">'
+          +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;flex-wrap:wrap">'
+          +'<span style="font-size:0.85rem;font-weight:600;color:#fff">#'+t.id+' — '+t.subject+'</span>'+badge+msgCount+'</div>'
+          +'<div style="font-size:0.73rem;color:rgba(107,114,128,0.7)">'+(t.userEmail||'')+(t.refCode?' · '+t.refCode:'')+'</div>'
+          +'</div>'
+          +'<button class="btn btn-ghost" style="font-size:0.75rem;padding:5px 10px;flex-shrink:0" onclick="event.stopPropagation();adminOpenTicket(\''+t.id+'\')">Megtekintés</button>'
+          +'</div>';
+      }).join('');
+    }
+  } catch(e) {}
+
+  // Services
+  try {
+    var svr = await ahFetch('/api/admin/services');
+    var services = await svr.json();
+    var sel = document.getElementById('adm-services-list');
+    if (sel) {
+      if (!services.length) { sel.innerHTML = '<div style="padding:32px;text-align:center;color:rgba(107,114,128,0.6)">Nincs szolgáltatás.</div>'; }
+      else sel.innerHTML = services.map(function(s) {
+        var statusMap = { running:'badge-green', pending:'badge-yellow', pending_payment:'badge-yellow', suspended:'badge-red' };
+        var badge = '<span class="badge '+(statusMap[s.status]||'badge-yellow')+'">'+s.status+'</span>';
+        var activateBtn = (s.status === 'pending' || s.status === 'pending_payment')
+          ? '<button class="btn btn-ghost" style="font-size:0.75rem;padding:5px 10px;color:#4ade80" onclick="adminActivateService(\''+s.id+'\')">Aktiválás</button>'
+          : '';
+        var suspendBtn = s.status === 'running'
+          ? '<button class="btn btn-danger" style="font-size:0.75rem;padding:5px 10px" onclick="adminSuspendService(\''+s.id+'\')">Felfüggesztés</button>'
+          : '';
+        return '<div class="service-row" style="padding:14px 20px">'
+          +'<div style="flex:1;min-width:0">'
+          +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">'
+          +'<span style="font-size:0.85rem;font-weight:600;color:#fff">'+s.name+'</span>'+badge+'</div>'
+          +'<div style="font-size:0.73rem;color:rgba(107,114,128,0.7)">'+(s.userEmail||s.userId)+' · '+(s.plan||'')+' · '+(s.price||0).toLocaleString('hu-HU')+' Ft/hó'+(s.refCode?' · '+s.refCode:'')+'</div>'
+          +'</div>'
+          +'<div style="display:flex;gap:6px">'+activateBtn+suspendBtn+'</div>'
+          +'</div>';
+      }).join('');
+    }
+  } catch(e) {}
+
+  // Users
+  try {
+    var ur = await ahFetch('/api/admin/users');
+    var users = await ur.json();
+    var uel = document.getElementById('adm-users-list');
+    if (uel) {
+      if (!users.length) { uel.innerHTML = '<div style="padding:32px;text-align:center;color:rgba(107,114,128,0.6)">Nincs felhasználó.</div>'; }
+      else uel.innerHTML = users.map(function(u) {
+        return '<div class="service-row" style="padding:14px 20px">'
+          +'<div style="flex:1">'
+          +'<div style="font-size:0.85rem;font-weight:600;color:#fff;margin-bottom:2px">'+u.name+' <span style="font-size:0.75rem;color:rgba(107,114,128,0.7)">@'+u.username+'</span></div>'
+          +'<div style="font-size:0.73rem;color:rgba(107,114,128,0.7)">'+u.email+' · '+u.plan+'</div>'
+          +'</div>'
+          +'<div style="font-size:0.73rem;color:rgba(107,114,128,0.6)">'+(u.createdAt?u.createdAt.slice(0,10):'')+'</div>'
+          +'</div>';
+      }).join('');
+    }
+    // Teszt szerver user select feltöltése
+    var testUserSel = document.getElementById('test-user');
+    if (testUserSel && users.length) {
+      testUserSel.innerHTML = '<option value="">Saját fiók</option>'
+        + users.map(function(u){ return '<option value="'+u.id+'">'+u.name+' ('+u.email+')</option>'; }).join('');
+    }
+  } catch(e) {}
+}
+
+async function adminOpenTicket(id) {
+  try {
+    var r = await ahFetch('/api/tickets/' + id);
+    if (!r || !r.ok) { showToast('Ticket nem található.', 'warn'); return; }
+    var t = await r.json();
+    _currentTicketId = t.id;
+    renderTicketModal(t);
+    openModal('ticketViewModal');
+  } catch(e) { showToast('Hálózati hiba.', 'warn'); }
+}
+
+async function adminCloseTicket(id) {
+  var r = await ahFetch('/api/admin/tickets/'+id+'/close', {
+    method: 'PATCH',
+    headers: { 'Content-Type':'application/json' },
+    body: JSON.stringify({ resolution: 'Admin által lezárva.' })
+  });
+  if ((await r.json()).success) { showToast('Ticket lezárva!', 'success'); loadAdminData(); }
+}
+
+async function adminActivateService(id) {
+  var r = await ahFetch('/api/admin/services/'+id+'/activate', { method: 'PATCH' });
+  if ((await r.json()).success) { showToast('Szolgáltatás aktiválva!', 'success'); loadAdminData(); }
+}
+
+async function adminSuspendService(id) {
+  if (!confirm('Biztosan felfüggeszted?')) return;
+  var r = await ahFetch('/api/admin/services/'+id+'/suspend', { method: 'PATCH' });
+  if ((await r.json()).success) { showToast('Felfüggesztve.', 'warn'); loadAdminData(); }
+}
+
+function updateTestGameSelect() {
+  var type = document.getElementById('test-type');
+  var wrap = document.getElementById('test-game-wrap');
+  if (wrap) wrap.style.display = (type && type.value === 'game') ? 'block' : 'none';
+}
+
+async function createTestServer() {
+  var name  = document.getElementById('test-name')  ? document.getElementById('test-name').value.trim()  : '';
+  var type  = document.getElementById('test-type')  ? document.getElementById('test-type').value          : 'game';
+  var game  = document.getElementById('test-game')  ? document.getElementById('test-game').value          : 'minecraft';
+  var plan  = document.getElementById('test-plan')  ? document.getElementById('test-plan').value          : 'starter';
+  var userId = document.getElementById('test-user') ? document.getElementById('test-user').value          : '';
+  var resEl = document.getElementById('test-result');
+
+  if (!name) { showToast('Add meg a szerver nevét!', 'warn'); return; }
+
+  var btn = document.querySelector('#page-admin .btn-purple:last-of-type');
+  if (btn) btn.disabled = true;
+  if (resEl) { resEl.style.display = 'none'; }
+
+  try {
+    var r = await ahFetch('/api/admin/test-server', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name, type: type, game: type === 'game' ? game : undefined, plan: plan, userId: userId || undefined })
+    });
+    var d = await r.json();
+
+    if (d.success) {
+      if (resEl) {
+        resEl.style.display = 'block';
+        resEl.innerHTML = '<div style="background:rgba(34,197,94,0.07);border:1px solid rgba(34,197,94,0.2);border-radius:12px;padding:14px 16px">'
+          + '<div style="font-size:0.88rem;font-weight:700;color:#4ade80;margin-bottom:6px">✅ Szerver sikeresen létrehozva!</div>'
+          + '<div style="font-size:0.8rem;color:rgba(209,213,219,0.8);line-height:1.6">'
+          + '<b>Neve:</b> ' + name + '<br>'
+          + '<b>Csomag:</b> ' + plan + '<br>'
+          + (d.pteroReady ? '<b>Pterodactyl ID:</b> ' + d.pteroId : '<b>Pterodactyl:</b> nincs bekonfigurálva, manuálisan kell létrehozni')
+          + '</div></div>';
+        document.getElementById('test-name').value = '';
+      }
+      showToast(name + ' létrehozva!', 'success');
+      loadAdminData();
+    } else {
+      if (resEl) {
+        resEl.style.display = 'block';
+        resEl.innerHTML = '<div style="background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.2);border-radius:12px;padding:14px 16px;font-size:0.85rem;color:#f87171">'
+          + '❌ Hiba: ' + (d.error || 'ismeretlen hiba') + '</div>';
+      }
+      showToast(d.error || 'Hiba', 'warn');
+    }
+  } catch(e) {
+    showToast('Hálózati hiba: ' + e.message, 'warn');
+  }
+  if (btn) btn.disabled = false;
+}
+
+// Admin page betöltés
+var _origShowPage = showPage;
+showPage = function(id) {
+  _origShowPage(id);
+  if (id === 'admin') loadAdminData();
+  if (id === 'servers-public') loadPublicServers('');
+  if (id === 'migration') loadMigrationHistory();
+};
+
+// Pages listába felvesszük az új oldalakat
+pages.push('admin');
+pages.push('servers-public');
+pages.push('migration');
+navLabels['admin']          = 'Admin Panel';
+navLabels['servers-public'] = 'Szerver Kereső';
+navLabels['migration']      = 'Átköltöztetés';
+
+// ════════════════════════════════════════════════════════
+// #2 — PAUSE / RESUME
+// ════════════════════════════════════════════════════════
+
+function togglePauseServer() {
+  var svcs = getServices();
+  var svc  = svcs.find(function(s){ return s.id === _controlSvcId; });
+  if (!svc) return;
+  if (svc.status === 'paused') {
+    // Folytatás
+    if (!confirm('Folytatod a szervert? Újra elindul és megkezdi a számlázást.')) return;
+    resumeServer();
+  } else {
+    openModal('pauseConfirmModal');
+  }
+}
+
+async function confirmPause() {
+  if (!_controlSvcId) return;
+  var until  = document.getElementById('pause-until')  ? document.getElementById('pause-until').value  : '';
+  var reason = document.getElementById('pause-reason') ? document.getElementById('pause-reason').value : '';
+  closeModal('pauseConfirmModal');
+  try {
+    var r = await ahFetch('/api/services/' + _controlSvcId + '/pause', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ reason: reason || undefined, resumeAt: until || undefined })
+    });
+    var d = await r.json();
+    if (!r.ok) { showToast(d.error || 'Hiba történt.', 'warn'); return; }
+    showToast('Szerver szüneteltetve. Számlázás szünetel.', 'success');
+    closeModal('serverControlModal');
+    await syncFromServer();
+    updatePauseBtn();
+  } catch(e) { showToast('Hálózati hiba.', 'warn'); }
+}
+
+async function resumeServer() {
+  if (!_controlSvcId) return;
+  try {
+    var r = await ahFetch('/api/services/' + _controlSvcId + '/resume', { method: 'POST' });
+    var d = await r.json();
+    if (!r.ok) { showToast(d.error || 'Hiba.', 'warn'); return; }
+    showToast('Szerver folytatva! Újra indul...', 'success');
+    closeModal('serverControlModal');
+    await syncFromServer();
+    updatePauseBtn();
+  } catch(e) { showToast('Hálózati hiba.', 'warn'); }
+}
+
+function updatePauseBtn() {
+  var svcs = getServices();
+  var svc  = svcs.find(function(s){ return s.id === _controlSvcId; });
+  var btn  = document.getElementById('svc-pause-btn');
+  var lbl  = document.getElementById('svc-pause-label');
+  if (!btn || !svc) return;
+  if (svc.status === 'paused') {
+    btn.style.background   = 'rgba(234,179,8,0.08)';
+    btn.style.borderColor  = 'rgba(234,179,8,0.3)';
+    btn.style.color        = '#facc15';
+    if (lbl) lbl.textContent = 'Folytatás';
+  } else {
+    btn.style.background  = '';
+    btn.style.borderColor = '';
+    btn.style.color       = '';
+    if (lbl) lbl.textContent = 'Szüneteltetés';
+  }
+}
+
+// Felülírjuk az openServerControl-t, hogy frissítse a pause gombot
+var _origOpenServerControl = openServerControl;
+openServerControl = function(idx) {
+  _origOpenServerControl(idx);
+  updatePauseBtn();
+};
+
+// ════════════════════════════════════════════════════════
+// #3 — PUBLIKUS PROFIL
+// ════════════════════════════════════════════════════════
+
+var _pubProfileSvcId = null;
+
+function openPublicProfileModal() {
+  _pubProfileSvcId = _controlSvcId;
+  if (!_pubProfileSvcId) return;
+  // Betöltjük a meglévő adatokat
+  ahFetch('/api/services/' + _pubProfileSvcId + '/public-profile').then(function(r) {
+    return r.json();
+  }).then(function(d) {
+    var p = d.profile;
+    var toggle = document.getElementById('pub-toggle');
+    if (p) {
+      if (toggle) { toggle.classList.add('tog-on'); }
+      var titleEl = document.getElementById('pub-title');
+      var descEl  = document.getElementById('pub-desc');
+      var tagsEl  = document.getElementById('pub-tags');
+      var ipToggle = document.getElementById('pub-showip-toggle');
+      if (titleEl) titleEl.value = p.title || '';
+      if (descEl)  descEl.value  = p.description || '';
+      if (tagsEl)  tagsEl.value  = p.tags || '';
+      if (ipToggle) { if (p.showIp) ipToggle.classList.add('tog-on'); else ipToggle.classList.remove('tog-on'); }
+      // URL preview
+      var siteUrl = window.location.origin;
+      var slug = p.slug || '';
+      var urlEl = document.getElementById('pub-url-text');
+      var urlPreview = document.getElementById('pub-url-preview');
+      if (urlEl) urlEl.textContent = siteUrl + '/server/' + slug;
+      if (urlPreview) urlPreview.style.display = 'block';
+    } else {
+      if (toggle) toggle.classList.add('tog-on');
+      var svcs = getServices();
+      var svc = svcs.find(function(s){ return s.id === _pubProfileSvcId; });
+      var titleEl2 = document.getElementById('pub-title');
+      if (titleEl2 && svc) titleEl2.value = svc.name || '';
+      var urlPreview2 = document.getElementById('pub-url-preview');
+      if (urlPreview2) urlPreview2.style.display = 'none';
+    }
+  }).catch(function(){});
+  openModal('publicProfileModal');
+}
+
+async function savePublicProfile() {
+  if (!_pubProfileSvcId) return;
+  var toggle   = document.getElementById('pub-toggle');
+  var enabled  = toggle ? toggle.classList.contains('tog-on') : true;
+  var titleEl  = document.getElementById('pub-title');
+  var descEl   = document.getElementById('pub-desc');
+  var tagsEl   = document.getElementById('pub-tags');
+  var ipToggle = document.getElementById('pub-showip-toggle');
+  var body = {
+    enabled: enabled,
+    title:   titleEl  ? titleEl.value.trim()  : '',
+    description: descEl ? descEl.value.trim()  : '',
+    tags:    tagsEl   ? tagsEl.value.trim()   : '',
+    showIp:  ipToggle ? ipToggle.classList.contains('tog-on') : true
+  };
+  try {
+    var r = await ahFetch('/api/services/' + _pubProfileSvcId + '/public-profile', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    var d = await r.json();
+    if (!r.ok) { showToast(d.error || 'Hiba.', 'warn'); return; }
+    if (d.url) {
+      var urlEl = document.getElementById('pub-url-text');
+      var urlPreview = document.getElementById('pub-url-preview');
+      if (urlEl) urlEl.textContent = d.url;
+      if (urlPreview) urlPreview.style.display = enabled ? 'block' : 'none';
+    }
+    showToast(enabled ? 'Publikus oldal mentve!' : 'Publikus oldal kikapcsolva.', 'success');
+    if (enabled) return; // maradjon nyitva az URL-lel
+    closeModal('publicProfileModal');
+  } catch(e) { showToast('Hálózati hiba.', 'warn'); }
+}
+
+function copyPubUrl() {
+  var urlEl = document.getElementById('pub-url-text');
+  if (urlEl && urlEl.textContent) {
+    navigator.clipboard.writeText(urlEl.textContent).then(function(){ showToast('Link másolva!', 'success'); });
+  }
+}
+
+// #3 — Szerver Kereső oldal
+var _publicServersGame = '';
+
+async function loadPublicServers(game) {
+  _publicServersGame = game;
+  var el = document.getElementById('public-servers-list');
+  if (!el) return;
+  el.innerHTML = '<div style="grid-column:1/-1;padding:60px;text-align:center;color:rgba(107,114,128,0.5);font-size:0.88rem">Betöltés...</div>';
+  try {
+    var url = '/api/public/servers?limit=40' + (game ? '&game=' + encodeURIComponent(game) : '');
+    var r = await ahFetch(url);
+    var servers = await r.json();
+    if (!servers.length) {
+      el.innerHTML = '<div style="grid-column:1/-1;padding:60px;text-align:center;color:rgba(107,114,128,0.5);font-size:0.88rem">Még nincs nyilvánosan listázott szerver' + (game ? ' ebben a kategóriában' : '') + '.<br><br>Legyen te az első — tedd nyilvánossá a szerveredet a Szerver Kezelés → Publikus oldal gombbal!</div>';
+      return;
+    }
+    var GAME_LABELS = {minecraft:'Minecraft',rust:'Rust',cs2:'CS2',palworld:'Palworld',valheim:'Valheim',ark:'ARK','project-zomboid':'Project Zomboid'};
+    var GAME_IMGS = {minecraft:'games/minecraft-bg.jpg',rust:'games/rust-bg.jpg',cs2:'games/cs2-bg.jpg',palworld:'games/palworld-bg.jpg',valheim:'games/valheim-bg.jpg',ark:'games/ark-bg.jpg'};
+    el.innerHTML = servers.map(function(s) {
+      var img = GAME_IMGS[s.game] || 'Backgrounds/game-bg.png';
+      var st  = s.status === 'running' ? '<span class="badge badge-green"><span style="width:5px;height:5px;border-radius:50%;background:#4ade80" class="animate-pulse"></span>Online</span>' : '<span class="badge badge-yellow">Szünetel</span>';
+      var tagsHtml = s.tags ? s.tags.split(',').map(function(t){ return '<span style="padding:2px 8px;background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.18);border-radius:6px;font-size:0.68rem;color:#c084fc">'+escHtml(t.trim())+'</span>'; }).join('') : '';
+      return '<div class="card card-hover" style="overflow:hidden;cursor:pointer" onclick="window.open(\'/server/'+s.slug+'\',\'_blank\')">'
+        +'<div style="height:90px;position:relative;overflow:hidden">'
+        +'<img src="'+img+'" style="width:100%;height:100%;object-fit:cover">'
+        +'<div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,0.85))"></div>'
+        +'<div style="position:absolute;top:10px;right:10px">'+st+'</div>'
+        +'</div>'
+        +'<div style="padding:16px">'
+        +'<div style="font-size:0.95rem;font-weight:700;color:#fff;margin-bottom:3px">'+escHtml(s.title||s.game||'Szerver')+'</div>'
+        +'<div style="font-size:0.75rem;color:rgba(107,114,128,0.8);margin-bottom:8px">'+(GAME_LABELS[s.game]||s.game||'')+(s.ram?' · '+s.ram+'GB RAM':'')+'</div>'
+        +(s.description ? '<div style="font-size:0.78rem;color:rgba(156,163,175,0.7);margin-bottom:10px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">'+escHtml(s.description)+'</div>' : '')
+        +(tagsHtml ? '<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px">'+tagsHtml+'</div>' : '')
+        +'<div style="display:flex;align-items:center;justify-content:space-between">'
+        +'<span style="font-size:0.72rem;color:rgba(107,114,128,0.5)">'+(s.createdAt?s.createdAt.slice(0,10):'')+'</span>'
+        +'<span style="font-size:0.75rem;color:#a855f7;font-weight:600">Megtekintés →</span>'
+        +'</div></div></div>';
+    }).join('');
+  } catch(e) {
+    el.innerHTML = '<div style="grid-column:1/-1;padding:60px;text-align:center;color:rgba(107,114,128,0.5)">Nem sikerült betölteni.</div>';
+  }
+}
+
+function filterPublicServers(btn, game) {
+  document.querySelectorAll('#page-servers-public .tab').forEach(function(t){ t.classList.remove('active'); });
+  btn.classList.add('active');
+  loadPublicServers(game);
+}
+
+// ════════════════════════════════════════════════════════
+// #4 — COMING SOON
+// ════════════════════════════════════════════════════════
+
+var _csSvcId = null;
+
+function openComingSoonModal() {
+  _csSvcId = _controlSvcId;
+  if (!_csSvcId) return;
+  ahFetch('/api/services/' + _csSvcId + '/coming-soon').then(function(r){ return r.json(); }).then(function(d) {
+    var cs = d.comingSoon;
+    var toggle = document.getElementById('cs-active-toggle');
+    var headEl  = document.getElementById('cs-headline');
+    var subEl   = document.getElementById('cs-subtext');
+    var launchEl = document.getElementById('cs-launch');
+    var discEl  = document.getElementById('cs-discord');
+    if (cs) {
+      if (toggle) { if (cs.active) toggle.classList.add('tog-on'); else toggle.classList.remove('tog-on'); }
+      if (headEl)  headEl.value  = cs.headline  || 'Hamarosan nyitunk!';
+      if (subEl)   subEl.value   = cs.subtext   || '';
+      if (launchEl && cs.launchAt) launchEl.value = cs.launchAt.slice(0,16);
+      if (discEl)  discEl.value  = cs.discordUrl || '';
+      // URL preview — publikus oldal szükséges
+      var urlPreview = document.getElementById('cs-url-preview');
+      var urlText    = document.getElementById('cs-url-text');
+      ahFetch('/api/services/' + _csSvcId + '/public-profile').then(function(r2){ return r2.json(); }).then(function(d2){
+        if (d2.profile && urlPreview && urlText) {
+          urlText.textContent = window.location.origin + '/server/' + d2.profile.slug;
+          urlPreview.style.display = 'block';
+        }
+      }).catch(function(){});
+    } else {
+      if (toggle) toggle.classList.add('tog-on');
+      if (headEl)  headEl.value  = 'Hamarosan nyitunk!';
+    }
+  }).catch(function(){});
+  openModal('comingSoonModal');
+}
+
+async function saveComingSoon() {
+  if (!_csSvcId) return;
+  var toggle   = document.getElementById('cs-active-toggle');
+  var headEl   = document.getElementById('cs-headline');
+  var subEl    = document.getElementById('cs-subtext');
+  var launchEl = document.getElementById('cs-launch');
+  var discEl   = document.getElementById('cs-discord');
+  var body = {
+    active:     toggle   ? toggle.classList.contains('tog-on')   : true,
+    headline:   headEl   ? headEl.value.trim()   : 'Hamarosan nyitunk!',
+    subtext:    subEl    ? subEl.value.trim()     : '',
+    launchAt:   launchEl ? launchEl.value         : '',
+    discordUrl: discEl   ? discEl.value.trim()    : ''
+  };
+  try {
+    var r = await ahFetch('/api/services/' + _csSvcId + '/coming-soon', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    var d = await r.json();
+    if (!r.ok) { showToast(d.error || 'Hiba.', 'warn'); return; }
+    showToast(body.active ? 'Coming soon oldal aktív!' : 'Coming soon oldal kikapcsolva.', 'success');
+    closeModal('comingSoonModal');
+  } catch(e) { showToast('Hálózati hiba.', 'warn'); }
+}
+
+function copyCsUrl() {
+  var urlEl = document.getElementById('cs-url-text');
+  if (urlEl && urlEl.textContent) {
+    navigator.clipboard.writeText(urlEl.textContent).then(function(){ showToast('Link másolva!', 'success'); });
+  }
+}
+
+// ════════════════════════════════════════════════════════
+// #5 — HETI EMAIL (Settings toggle)
+// ════════════════════════════════════════════════════════
+
+async function sendWeeklyReportNow() {
+  try {
+    var r = await ahFetch('/api/me/send-weekly-report', { method: 'POST' });
+    var d = await r.json();
+    if (r.ok) showToast('Heti összefoglaló elküldve!', 'success');
+    else showToast(d.error || 'Hiba.', 'warn');
+  } catch(e) { showToast('Hálózati hiba.', 'warn'); }
+}
+
+// ════════════════════════════════════════════════════════
+// #7 — MIGRÁCIÓ
+// ════════════════════════════════════════════════════════
+
+async function submitMigration() {
+  var fromHost = document.getElementById('mig-fromhost') ? document.getElementById('mig-fromhost').value.trim() : '';
+  var game     = document.getElementById('mig-game')     ? document.getElementById('mig-game').value     : '';
+  var plan     = document.getElementById('mig-plan')     ? document.getElementById('mig-plan').value     : '';
+  var backup   = document.getElementById('mig-backup')   ? document.getElementById('mig-backup').value.trim()   : '';
+  var notes    = document.getElementById('mig-notes')    ? document.getElementById('mig-notes').value.trim()    : '';
+
+  if (!fromHost) { showToast('Add meg a jelenlegi hoster nevét!', 'warn'); return; }
+
+  var btn = document.querySelector('#page-migration .btn-purple');
+  if (btn) btn.disabled = true;
+
+  try {
+    var r = await ahFetch('/api/migration/request', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fromHost: fromHost, game: game || undefined, plan: plan || undefined, notes: notes || undefined, backupUrl: backup || undefined })
+    });
+    var d = await r.json();
+    if (r.ok) {
+      showToast('Migráció kérés elküldve! Ticket: #' + d.ticketId, 'success');
+      document.getElementById('mig-fromhost').value = '';
+      document.getElementById('mig-notes').value = '';
+      document.getElementById('mig-backup').value = '';
+      loadMigrationHistory();
+    } else {
+      showToast(d.error || 'Hiba.', 'warn');
+    }
+  } catch(e) { showToast('Hálózati hiba.', 'warn'); }
+  if (btn) btn.disabled = false;
+}
+
+async function loadMigrationHistory() {
+  var el = document.getElementById('mig-history');
+  if (!el) return;
+  try {
+    var r = await ahFetch('/api/migration/requests');
+    if (!r || !r.ok) return;
+    var reqs = await r.json();
+    if (!reqs.length) { el.innerHTML = ''; return; }
+    var STATUS_LABELS = { pending:'Függőben', in_progress:'Folyamatban', done:'Kész', cancelled:'Lemondva' };
+    var STATUS_BADGE  = { pending:'badge-yellow', in_progress:'badge-blue', done:'badge-green', cancelled:'badge-red' };
+    el.innerHTML = '<div class="card" style="overflow:hidden"><div style="padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:0.9rem;font-weight:700;color:#fff">Korábbi kérések</div>'
+      + reqs.map(function(m) {
+        return '<div class="service-row" style="padding:14px 20px">'
+          +'<div style="flex:1"><div style="font-size:0.85rem;font-weight:600;color:#fff;margin-bottom:3px">' + escHtml(m.fromHost) + (m.game ? ' — ' + m.game : '') + '</div>'
+          +'<div style="font-size:0.73rem;color:rgba(107,114,128,0.7)">' + (m.createdAt?m.createdAt.slice(0,10):'') + (m.ticketId?' · Ticket #'+m.ticketId:'') + '</div></div>'
+          +'<span class="badge ' + (STATUS_BADGE[m.status]||'badge-yellow') + '">' + (STATUS_LABELS[m.status]||m.status) + '</span>'
+          +'</div>';
+      }).join('')
+      + '</div>';
+  } catch(e) {}
+}
+
+// ---- init ----
+renderAll();
+checkAdminStatus();
+renderNotifDot();
+showVerifyBanner();
+syncFromServer();
+</script>
+</body></html>

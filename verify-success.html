@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-mail megerősítés – AeroHost</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#060611;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;color:#e2e8f0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .card{background:#0f0f1a;border:1px solid rgba(255,255,255,0.08);border-radius:24px;padding:48px 40px;max-width:440px;width:100%;text-align:center}
+  .icon{font-size:3.5rem;margin-bottom:24px}
+  h1{font-size:1.5rem;font-weight:800;color:#fff;margin-bottom:12px;letter-spacing:-0.02em}
+  p{color:rgba(148,163,184,0.9);font-size:0.92rem;line-height:1.7;margin-bottom:28px}
+  .btn{display:inline-block;padding:14px 32px;background:linear-gradient(135deg,#1d4ed8,#7c3aed);border-radius:50px;color:#fff;text-decoration:none;font-weight:700;font-size:0.9rem}
+  .brand{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:32px}
+  .logo{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#4c1d95,#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:0.8rem;color:#fff}
+  .brand-name{font-weight:800;color:#fff;font-size:1.1rem}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="brand">
+    <div class="logo">AE</div>
+    <span class="brand-name">AeroHost</span>
+  </div>
+  <div id="content"></div>
+</div>
+<script>
+const p = new URLSearchParams(location.search);
+const status = p.get('status');
+const states = {
+  ok: {
+    icon: '✅',
+    title: 'E-mail sikeresen megerősítve!',
+    text: 'A fiókod aktiválva lett. Már be tudsz jelentkezni és használhatod az összes funkciót.',
+    btn: 'Bejelentkezés', href: '/login.html'
+  },
+  expired: {
+    icon: '⏰',
+    title: 'A link lejárt',
+    text: 'Ez a megerősítő link már nem érvényes. Kérj új megerősítő emailt a vezérlőpultból.',
+    btn: 'Vezérlőpult', href: '/dashboard.html'
+  },
+  invalid: {
+    icon: '❌',
+    title: 'Érvénytelen link',
+    text: 'Ez a megerősítő link nem érvényes. Ellenőrizd hogy a teljes linket másoltad-e be.',
+    btn: 'Főoldal', href: '/'
+  }
+};
+const s = states[status] || states.invalid;
+document.getElementById('content').innerHTML = `
+  <div class="icon">${s.icon}</div>
+  <h1>${s.title}</h1>
+  <p>${s.text}</p>
+  <a href="${s.href}" class="btn">${s.btn} →</a>
+`;
+</script>
+</body>
+</html>

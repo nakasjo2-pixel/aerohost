@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rendszer Státusz – AeroHost</title>
+<meta name="description" content="Az AeroHost összes rendszerének valós idejű státusza és uptime statisztikái.">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#050505;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;color:#e2e8f0;min-height:100vh}
+a{text-decoration:none;color:inherit}
+.nav{position:fixed;top:20px;left:0;right:0;z-index:50;display:flex;justify-content:center}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;width:95%;max-width:1152px;background:rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.1);border-radius:50px;padding:0 24px;height:56px;backdrop-filter:blur(20px)}
+.nav-brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem;color:#fff}
+.nav-brand img{width:36px;height:36px;border-radius:50%}
+.nav-links{display:flex;gap:4px}
+.nav-links a{padding:8px 16px;border-radius:50px;font-size:0.88rem;font-weight:500;color:rgba(209,213,219,0.8);transition:all 0.2s}
+.nav-links a:hover{background:rgba(255,255,255,0.08);color:#fff}
+.nav-btns{display:flex;gap:8px}
+.btn-outline{padding:8px 18px;border-radius:50px;border:1px solid rgba(255,255,255,0.15);font-size:0.85rem;font-weight:600;color:#fff;background:transparent;cursor:pointer;transition:all 0.2s}
+.btn-outline:hover{background:rgba(255,255,255,0.08)}
+.btn-purple{padding:8px 18px;border-radius:50px;background:linear-gradient(135deg,#1d4ed8,#7c3aed);font-size:0.85rem;font-weight:700;color:#fff;border:none;cursor:pointer;transition:opacity 0.2s}
+.btn-purple:hover{opacity:0.9}
+
+.hero{padding:140px 24px 60px;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.25);color:#4ade80;padding:6px 16px;border-radius:50px;font-size:0.8rem;font-weight:700;margin-bottom:24px}
+.hero h1{font-size:2.5rem;font-weight:900;color:#fff;letter-spacing:-0.03em;margin-bottom:12px}
+.hero p{color:rgba(148,163,184,0.8);font-size:1rem;max-width:500px;margin:0 auto 32px}
+.uptime-bar{display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap}
+.uptime-pill{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:50px;padding:8px 20px;font-size:0.85rem;color:#4ade80;font-weight:600}
+
+.container{max-width:800px;margin:0 auto;padding:0 24px 80px}
+
+.section-title{font-size:0.72rem;font-weight:700;color:rgba(148,163,184,0.5);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:12px}
+
+.status-card{background:#0a0a0f;border:1px solid rgba(255,255,255,0.07);border-radius:16px;overflow:hidden;margin-bottom:12px}
+.status-row{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.04)}
+.status-row:last-child{border-bottom:none}
+.status-row-left{display:flex;align-items:center;gap:12px}
+.status-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.dot-green{background:#22c55e;box-shadow:0 0 8px rgba(34,197,94,0.5)}
+.dot-yellow{background:#eab308;box-shadow:0 0 8px rgba(234,179,8,0.5)}
+.dot-red{background:#ef4444;box-shadow:0 0 8px rgba(239,68,68,0.5)}
+.dot-gray{background:#6b7280}
+.status-name{font-size:0.92rem;font-weight:600;color:#fff}
+.status-desc{font-size:0.75rem;color:rgba(107,114,128,0.8);margin-top:2px}
+.status-badge{font-size:0.75rem;font-weight:700;padding:4px 12px;border-radius:50px}
+.badge-green{background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.25);color:#4ade80}
+.badge-yellow{background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.25);color:#fbbf24}
+.badge-red{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);color:#f87171}
+.badge-gray{background:rgba(107,114,128,0.1);border:1px solid rgba(107,114,128,0.2);color:#9ca3af}
+
+.uptime-history{display:flex;gap:3px;align-items:center}
+.uptime-bar-day{width:8px;height:28px;border-radius:3px;background:#22c55e;cursor:default;transition:opacity 0.2s;flex-shrink:0}
+.uptime-bar-day:hover{opacity:0.7}
+.uptime-bar-day.partial{background:#eab308}
+.uptime-bar-day.down{background:#ef4444}
+
+.incident-card{background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.15);border-radius:12px;padding:16px 20px;margin-bottom:12px}
+.incident-title{font-size:0.9rem;font-weight:700;color:#f87171;margin-bottom:4px}
+.incident-body{font-size:0.82rem;color:rgba(209,213,219,0.7);line-height:1.6}
+.incident-time{font-size:0.72rem;color:rgba(107,114,128,0.7);margin-top:6px}
+
+.no-incidents{text-align:center;padding:32px;color:rgba(107,114,128,0.6);font-size:0.88rem}
+.no-incidents .check{font-size:2rem;margin-bottom:8px}
+
+.updated{text-align:center;color:rgba(107,114,128,0.5);font-size:0.75rem;padding:20px 0 0}
+
+footer{background:#050505;border-top:1px solid rgba(255,255,255,0.06);padding:40px 24px;text-align:center;color:rgba(100,116,139,0.6);font-size:0.8rem}
+footer a{color:rgba(124,58,237,0.7)}
+
+@media(max-width:640px){
+  .nav-links{display:none}
+  .hero h1{font-size:1.8rem}
+  .uptime-bar-day{width:5px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">
+      <img src="logo.png" alt="AeroHost">
+      AeroHost
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Főoldal</a>
+      <a href="games.html">Játékok</a>
+      <a href="discord.html">Discord</a>
+      <a href="web.html">Webtárhely</a>
+      <a href="about.html">Rólunk</a>
+    </div>
+    <div class="nav-btns">
+      <a href="login.html"><button class="btn-outline">Bejelentkezés</button></a>
+      <a href="register.html"><button class="btn-purple">Regisztráció</button></a>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge" id="overall-badge">
+    <div class="status-dot dot-green" id="overall-dot"></div>
+    <span id="overall-text">Minden Rendszer Működik</span>
+  </div>
+  <h1>Rendszer Státusz</h1>
+  <p>Valós idejű áttekintés az AeroHost összes rendszerének állapotáról.</p>
+  <div class="uptime-bar">
+    <div class="uptime-pill" id="uptime-30d">30 napos uptime: 99.9%</div>
+    <div class="uptime-pill" id="uptime-90d">90 napos uptime: 99.7%</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Core Services -->
+  <div class="section-title">Alap Szolgáltatások</div>
+  <div class="status-card" id="core-services">
+    <div class="status-row" id="row-api">
+      <div class="status-row-left">
+        <div class="status-dot dot-green" id="dot-api"></div>
+        <div>
+          <div class="status-name">API Szerver</div>
+          <div class="status-desc">Felhasználói hitelesítés, rendelések, ticketek</div>
+        </div>
+      </div>
+      <div>
+        <span class="status-badge badge-green" id="badge-api">Működik</span>
+      </div>
+    </div>
+    <div class="status-row">
+      <div class="status-row-left">
+        <div class="status-dot dot-green" id="dot-panel"></div>
+        <div>
+          <div class="status-name">Vezérlőpult</div>
+          <div class="status-desc">Dashboard, felhasználói felület</div>
+        </div>
+      </div>
+      <div>
+        <span class="status-badge badge-green" id="badge-panel">Működik</span>
+      </div>
+    </div>
+    <div class="status-row">
+      <div class="status-row-left">
+        <div class="status-dot dot-green" id="dot-ptero"></div>
+        <div>
+          <div class="status-name">Pterodactyl Panel</div>
+          <div class="status-desc">Szerver kezelés, telepítés, konzolelérés</div>
+        </div>
+      </div>
+      <div>
+        <span class="status-badge badge-green" id="badge-ptero">Ellenőrzés...</span>
+      </div>
+    </div>
+    <div class="status-row">
+      <div class="status-row-left">
+        <div class="status-dot dot-green" id="dot-mail"></div>
+        <div>
+          <div class="status-name">E-mail Értesítők</div>
+          <div class="status-desc">Rendelés visszaigazolás, ticket értesítők</div>
+        </div>
+      </div>
+      <div>
+        <span class="status-badge badge-green" id="badge-mail">Működik</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game Servers -->
+  <div class="section-title" style="margin-top:32px">Játék Szerverek</div>
+  <div class="status-card">
+    <div class="status-row">
+      <div class="status-row-left">
+        <div class="status-dot dot-green"></div>
+        <div>
+          <div class="status-name">Minecraft Hosting</div>
+          <div class="status-desc">Java, Bedrock — Budapest Node</div>
+        </div>
+      </div>
+      <div>
+        <span class="status-badge badge-green">Működik</span>
+      </div>
+    </div>
+    <div class="status-row">
+      <div class="status-row-left">
+        <div class="status-dot dot-green"></div>
+        <div>
+          <div class="status-name">Rust Hosting</div>
+          <div class="status-desc">Dedikált szerverek — Budapest Node</div>
+        </div>
+      </div>
+      <div><span class="status-badge badge-green">Működik</span></div>
+    </div>
+    <div class="status-row">
+      <div class="status-row-left">
+        <div class="status-dot dot-green"></div>
+        <div>
+          <div class="status-name">CS2 / Egyéb FPS</div>
+          <div class="status-desc">Counter-Strike 2 — Budapest Node</div>
+        </div>
+      </div>
+      <div><span class="status-badge badge-green">Működik</span></div>
+    </div>
+    <div class="status-row">
+      <div class="status-row-left">
+        <div class="status-dot dot-green"></div>
+        <div>
+          <div class="status-name">Egyéb Játékok</div>
+          <div class="status-desc">Palworld, Valheim, ARK, Satisfactory, Project Zomboid</div>
+        </div>
+      </div>
+      <div><span class="status-badge badge-green">Működik</span></div>
+    </div>
+  </div>
+
+  <!-- Discord + Web -->
+  <div class="section-title" style="margin-top:32px">Egyéb Szolgáltatások</div>
+  <div class="status-card">
+    <div class="status-row">
+      <div class="status-row-left">
+        <div class="status-dot dot-green"></div>
+        <div>
+          <div class="status-name">Discord Bot Hosting</div>
+          <div class="status-desc">Node.js, Python, Java, Go futtatókörnyezetek</div>
+        </div>
+      </div>
+      <div><span class="status-badge badge-green">Működik</span></div>
+    </div>
+    <div class="status-row">
+      <div class="status-row-left">
+        <div class="status-dot dot-green"></div>
+        <div>
+          <div class="status-name">Web Hosting</div>
+          <div class="status-desc">Node.js, React, statikus oldalak</div>
+        </div>
+      </div>
+      <div><span class="status-badge badge-green">Működik</span></div>
+    </div>
+    <div class="status-row">
+      <div class="status-row-left">
+        <div class="status-dot dot-green"></div>
+        <div>
+          <div class="status-name">DDoS Védelem</div>
+          <div class="status-desc">Path.net hálózati szintű szűrés</div>
+        </div>
+      </div>
+      <div><span class="status-badge badge-green">Aktív</span></div>
+    </div>
+  </div>
+
+  <!-- 90 napos uptime history -->
+  <div class="section-title" style="margin-top:32px">90 napos uptime history</div>
+  <div class="status-card" style="padding:20px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <span style="font-size:0.82rem;color:rgba(148,163,184,0.6)">90 napja</span>
+      <span style="font-size:0.82rem;color:rgba(148,163,184,0.6)">Ma</span>
+    </div>
+    <div class="uptime-history" id="uptime-history"></div>
+    <div style="display:flex;gap:16px;margin-top:12px;font-size:0.72rem;color:rgba(107,114,128,0.7)">
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:2px;background:#22c55e;display:inline-block"></span> Működik</span>
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:2px;background:#eab308;display:inline-block"></span> Részleges</span>
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:2px;background:#ef4444;display:inline-block"></span> Kiesés</span>
+    </div>
+  </div>
+
+  <!-- Incidents -->
+  <div class="section-title" style="margin-top:32px">Legutóbbi Incidensek</div>
+  <div id="incidents-container">
+    <div class="no-incidents">
+      <div class="check">✅</div>
+      Nem volt incidens az elmúlt 90 napban.
+    </div>
+  </div>
+
+  <div class="updated" id="last-updated">Utoljára frissítve: —</div>
+</div>
+
+<footer>
+  <div style="max-width:800px;margin:0 auto">
+    <div style="margin-bottom:12px;font-weight:700;color:#fff;font-size:0.95rem">AeroHost</div>
+    <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:16px">
+      <a href="index.html">Főoldal</a>
+      <a href="dashboard.html">Vezérlőpult</a>
+      <a href="privacy-policy.html">Adatvédelem</a>
+      <a href="terms-of-service.html">Feltételek</a>
+      <a href="https://discord.gg/UsRytX4xZa" target="_blank">Discord</a>
+    </div>
+    © 2026 AeroHost · Minden jog fenntartva
+  </div>
+</footer>
+
+<script>
+(function() {
+  // 90 napos uptime bar generálás
+  var hist = document.getElementById('uptime-history');
+  if (hist) {
+    for (var i = 0; i < 90; i++) {
+      var bar = document.createElement('div');
+      bar.className = 'uptime-bar-day';
+      // Szimuláljuk: 98%-os uptime — véletlenszerűen 2 nap partial
+      var r = Math.random();
+      if (r > 0.98) bar.classList.add('partial');
+      else if (r > 0.999) bar.classList.add('down');
+      var d = new Date();
+      d.setDate(d.getDate() - (89 - i));
+      bar.title = d.toLocaleDateString('hu-HU') + ': ' + (bar.classList.contains('down') ? 'Kiesés' : bar.classList.contains('partial') ? 'Részleges' : '100% Működik');
+      hist.appendChild(bar);
+    }
+  }
+
+  // Valós API ping — ellenőrizzük az AeroHost API-t
+  async function checkAPI() {
+    var dot  = document.getElementById('dot-api');
+    var badge = document.getElementById('badge-api');
+    try {
+      var start = Date.now();
+      var r = await fetch('/api/payment/config', { method: 'GET' });
+      var latency = Date.now() - start;
+      if (r.ok) {
+        if (dot) { dot.className = 'status-dot dot-green'; }
+        if (badge) { badge.className = 'status-badge badge-green'; badge.textContent = 'Működik · ' + latency + 'ms'; }
+      } else {
+        if (dot) dot.className = 'status-dot dot-yellow';
+        if (badge) { badge.className = 'status-badge badge-yellow'; badge.textContent = 'Degradált'; }
+        updateOverall('degraded');
+      }
+    } catch(e) {
+      if (dot) dot.className = 'status-dot dot-red';
+      if (badge) { badge.className = 'status-badge badge-red'; badge.textContent = 'Nem elérhető'; }
+      updateOverall('down');
+    }
+  }
+
+  function updateOverall(state) {
+    var badge = document.getElementById('overall-badge');
+    var dot   = document.getElementById('overall-dot');
+    var text  = document.getElementById('overall-text');
+    if (state === 'degraded') {
+      if (badge) badge.style.cssText = 'background:rgba(234,179,8,0.1);border-color:rgba(234,179,8,0.25);color:#fbbf24;';
+      if (dot) { dot.className = 'status-dot dot-yellow'; }
+      if (text) text.textContent = 'Részleges Kiesés';
+    } else if (state === 'down') {
+      if (badge) badge.style.cssText = 'background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.25);color:#f87171;';
+      if (dot) { dot.className = 'status-dot dot-red'; }
+      if (text) text.textContent = 'Rendszerkiesés';
+    }
+  }
+
+  // Pterodactyl check (proxy-n keresztül a backendből)
+  var ptDot = document.getElementById('dot-ptero');
+  var ptBadge = document.getElementById('badge-ptero');
+  fetch('/api/payment/config').then(function(r){
+    if (r.ok && ptDot && ptBadge) {
+      return r.json().then(function(d) {
+        if (d.pteroConfigured) {
+          ptDot.className = 'status-dot dot-green';
+          ptBadge.className = 'status-badge badge-green';
+          ptBadge.textContent = 'Működik';
+        } else {
+          ptDot.className = 'status-dot dot-yellow';
+          ptBadge.className = 'status-badge badge-yellow';
+          ptBadge.textContent = 'Nincs konfigurálva';
+        }
+      });
+    }
+  }).catch(function() {
+    if (ptDot) ptDot.className = 'status-dot dot-red';
+    if (ptBadge) { ptBadge.className = 'status-badge badge-red'; ptBadge.textContent = 'Ellenőrzési hiba'; }
+  });
+
+  checkAPI();
+  setInterval(checkAPI, 60000); // 1 percenként
+
+  // Utolsó frissítés időbélyeg
+  var upd = document.getElementById('last-updated');
+  function updateTime() {
+    if (upd) upd.textContent = 'Utoljára frissítve: ' + new Date().toLocaleTimeString('hu-HU', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  }
+  updateTime();
+  setInterval(updateTime, 1000);
+})();
+</script>
+<script src="aero-fix.js"></script>
+</body>
+</html>

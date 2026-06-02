@@ -1,0 +1,21 @@
+{
+  "name": "aerohost-backend",
+  "version": "2.0.0",
+  "description": "AeroHost backend – Express + SQLite + JWT refresh + email verify",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --experimental-sqlite server.js",
+    "dev": "node --experimental-sqlite server.js",
+    "migrate": "node --experimental-sqlite migrate.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.9",
+    "nodemailer": "^6.9.14",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.1",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

@@ -1,0 +1,81 @@
+[
+  {
+    "id": 2001,
+    "userId": "1780209218791",
+    "userEmail": "niczkimate@gmail.com",
+    "userName": "Niczki Niczki",
+    "subject": "PayPal fizetés megerősítése – dwwdwd",
+    "category": "Számlázás",
+    "status": "closed",
+    "refCode": "AH-MPTI4RWA",
+    "message": "Kedves Niczki Niczki!\n\nKöszönjük a rendelésedet!\n\n📦 Szolgáltatás: dwwdwd\n🎮 Típus: Game Szerver · minecraft\n📋 Csomag: Elite (16GB)\n💰 Összeg: 6990 Ft/hó\n\n📌 Referencia kód: AH-MPTI4RWA\n\nHa a PayPal fizetésed sikeresen megtörtént, hamarosan aktiváljuk a szerveredet.\nHa még nem fizettél, használd ezt a linket: https://paypal.me/HostAero/6990HUF\n\nKözleménybe írd: AH-MPTI4RWA\n\nAeroHost Csapat",
+    "createdAt": "2026-05-31T08:12:23.554Z",
+    "closedAt": "2026-05-31T08:31:08.909Z",
+    "resolution": "Admin által lezárva."
+  },
+  {
+    "id": 1002,
+    "userId": "1780209218791",
+    "userEmail": "niczkimate@gmail.com",
+    "userName": "Niczki Niczki",
+    "subject": "dwwddw",
+    "category": "Technikai probléma",
+    "status": "closed",
+    "message": "dwdwwd",
+    "messages": [
+      {
+        "author": "Niczki Niczki",
+        "email": "niczkimate@gmail.com",
+        "isAdmin": true,
+        "message": "dwwddwdwwddw",
+        "createdAt": "2026-05-31T09:15:01.412Z"
+      },
+      {
+        "author": "Niczki Niczki",
+        "email": "niczkimate@gmail.com",
+        "isAdmin": true,
+        "message": "dw",
+        "createdAt": "2026-05-31T09:15:06.079Z"
+      },
+      {
+        "author": "Niczki Niczki",
+        "email": "niczkimate@gmail.com",
+        "isAdmin": true,
+        "message": "csao",
+        "createdAt": "2026-05-31T09:15:15.338Z"
+      },
+      {
+        "author": "Niczki Niczki",
+        "email": "niczkimate@gmail.com",
+        "isAdmin": true,
+        "message": "wdwdwd",
+        "createdAt": "2026-05-31T09:15:36.673Z"
+      }
+    ],
+    "createdAt": "2026-05-31T09:14:59.346Z",
+    "date": "2026. 05. 31.",
+    "closedAt": "2026-05-31T09:15:28.035Z",
+    "resolution": "Lezárva."
+  },
+  {
+    "id": 2003,
+    "userId": "1780209218791",
+    "userEmail": "niczkimate@gmail.com",
+    "userName": "Niczki Niczki",
+    "subject": "Banki átutalásos rendelés – dwddwdw",
+    "category": "Számlázás",
+    "status": "open",
+    "refCode": "AH-MPTKTPMY",
+    "message": "Kedves Niczki Niczki!\n\nKöszönjük a rendelésedet!\n\n📦 Szolgáltatás: dwddwdw\n🎮 Típus: Game Szerver · minecraft\n📋 Csomag: Pro (8GB)\n💰 Összeg: 3990 Ft/hó\n\n🏦 BANKSZÁMLA ADATOK:\nBank: OTP Bank\nSzámlaszám: 12345678-12345678-12345678\nIBAN: HU00000000000000000000000000\nKedvezményezett: AeroHost\n\n📌 KÖZLEMÉNY (kötelező!): AH-MPTKTPMY\n\nAz utalás beérkezése után (1–2 munkanap) aktiváljuk a szerveredet!\n\nAeroHost Csapat",
+    "createdAt": "2026-05-31T09:27:46.192Z",
+    "messages": [
+      {
+        "author": "Niczki Niczki",
+        "email": "niczkimate@gmail.com",
+        "isAdmin": true,
+        "message": "szia elfogadtuk",
+        "createdAt": "2026-05-31T09:28:35.672Z"
+      }
+    ]
+  }
+]

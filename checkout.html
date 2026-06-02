@@ -1,0 +1,470 @@
+<!DOCTYPE html><html lang="hu" class="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><link rel="preload" href="_next/static/media/68d403cf9f2c68c5-s.p.f9f15f61.woff2" as="font" crossorigin="" type="font/woff2"><link rel="stylesheet" href="_next/static/chunks/a5f94a35a4f4cbe8.css" data-precedence="next"><link rel="stylesheet" href="_next/static/chunks/2c07a184e6ec78bd.css" data-precedence="next"><title>Fizetés | AeroHost</title><link rel="icon" href="logo.png"><style>
+  html{overflow:hidden;height:100%}body{overflow-y:auto;overflow-x:hidden;height:100%}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Geist","Geist Fallback",ui-sans-serif,system-ui,sans-serif;background:#000;color:#fff;min-height:100vh;-webkit-font-smoothing:antialiased}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+  @keyframes ping{75%,100%{transform:scale(2);opacity:0}}
+  .animate-pulse{animation:pulse 2s cubic-bezier(0.4,0,0.6,1) infinite}
+  .animate-ping{animation:ping 1.5s cubic-bezier(0,0,0.2,1) infinite}
+  .fade-up{animation:fadeUp 0.5s ease-out forwards}
+  .card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:20px;backdrop-filter:blur(8px)}
+  .card-active{border-color:rgba(168,85,247,0.45);background:rgba(168,85,247,0.06)}
+  .price-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+  .price-row:last-child{border-bottom:none}
+  .badge{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:99px;font-size:0.7rem;font-weight:600}
+  .badge-purple{background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.2);color:#c084fc}
+  .badge-green{background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);color:#4ade80}
+  .badge-yellow{background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.2);color:#facc15}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:50px;font-size:0.95rem;font-weight:700;border:none;cursor:pointer;transition:all 0.2s;font-family:inherit;width:100%;letter-spacing:0.01em}
+  .btn:disabled{opacity:0.5;cursor:not-allowed}
+  .btn-paypal{background:#FFC43A;color:#003087;box-shadow:0 6px 20px -6px rgba(255,196,58,0.4)}
+  .btn-paypal:hover:not(:disabled){background:#ffb800;box-shadow:0 10px 28px -6px rgba(255,196,58,0.5)}
+  .btn-purple{position:relative;overflow:hidden;color:#fff;box-shadow:0 6px 20px -6px rgba(168,85,247,0.4)}
+  .btn-purple .bg{position:absolute;inset:0;background:linear-gradient(135deg,#1d4ed8,#7c3aed,#4338ca);z-index:0}
+  .btn-purple:hover:not(:disabled){box-shadow:0 10px 28px -6px rgba(168,85,247,0.6)}
+  .btn-purple span{position:relative;z-index:1;display:flex;align-items:center;gap:8px}
+  .btn-ghost{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.10);color:rgba(209,213,219,0.9)}
+  .btn-ghost:hover:not(:disabled){background:rgba(255,255,255,0.08);color:#fff}
+  .method-btn{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.10);border-radius:16px;padding:16px;cursor:pointer;transition:all 0.2s;text-align:left;width:100%;font-family:inherit;color:#fff;display:flex;align-items:center;gap:14px;margin-bottom:10px}
+  .method-btn:hover{border-color:rgba(168,85,247,0.35);background:rgba(168,85,247,0.05)}
+  .method-btn.selected{border-color:rgba(168,85,247,0.5);background:rgba(168,85,247,0.08)}
+  .method-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .alert{padding:14px 16px;border-radius:14px;font-size:0.85rem;line-height:1.6;margin-bottom:16px}
+  .alert-green{background:rgba(34,197,94,0.07);border:1px solid rgba(34,197,94,0.2);color:#86efac}
+  .alert-yellow{background:rgba(234,179,8,0.07);border:1px solid rgba(234,179,8,0.2);color:#fde68a}
+  .alert-red{background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.2);color:#fca5a5}
+  .bank-field{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.10);border-radius:12px;padding:12px 16px;margin-bottom:10px}
+  .bank-field-label{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:rgba(107,114,128,0.8);margin-bottom:4px}
+  .bank-field-value{font-size:0.95rem;font-weight:700;color:#fff;font-family:"Geist Mono","Courier New",monospace;display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .copy-btn{background:rgba(168,85,247,0.12);border:1px solid rgba(168,85,247,0.2);border-radius:7px;padding:3px 8px;font-size:0.7rem;font-weight:600;color:#c084fc;cursor:pointer;font-family:inherit;transition:background 0.2s;white-space:nowrap}
+  .copy-btn:hover{background:rgba(168,85,247,0.25)}
+  .ref-highlight{background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.35);border-radius:10px;padding:12px 16px;text-align:center;font-size:1.1rem;font-weight:800;letter-spacing:0.08em;color:#c084fc;font-family:"Geist Mono","Courier New",monospace;margin:12px 0}
+  .step{display:flex;gap:10px;margin-bottom:12px}
+  .step-num{width:24px;height:24px;border-radius:50%;background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.3);display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:800;color:#c084fc;flex-shrink:0;margin-top:1px}
+  .divider{display:flex;align-items:center;gap:12px;color:rgba(156,163,175,0.4);font-size:0.75rem;margin:6px 0 16px}
+  .divider::before,.divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.06)}
+</style></head>
+<body>
+
+<div style="position:fixed;inset:0;pointer-events:none;z-index:0">
+  <div style="position:absolute;top:-100px;left:-100px;width:500px;height:500px;border-radius:50%;background:rgba(88,28,135,0.15);filter:blur(120px)"></div>
+  <div style="position:absolute;bottom:-100px;right:-100px;width:400px;height:400px;border-radius:50%;background:rgba(67,56,202,0.12);filter:blur(100px)"></div>
+  <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px);background-size:64px 64px"></div>
+</div>
+
+<main style="position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 16px">
+  <div class="fade-up" id="checkout-grid" style="width:100%;max-width:920px;display:grid;grid-template-columns:1fr 1fr;gap:28px">
+
+    <!-- ── BAL: RENDELÉS ÖSSZESÍTŐ ── -->
+    <div>
+      <a href="dashboard.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:32px">
+        <img src="logo.png" alt="AeroHost" style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,0.08)">
+        <span style="font-weight:700;font-size:1.2rem;color:#fff;letter-spacing:-0.02em">AeroHost</span>
+      </a>
+
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <span style="position:relative;display:inline-flex;width:8px;height:8px">
+          <span class="animate-ping" style="position:absolute;inset:0;border-radius:50%;background:rgba(168,85,247,0.75)"></span>
+          <span style="position:relative;display:block;width:8px;height:8px;border-radius:50%;background:#7c3aed"></span>
+        </span>
+        <span style="font-size:0.7rem;font-family:monospace;text-transform:uppercase;letter-spacing:0.15em;color:rgba(196,181,253,0.8)">Biztonságos fizetés</span>
+      </div>
+
+      <h1 style="font-size:1.75rem;font-weight:800;color:#fff;letter-spacing:-0.025em;margin-bottom:4px">Rendelés</h1>
+      <p style="color:rgba(156,163,175,0.7);font-size:0.85rem;margin-bottom:24px">Ellenőrizd a részleteket fizetés előtt</p>
+
+      <!-- Rendelés részlet -->
+      <div class="card" style="padding:20px;margin-bottom:16px">
+        <div style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:rgba(107,114,128,0.8);margin-bottom:14px">Megrendelt szolgáltatás</div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <div id="order-icon" style="width:46px;height:46px;border-radius:13px;background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></svg>
+          </div>
+          <div style="flex:1">
+            <div id="order-name" style="font-size:1rem;font-weight:700;color:#fff;margin-bottom:3px">–</div>
+            <div id="order-sub" style="font-size:0.78rem;color:rgba(107,114,128,0.8)">–</div>
+          </div>
+          <span class="badge badge-purple" id="order-plan-badge">–</span>
+        </div>
+
+        <div id="order-specs" style="display:flex;gap:0;padding:12px;background:rgba(255,255,255,0.03);border-radius:12px;margin-bottom:14px"></div>
+
+        <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:14px">
+          <div class="price-row">
+            <span style="font-size:0.85rem;color:rgba(156,163,175,0.7)">Havi előfizetés</span>
+            <span id="price-monthly" style="font-size:0.85rem;font-weight:600;color:#fff">– Ft</span>
+          </div>
+          <div class="price-row">
+            <span style="font-size:0.85rem;color:rgba(156,163,175,0.7)">Aktiválási díj</span>
+            <span style="font-size:0.85rem;font-weight:600;color:#4ade80">Ingyenes</span>
+          </div>
+          <div class="price-row" style="padding-top:14px">
+            <span style="font-size:1rem;font-weight:700;color:#fff">Fizetendő most</span>
+            <span id="price-total" style="font-size:1.35rem;font-weight:800;color:#fff;letter-spacing:-0.02em">– Ft</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bizalom jelek -->
+      <div style="display:flex;flex-wrap:wrap;gap:14px">
+        <div style="display:flex;align-items:center;gap:6px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg><span style="font-size:0.73rem;color:rgba(107,114,128,0.7)">SSL titkosítás</span></div>
+        <div style="display:flex;align-items:center;gap:6px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span style="font-size:0.73rem;color:rgba(107,114,128,0.7)">Azonnali aktiválás</span></div>
+        <div style="display:flex;align-items:center;gap:6px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0"/><path d="M12 8v4l2 2"/></svg><span style="font-size:0.73rem;color:rgba(107,114,128,0.7)">Bármikor lemondható</span></div>
+      </div>
+    </div>
+
+    <!-- ── JOBB: FIZETÉSI MÓD ── -->
+    <div>
+      <!-- SIKERES FIZETÉS -->
+      <div id="state-success" style="display:none">
+        <div class="card" style="padding:36px;text-align:center">
+          <div style="width:64px;height:64px;border-radius:50%;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          </div>
+          <div style="font-size:1.15rem;font-weight:800;color:#fff;margin-bottom:8px">Sikeres fizetés!</div>
+          <p style="font-size:0.85rem;color:rgba(156,163,175,0.7);margin-bottom:20px">A szolgáltatásod aktiválva. Jó szórakozást!</p>
+          <a href="dashboard.html" style="display:inline-flex;align-items:center;gap:8px;padding:11px 24px;border-radius:50px;background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.3);color:#c084fc;text-decoration:none;font-weight:600;font-size:0.88rem">Vissza a Vezérlőpultra</a>
+        </div>
+      </div>
+
+      <!-- BANKI ÁTUTALÁS ELKÜLDVE -->
+      <div id="state-transfer" style="display:none">
+        <div class="card" style="padding:24px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+            <div style="width:40px;height:40px;border-radius:50%;background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.2);display:flex;align-items:center;justify-content:center">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
+            </div>
+            <div>
+              <div style="font-size:0.95rem;font-weight:700;color:#fff">Rendelés rögzítve!</div>
+              <div style="font-size:0.78rem;color:rgba(107,114,128,0.8)">Ticket #<span id="transfer-ticket-id"></span> megnyitva</div>
+            </div>
+          </div>
+
+          <div style="font-size:0.82rem;color:rgba(156,163,175,0.7);margin-bottom:14px">Utald át az összeget az alábbi adatokra. A <strong style="color:#fff">közleménybe</strong> mindenképp írd be a referencia kódot!</div>
+
+          <div class="bank-field">
+            <div class="bank-field-label">Bank</div>
+            <div class="bank-field-value"><span id="t-bank"></span></div>
+          </div>
+          <div class="bank-field">
+            <div class="bank-field-label">Kedvezményezett</div>
+            <div class="bank-field-value"><span id="t-beneficiary"></span></div>
+          </div>
+          <div class="bank-field">
+            <div class="bank-field-label">Számlaszám</div>
+            <div class="bank-field-value">
+              <span id="t-account"></span>
+              <button class="copy-btn" onclick="copyText('t-account')">Másolás</button>
+            </div>
+          </div>
+          <div id="t-iban-row" class="bank-field" style="display:none">
+            <div class="bank-field-label">IBAN</div>
+            <div class="bank-field-value">
+              <span id="t-iban"></span>
+              <button class="copy-btn" onclick="copyText('t-iban')">Másolás</button>
+            </div>
+          </div>
+          <div class="bank-field">
+            <div class="bank-field-label">Összeg</div>
+            <div class="bank-field-value"><span id="t-amount"></span> Ft</div>
+          </div>
+
+          <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:rgba(107,114,128,0.7);margin:14px 0 4px">Közlemény (kötelező!)</div>
+          <div class="ref-highlight" id="t-refcode" onclick="copyRefCode()">–</div>
+          <div style="text-align:center;font-size:0.72rem;color:rgba(107,114,128,0.6);margin-bottom:16px">Kattints a másoláshoz</div>
+
+          <div class="alert alert-yellow" style="font-size:0.8rem">
+            ⚡ Az utalás beérkezése után (1–2 munkanap) aktiváljuk a szerveredet és lezárjuk a ticketet. Ha kérdésed van, válaszolj a ticketre!
+          </div>
+
+          <a href="dashboard.html" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:50px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.10);color:rgba(209,213,219,0.9);text-decoration:none;font-size:0.88rem;font-weight:600;margin-top:4px">Vissza a Vezérlőpultra</a>
+        </div>
+      </div>
+
+      <!-- FIZETÉSI MÓD VÁLASZTÓ -->
+      <div id="state-choose">
+        <div style="margin-bottom:24px">
+          <h2 style="font-size:1.15rem;font-weight:800;color:#fff;letter-spacing:-0.02em;margin-bottom:4px">Fizetési mód</h2>
+          <p style="color:rgba(156,163,175,0.7);font-size:0.82rem">Válassz az alábbi lehetőségek közül</p>
+        </div>
+
+        <div id="error-msg" class="alert alert-red" style="display:none"></div>
+
+        <!-- PayPal.Me gomb -->
+        <button class="method-btn" id="btn-paypal" onclick="selectMethod('paypal')">
+          <div class="method-icon" style="background:rgba(255,196,58,0.1);border:1px solid rgba(255,196,58,0.2)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#FFC43A"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/></svg>
+          </div>
+          <div>
+            <div style="font-size:0.92rem;font-weight:700;color:#fff;margin-bottom:2px">PayPal</div>
+            <div style="font-size:0.75rem;color:rgba(107,114,128,0.8)">Bankkártyával is fizethető · Gyors aktiválás</div>
+          </div>
+          <svg style="margin-left:auto;flex-shrink:0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(107,114,128,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+
+        <!-- PayPal szekció (kibomlik kattintásra) -->
+        <div id="paypal-section" style="display:none;margin-bottom:10px">
+          <div class="card" style="padding:20px;border-color:rgba(255,196,58,0.2);background:rgba(255,196,58,0.04)">
+            <div style="font-size:0.82rem;color:rgba(156,163,175,0.8);margin-bottom:14px;line-height:1.6">
+              Kattints a gombra → megnyílik a PayPal oldal → fizetsz kártyával <strong style="color:#fff">vagy</strong> PayPal egyenleggel → visszajössz és aktiváljuk a szervered.
+            </div>
+            <a id="paypal-link" href="#" target="_blank" onclick="onPaypalClick(event)" class="btn btn-paypal" style="text-decoration:none;margin-bottom:10px">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#003087"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/></svg>
+              Fizetés PayPal-lal
+            </a>
+            <!-- Fizettem gomb — erre kattint miután visszajön PayPal-ról -->
+            <div id="paid-confirm" style="display:none">
+              <div class="alert alert-yellow" style="margin-bottom:10px;font-size:0.8rem">
+                ✅ Visszajöttél a PayPal-ról? Kattints az alábbi gombra a rendelés rögzítéséhez!
+              </div>
+              <button class="btn btn-purple" onclick="confirmPaypalPayment()">
+                <div class="bg"></div>
+                <span>Igen, fizettem → Rendelés rögzítése</span>
+              </button>
+            </div>
+            <button class="btn btn-ghost" style="margin-top:8px;padding:10px;font-size:0.8rem" onclick="selectMethod(null)">← Vissza</button>
+          </div>
+        </div>
+
+        <div class="divider">vagy</div>
+
+        <button class="method-btn" onclick="selectMethod('transfer')">
+          <div class="method-icon" style="background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.2)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
+          </div>
+          <div>
+            <div style="font-size:0.92rem;font-weight:700;color:#fff;margin-bottom:2px">Banki átutalás</div>
+            <div style="font-size:0.75rem;color:rgba(107,114,128,0.8)">Ticket alapú · 1–2 munkanappal lassabb</div>
+          </div>
+          <svg style="margin-left:auto;flex-shrink:0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(107,114,128,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<script id="paypal-sdk"></script>
+<script>
+// ── Auth ─────────────────────────────────────────────────────────────────
+var _session = null;
+try { _session = JSON.parse(localStorage.getItem('ah_session')); } catch(e) {}
+if (!_session) { window.location.href = 'login.html'; }
+
+// ── API fetch helper (token refresh) ─────────────────────────────────────
+async function ahFetch(url, opts) {
+  opts = opts || {};
+  opts.headers = opts.headers || {};
+  opts.headers['Authorization'] = 'Bearer ' + (localStorage.getItem('ah_token') || '');
+  var res = await fetch(url, opts);
+  if (res.status === 401) {
+    var rt = localStorage.getItem('ah_refresh_token');
+    if (rt) {
+      try {
+        var rr = await fetch('/api/auth/refresh', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({refreshToken: rt}) });
+        if (rr.ok) {
+          var rd = await rr.json();
+          localStorage.setItem('ah_token', rd.accessToken);
+          if (rd.refreshToken) localStorage.setItem('ah_refresh_token', rd.refreshToken);
+          opts.headers['Authorization'] = 'Bearer ' + rd.accessToken;
+          return fetch(url, opts);
+        }
+      } catch(e) {}
+    }
+    localStorage.clear(); window.location.href = 'login.html'; return;
+  }
+  return res;
+}
+
+// ── URL paraméterek ───────────────────────────────────────────────────────
+var params  = new URLSearchParams(window.location.search);
+var plan    = params.get('plan')  || 'starter';
+var svcType = params.get('type')  || 'game';
+var svcName = params.get('name')  || 'Új Szerver';
+var svcGame = params.get('game')  || '';
+
+var PLANS = {
+  starter: { label:'Starter', price:2490, ram:'4GB RAM', cpu:'2 vCPU', disk:'20GB SSD' },
+  pro:     { label:'Pro',     price:3990, ram:'8GB RAM', cpu:'4 vCPU', disk:'50GB SSD' },
+  elite:   { label:'Elite',   price:6990, ram:'16GB RAM',cpu:'6 vCPU', disk:'100GB SSD' }
+};
+var TYPE_LABELS = { game:'Game Szerver', discord:'Discord Bot', web:'Webtárhely' };
+var GAME_LABELS = { minecraft:'Minecraft',rust:'Rust',cs2:'CS2',palworld:'Palworld',valheim:'Valheim',ark:'ARK',satisfactory:'Satisfactory','project-zomboid':'Project Zomboid' };
+var currentPlan = PLANS[plan] || PLANS.starter;
+var CONFIG = { paypalClientId:'', paypalMode:'sandbox' };
+var paypalReady = false;
+
+// ── Order summary ─────────────────────────────────────────────────────────
+function fillOrderSummary() {
+  setText('order-name', svcName);
+  setText('order-sub', (TYPE_LABELS[svcType]||svcType) + (svcGame ? ' · '+(GAME_LABELS[svcGame]||svcGame) : ''));
+  setText('order-plan-badge', currentPlan.label);
+  var specs = [
+    {l:'RAM', v:currentPlan.ram},
+    {l:'CPU', v:currentPlan.cpu},
+    {l:'Tárhely', v:currentPlan.disk}
+  ];
+  var el = document.getElementById('order-specs');
+  if (el) el.innerHTML = specs.map(function(s){
+    return '<div style="text-align:center;flex:1"><div style="font-size:0.65rem;color:rgba(107,114,128,0.6);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">'+s.l+'</div><div style="font-size:0.85rem;font-weight:700;color:#fff">'+s.v+'</div></div>';
+  }).join('<div style="width:1px;background:rgba(255,255,255,0.06)"></div>');
+  var fmt = currentPlan.price.toLocaleString('hu-HU') + ' Ft';
+  setText('price-monthly', fmt+'/hó');
+  setText('price-total', fmt);
+}
+
+function setText(id, val) { var e = document.getElementById(id); if(e) e.textContent = val; }
+function showState(s) {
+  ['state-success','state-transfer','state-choose'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.style.display = id === s ? 'block' : 'none';
+  });
+}
+function showError(msg) {
+  var el = document.getElementById('error-msg');
+  if(el){ el.textContent = msg; el.style.display = 'block'; setTimeout(function(){ el.style.display='none'; }, 5000); }
+}
+
+// ── Config betöltése ──────────────────────────────────────────────────────
+async function loadConfig() {
+  try {
+    var r = await fetch('/api/payment/config');
+    if (r.ok) CONFIG = await r.json();
+  } catch(e) {}
+  // PayPal link frissítése
+  if (CONFIG.paypalMe) {
+    var link = document.getElementById('paypal-link');
+    if (link) link.href = 'https://paypal.me/' + CONFIG.paypalMe + '/' + currentPlan.price + 'HUF';
+  }
+}
+
+// ── Fizetési mód választás ────────────────────────────────────────────────
+function selectMethod(method) {
+  var ppSection  = document.getElementById('paypal-section');
+  var ppBtn      = document.getElementById('btn-paypal');
+  document.querySelectorAll('.method-btn').forEach(function(b){ b.classList.remove('selected'); });
+
+  if (method === 'paypal') {
+    if (ppSection) ppSection.style.display = 'block';
+    if (ppBtn) ppBtn.classList.add('selected');
+    if (!CONFIG.paypalMe) showError('PayPal.Me nincs beállítva a szerveren (.env PAYPAL_ME)');
+  } else if (method === 'transfer') {
+    submitTransfer();
+  } else {
+    if (ppSection) ppSection.style.display = 'none';
+  }
+}
+
+// ── PayPal.Me kattintás → megnyílik PayPal új fülön ──────────────────────
+function onPaypalClick(e) {
+  if (!CONFIG.paypalMe) { e.preventDefault(); showError('PayPal.Me nincs konfigurálva!'); return; }
+  // Kis késleltetés után megjelenik a "Fizettem" gomb
+  setTimeout(function() {
+    var confirm = document.getElementById('paid-confirm');
+    if (confirm) confirm.style.display = 'block';
+  }, 2000);
+}
+
+// ── Fizettem → szerver értesítése + Pterodactyl szerver létrehozás ────────
+async function confirmPaypalPayment() {
+  var btn = document.querySelector('#paid-confirm button');
+  if (btn) { btn.disabled = true; btn.querySelector('span').textContent = 'Feldolgozás…'; }
+  try {
+    var r = await ahFetch('/api/payment/pending', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json' },
+      body: JSON.stringify({ plan:plan, type:svcType, name:svcName, game:svcGame })
+    });
+    var d = await r.json();
+    if (!d.success) { showError(d.error||'Hiba.'); if(btn){btn.disabled=false;btn.querySelector('span').textContent='Igen, fizettem → Rendelés rögzítése';} return; }
+
+    saveToLocalStorage(d);
+    showSuccessState(d);
+  } catch(e) {
+    showError('Hálózati hiba. Ellenőrizd, hogy a szerver fut-e.');
+    if (btn) { btn.disabled=false; btn.querySelector('span').textContent='Igen, fizettem → Rendelés rögzítése'; }
+  }
+}
+
+// ── Banki átutalás ────────────────────────────────────────────────────────
+async function submitTransfer() {
+  try {
+    var r = await ahFetch('/api/payment/transfer', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json' },
+      body: JSON.stringify({ plan:plan, type:svcType, name:svcName, game:svcGame })
+    });
+    var d = await r.json();
+    if (!d.success) { showError(d.error||'Hiba történt.'); return; }
+
+    saveToLocalStorage(d);
+    setText('transfer-ticket-id', d.ticketId);
+    setText('t-bank', d.bankName);
+    setText('t-beneficiary', d.beneficiary);
+    setText('t-account', d.bankAccount);
+    setText('t-amount', d.amount.toLocaleString('hu-HU'));
+    setText('t-refcode', d.refCode);
+    if (d.iban) { setText('t-iban', d.iban); var row = document.getElementById('t-iban-row'); if(row) row.style.display='block'; }
+    showState('state-transfer');
+  } catch(e) {
+    showError('Hálózati hiba. Ellenőrizd, hogy a szerver fut-e.');
+  }
+}
+
+// ── Sikeres fizetés után localStorage frissítés ───────────────────────────
+function saveToLocalStorage(d) {
+  if (d.service) {
+    var svcs = []; try { svcs = JSON.parse(localStorage.getItem('ah_services'))||[]; } catch(e){}
+    svcs.push(d.service);
+    localStorage.setItem('ah_services', JSON.stringify(svcs));
+  }
+  if (d.ticketId) {
+    var tickets = []; try { tickets = JSON.parse(localStorage.getItem('ah_tickets'))||[]; } catch(e){}
+    tickets.unshift({ id: d.ticketId, subject: 'Rendelés – '+svcName, category:'Számlázás', status:'open', date: new Date().toLocaleDateString('hu-HU') });
+    localStorage.setItem('ah_tickets', JSON.stringify(tickets));
+  }
+}
+
+function showSuccessState(d) {
+  var el = document.getElementById('state-success');
+  if (!el) return;
+  // Ha Pterodactyl azonnal létrehozta
+  var extra = d.pteroReady
+    ? '<p style="font-size:0.85rem;color:#4ade80;margin-bottom:6px">✅ Szervered automatikusan létrehozva a Pterodactyl panelen!</p>'
+    : '<p style="font-size:0.85rem;color:rgba(156,163,175,0.7);margin-bottom:6px">Ticket #'+d.ticketId+' megnyitva — hamarosan aktiváljuk.</p>';
+  el.querySelector('p').outerHTML = extra;
+  showState('state-success');
+}
+
+// ── Másolás ───────────────────────────────────────────────────────────────
+function copyText(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  navigator.clipboard.writeText(el.textContent.trim()).then(function() {
+    var btn = el.parentElement.querySelector('.copy-btn');
+    if (btn) { btn.textContent = 'Másolva!'; setTimeout(function(){ btn.textContent='Másolás'; }, 1500); }
+  });
+}
+function copyRefCode() {
+  var el = document.getElementById('t-refcode');
+  if (!el) return;
+  navigator.clipboard.writeText(el.textContent.trim()).then(function(){
+    el.textContent = '✓ Másolva!';
+    setTimeout(function(){ el.textContent = localStorage.getItem('_refcode_tmp')||''; }, 1500);
+  });
+  localStorage.setItem('_refcode_tmp', el.textContent.trim());
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────
+function checkGrid() {
+  var g = document.getElementById('checkout-grid');
+  if (g) g.style.gridTemplateColumns = window.innerWidth < 720 ? '1fr' : '1fr 1fr';
+}
+checkGrid();
+window.addEventListener('resize', checkGrid);
+
+// ── Init ──────────────────────────────────────────────────────────────────
+fillOrderSummary();
+loadConfig();
+</script>
+</body></html>
