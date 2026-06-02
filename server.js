@@ -72,22 +72,52 @@ app.use('/api/', apiLimiter);
 
 // index.htm → index.html redirect
 app.get('/index.htm', (req, res) => res.redirect(301, '/index.html'));
-app.get('/', (req, res) => {
-  const host = req.hostname;
-  if (host === 'dashboard.aerohost.eu') return res.sendFile(path.join(__dirname, 'dashboard.html'));
-  if (host === 'status.aerohost.eu')    return res.sendFile(path.join(__dirname, 'status.html'));
-  if (host === 'play.aerohost.eu')      return res.sendFile(path.join(__dirname, 'server.html'));
-  res.redirect(301, '/index.html');
-});
 
-// Subdomain root-ok explicit kezelése (nginx proxy_pass után)
+// Subdomain middleware — minden kérést kezel
 app.use((req, res, next) => {
   const host = req.hostname;
-  if (req.path === '/' || req.path === '') {
-    if (host === 'dashboard.aerohost.eu') return res.sendFile(path.join(__dirname, 'dashboard.html'));
-    if (host === 'status.aerohost.eu')    return res.sendFile(path.join(__dirname, 'status.html'));
-    if (host === 'play.aerohost.eu')      return res.sendFile(path.join(__dirname, 'server.html'));
+  const MAIN = 'https://aerohost.eu';
+
+  // dashboard.aerohost.eu
+  if (host === 'dashboard.aerohost.eu') {
+    if (req.path === '/' || req.path === '/dashboard.html') {
+      return res.sendFile(path.join(__dirname, 'dashboard.html'));
+    }
+    // API kérések mehetnek tovább
+    if (req.path.startsWith('/api/') || req.path.startsWith('/_next/') || req.path.match(/\.(js|css|png|jpg|svg|ico|woff2?)$/)) {
+      return next();
+    }
+    // Minden más oldalt (login.html, register.html stb.) a fődomainre küld
+    return res.redirect(302, MAIN + req.path);
   }
+
+  // status.aerohost.eu
+  if (host === 'status.aerohost.eu') {
+    if (req.path === '/' || req.path === '/status.html') {
+      return res.sendFile(path.join(__dirname, 'status.html'));
+    }
+    if (req.path.startsWith('/api/') || req.path.startsWith('/_next/') || req.path.match(/\.(js|css|png|jpg|svg|ico|woff2?)$/)) {
+      return next();
+    }
+    return res.redirect(302, MAIN + req.path);
+  }
+
+  // play.aerohost.eu
+  if (host === 'play.aerohost.eu') {
+    if (req.path === '/' || req.path === '/server.html') {
+      return res.sendFile(path.join(__dirname, 'server.html'));
+    }
+    if (req.path.startsWith('/api/') || req.path.startsWith('/_next/') || req.path.match(/\.(js|css|png|jpg|svg|ico|woff2?)$/)) {
+      return next();
+    }
+    return res.redirect(302, MAIN + req.path);
+  }
+
+  // Fődomainen: / → index.html
+  if (host === 'aerohost.eu' || host === 'www.aerohost.eu') {
+    if (req.path === '/') return res.redirect(301, '/index.html');
+  }
+
   next();
 });
 
