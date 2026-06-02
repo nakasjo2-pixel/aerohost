@@ -69,6 +69,11 @@ const apiLimiter = rateLimit({
   message: { error: 'Túl sok kérés. Lassíts egy kicsit.' }
 });
 app.use('/api/', apiLimiter);
+
+// index.htm → index.html redirect
+app.get('/index.htm', (req, res) => res.redirect(301, '/index.html'));
+app.get('/', (req, res) => res.redirect(301, '/index.html'));
+
 app.use(express.static(path.join(__dirname)));
 
 // ── JWT auth middleware ────────────────────────────────────────────────────
