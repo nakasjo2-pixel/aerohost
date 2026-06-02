@@ -72,7 +72,24 @@ app.use('/api/', apiLimiter);
 
 // index.htm → index.html redirect
 app.get('/index.htm', (req, res) => res.redirect(301, '/index.html'));
-app.get('/', (req, res) => res.redirect(301, '/index.html'));
+app.get('/', (req, res) => {
+  const host = req.hostname;
+  if (host === 'dashboard.aerohost.eu') return res.sendFile(path.join(__dirname, 'dashboard.html'));
+  if (host === 'status.aerohost.eu')    return res.sendFile(path.join(__dirname, 'status.html'));
+  if (host === 'play.aerohost.eu')      return res.sendFile(path.join(__dirname, 'server.html'));
+  res.redirect(301, '/index.html');
+});
+
+// Subdomain root-ok explicit kezelése (nginx proxy_pass után)
+app.use((req, res, next) => {
+  const host = req.hostname;
+  if (req.path === '/' || req.path === '') {
+    if (host === 'dashboard.aerohost.eu') return res.sendFile(path.join(__dirname, 'dashboard.html'));
+    if (host === 'status.aerohost.eu')    return res.sendFile(path.join(__dirname, 'status.html'));
+    if (host === 'play.aerohost.eu')      return res.sendFile(path.join(__dirname, 'server.html'));
+  }
+  next();
+});
 
 app.use(express.static(path.join(__dirname)));
 
