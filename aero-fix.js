@@ -381,10 +381,9 @@
       }
       if (isActive) {
         a.style.color = '#fff';
-        a.style.fontWeight = '700';
-        // Ha van inner span mint bg, emeljük ki
-        var bg = qs('span[class*="bg"]', a) || qs('.absolute', a);
-        if (bg) { bg.style.opacity = '0.7'; bg.style.transform = 'scale(1)'; }
+        // Csak a belső háttér-span-t mutatjuk — font-weight nem változik, layout stabil marad
+        var bg = qs('span[class*="bg"], .absolute', a);
+        if (bg) { bg.style.opacity = '1'; bg.style.transform = 'scale(1)'; }
       }
     });
   })();
