@@ -970,8 +970,7 @@ app.post('/api/admin/test-server', requireAuth, requireAdmin, async (req, res) =
   let pteroResult = null;
   if (PTERO_URL && PTERO_KEY) {
     try {
-      // skipEmail=true — teszt szervereknél ne menjen credentials email
-      pteroResult = await createPteroServer({ user: target, plan: plan || 'starter', type, name, game: game || 'minecraft', refCode: 'TEST-' + Date.now().toString(36).toUpperCase(), skipEmail: true });
+      pteroResult = await createPteroServer({ user: target, plan: plan || 'starter', type, name, game: game || 'minecraft', refCode: 'TEST-' + Date.now().toString(36).toUpperCase() });
     } catch(err) {
       return res.status(500).json({ error: 'Pterodactyl hiba: ' + (err?.response?.data?.errors?.[0]?.detail || err.message) });
     }
@@ -979,7 +978,7 @@ app.post('/api/admin/test-server', requireAuth, requireAdmin, async (req, res) =
   const svc = saveService({ userId: target.id, userEmail: target.email, userName: target.name,
     plan: plan || 'starter', type, name, game: game || undefined, paymentMethod: 'test',
     refCode: 'TEST-' + Date.now().toString(36).toUpperCase(), status: 'running', pteroId: pteroResult?.id || null });
-  // Teszt szervereknél nem küldünk emailt
+  sendServerReadyEmail(target.email, target.name, svc).catch(() => {});
   audit(req, 'test_server', svc.id, { name, type });
   res.json({ success: true, service: svc, pteroReady: !!pteroResult, pteroId: pteroResult?.id });
 });
