@@ -712,16 +712,33 @@ async function createPteroServer({ user, plan, type, name, game, refCode, skipEm
 }
 
 async function getOrCreatePteroUser(user, skipEmail = false) {
+  const username = (user.username || user.email.split('@')[0]).replace(/[^a-zA-Z0-9_\-]/g, '').slice(0, 16) || 'user';
+
   // Megnézzük létezik-e már
   try {
     const s = await axios.get(`${PTERO_URL}/api/application/users?filter[email]=${encodeURIComponent(user.email)}`,
       { headers: { Authorization: `Bearer ${PTERO_KEY}`, Accept: 'application/json' } });
-    if (s.data.data.length > 0) return s.data.data[0].attributes;
+    if (s.data.data.length > 0) {
+      const existing = s.data.data[0].attributes;
+      // Létező felhasználónál új jelszót generálunk és emailben elküldjük
+      if (!skipEmail) {
+        const newPassword = crypto.randomBytes(10).toString('base64').replace(/[+/=]/g, '').slice(0, 14) + '!1A';
+        // Frissítjük a jelszót a panelen
+        await axios.patch(`${PTERO_URL}/api/application/users/${existing.id}`, {
+          email:      existing.email,
+          username:   existing.username,
+          first_name: existing.first_name,
+          last_name:  existing.last_name,
+          password:   newPassword
+        }, { headers: { Authorization: `Bearer ${PTERO_KEY}`, 'Content-Type': 'application/json', Accept: 'application/json' } }).catch(() => {});
+        sendPteroCredentialsEmail(user.email, user.name || existing.username, existing.username, newPassword).catch(() => {});
+      }
+      return existing;
+    }
   } catch {}
 
   // Új felhasználó — generálunk jelszót
   const password = crypto.randomBytes(10).toString('base64').replace(/[+/=]/g, '').slice(0, 14) + '!1A';
-  const username = (user.username || user.email.split('@')[0]).replace(/[^a-zA-Z0-9_\-]/g, '').slice(0, 16) || 'user';
 
   const c = await axios.post(`${PTERO_URL}/api/application/users`, {
     email:      user.email,
@@ -731,7 +748,6 @@ async function getOrCreatePteroUser(user, skipEmail = false) {
     password
   }, { headers: { Authorization: `Bearer ${PTERO_KEY}`, 'Content-Type': 'application/json', Accept: 'application/json' } });
 
-  // Elküldjük az email-t a panel adatokkal (teszt szervereknél nem)
   if (!skipEmail) sendPteroCredentialsEmail(user.email, user.name || username, username, password).catch(() => {});
 
   return c.data.attributes;
