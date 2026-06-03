@@ -290,7 +290,11 @@ async function sendServerReadyEmail(userEmail, userName, svc) {
       <tr><td class="info-label">Csomag</td><td class="info-value">${PLAN_LABELS[svc.plan] || svc.plan} · ${svc.ram}GB RAM</td></tr>
       <tr><td class="info-label">Havi díj</td><td class="info-value">${(svc.price||0).toLocaleString('hu-HU')} Ft/hó</td></tr>
       ${svc.pteroId ? `<tr><td class="info-label">Panel ID</td><td class="info-value">#${svc.pteroId}</td></tr>` : ''}
+      ${svc.pteroId ? `<tr><td class="info-label">Panel link</td><td class="info-value"><a href="${PTERO_URL}/server/${svc.pteroId}" style="color:#a855f7">${PTERO_URL}/server/${svc.pteroId}</a></td></tr>` : ''}
     </table>
+    <p style="color:rgba(148,163,184,0.7);font-size:0.82rem;margin-top:4px;line-height:1.6">
+      A panel belépési adataidat külön emailben küldtük el. Ha nem kaptad meg, nézd meg a spam mappát.
+    </p>
     <div class="btn-wrap"><a href="${SITE_URL}/dashboard.html" class="btn">Szerver kezelése →</a></div>
   `);
   await sendMail(userEmail, '✅ Szervered készen áll — ' + svc.name, html);
@@ -708,17 +712,48 @@ async function createPteroServer({ user, plan, type, name, game, refCode }) {
 }
 
 async function getOrCreatePteroUser(user) {
+  // Megnézzük létezik-e már
   try {
     const s = await axios.get(`${PTERO_URL}/api/application/users?filter[email]=${encodeURIComponent(user.email)}`,
       { headers: { Authorization: `Bearer ${PTERO_KEY}`, Accept: 'application/json' } });
     if (s.data.data.length > 0) return s.data.data[0].attributes;
   } catch {}
+
+  // Új felhasználó — generálunk jelszót
+  const password = crypto.randomBytes(10).toString('base64').replace(/[+/=]/g, '').slice(0, 14) + '!1A';
+  const username = (user.username || user.email.split('@')[0]).replace(/[^a-zA-Z0-9_\-]/g, '').slice(0, 16) || 'user';
+
   const c = await axios.post(`${PTERO_URL}/api/application/users`, {
-    email: user.email, username: user.username || user.email.split('@')[0],
+    email:      user.email,
+    username,
     first_name: user.name?.split(' ')[0] || 'User',
-    last_name:  user.name?.split(' ').slice(1).join(' ') || 'User'
+    last_name:  user.name?.split(' ').slice(1).join(' ') || 'User',
+    password
   }, { headers: { Authorization: `Bearer ${PTERO_KEY}`, 'Content-Type': 'application/json', Accept: 'application/json' } });
+
+  // Elküldjük az email-t a panel adatokkal
+  sendPteroCredentialsEmail(user.email, user.name || username, username, password).catch(() => {});
+
   return c.data.attributes;
+}
+
+async function sendPteroCredentialsEmail(userEmail, userName, pteroUsername, pteroPassword) {
+  const html = emailTemplate('🎮 Panel hozzáférés — AeroHost', `
+    <p style="color:#e2e8f0;margin-bottom:16px">Szia <strong style="color:#fff">${userName}</strong>!</p>
+    <p style="color:rgba(148,163,184,0.9);margin-bottom:20px;line-height:1.6">
+      A szervered létrehozásához automatikusan létrehoztunk egy panel fiókot számodra. Az alábbi adatokkal tudsz bejelentkezni a vezérlőpanelre.
+    </p>
+    <table class="info-table">
+      <tr><td class="info-label">Panel URL</td><td class="info-value"><a href="${PTERO_URL}" style="color:#a855f7">${PTERO_URL}</a></td></tr>
+      <tr><td class="info-label">Felhasználónév</td><td class="info-value" style="font-family:monospace">${pteroUsername}</td></tr>
+      <tr><td class="info-label">Jelszó</td><td class="info-value" style="font-family:monospace;font-weight:700;color:#c084fc">${pteroPassword}</td></tr>
+    </table>
+    <p style="color:rgba(148,163,184,0.7);font-size:0.82rem;margin-top:16px;line-height:1.6">
+      ⚠️ Mentsd el ezeket az adatokat! Biztonsági okokból javasolt a jelszó megváltoztatása bejelentkezés után.
+    </p>
+    <div class="btn-wrap"><a href="${PTERO_URL}" class="btn">Megnyitom a panelt →</a></div>
+  `);
+  await sendMail(userEmail, '🎮 Panel hozzáférési adataid — AeroHost', html);
 }
 
 async function getFreeAllocation() {
