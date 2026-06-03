@@ -944,4 +944,81 @@
     };
   }
 
+  // ── 26. MOBILE RESPONSIVE JS FIXEK ──────────────────────────────────────
+  (function() {
+    var isMobile = window.innerWidth <= 768;
+    if (!isMobile) return;
+
+    // Checkout: 2 oszlopos grid → 1 oszlop mobilon
+    if (path.includes('checkout.html')) {
+      var grid = document.getElementById('checkout-grid');
+      if (grid) grid.style.gridTemplateColumns = '1fr';
+    }
+
+    // Login/Register: max-width korlátozás kis képernyőn
+    if (path.includes('login.html') || path.includes('register.html')) {
+      // Belső card teljes szélességre
+      qsa('.form-card, [style*="max-width:460px"], [style*="max-width: 460px"]').forEach(function(el) {
+        el.style.margin = '0 auto';
+        el.style.width = '100%';
+      });
+    }
+
+    // Dashboard: stat grid 2 oszlop mobilon
+    if (path.includes('dashboard.html')) {
+      var statGrid = qs('.stat-grid');
+      if (statGrid) statGrid.style.gridTemplateColumns = '1fr 1fr';
+
+      // Kétoszlopos section-ök összecsukása
+      qsa('.content > div').forEach(function(el) {
+        var style = el.getAttribute('style') || '';
+        if (style.includes('1fr 380px') || style.includes('1fr 340px') || style.includes('1fr 1fr')) {
+          el.style.gridTemplateColumns = '1fr';
+        }
+      });
+
+      // Migration page kétoszlop
+      var migGrid = qs('#page-migration > div[style*="grid"]');
+      if (migGrid) migGrid.style.gridTemplateColumns = '1fr';
+    }
+
+    // Affiliate: a kalkulátor grid
+    if (path.includes('affiliate.html')) {
+      qsa('.grid.md\\:grid-cols-2, [class*="md:grid-cols-2"]').forEach(function(el) {
+        el.style.gridTemplateColumns = '1fr';
+      });
+    }
+
+    // Minden inline grid style mobilon egységes
+    qsa('[style*="grid-template-columns:1fr 1fr"],[style*="grid-template-columns: 1fr 1fr"]').forEach(function(el) {
+      // Csak ha nem stat-grid és nem egy ismert 2 col layout
+      if (!el.classList.contains('stat-grid') && !el.closest('nav') && !el.closest('.tabs')) {
+        // Ha szélesebb mint a képernyő, összevonjuk
+        if (el.scrollWidth > window.innerWidth - 20) {
+          el.style.gridTemplateColumns = '1fr';
+        }
+      }
+    });
+
+    // Footer grid mobilon
+    qsa('footer .grid[class*="md:grid-cols"]').forEach(function(el) {
+      el.style.gridTemplateColumns = '1fr';
+    });
+
+    // Gombok fullwidth mobilon ahol szükséges
+    qsa('section .flex.gap-4, section .flex.gap-6').forEach(function(el) {
+      if (el.querySelector('a, button')) {
+        el.style.flexDirection = 'column';
+        el.style.alignItems = 'stretch';
+        qsa('a, button', el).forEach(function(b) {
+          if (!b.closest('nav')) b.style.textAlign = 'center';
+        });
+      }
+    });
+
+    // viewport meta: tiltjuk a felhasználói zoom-ot, mert néhány elem átnyúl
+    var vp = document.querySelector('meta[name="viewport"]');
+    if (vp) vp.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=5');
+  })();
+
 })();

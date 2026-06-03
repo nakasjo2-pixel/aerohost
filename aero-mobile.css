@@ -1,0 +1,154 @@
+/* AeroHost — Mobile responsive fixes */
+
+/* ── ÁLTALÁNOS ── */
+@media (max-width: 768px) {
+  /* Navbar liquid glass — kisebb padding mobilon */
+  nav .flex.justify-between { height: 52px !important; }
+  nav .space-x-1 { display: none !important; }
+
+  /* Hero szövegek */
+  h1 { font-size: clamp(1.8rem, 8vw, 3rem) !important; }
+  h2 { font-size: clamp(1.4rem, 6vw, 2rem) !important; }
+
+  /* Általános section padding */
+  section { padding-left: 16px !important; padding-right: 16px !important; }
+  .max-w-7xl, .max-w-6xl, .max-w-5xl, .max-w-4xl { padding-left: 16px !important; padding-right: 16px !important; }
+}
+
+/* ── CHECKOUT ── */
+@media (max-width: 720px) {
+  #checkout-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── REGISTER ── */
+@media (max-width: 900px) {
+  .reg-grid {
+    grid-template-columns: 1fr !important;
+    max-width: 500px !important;
+  }
+}
+
+/* ── DASHBOARD ── */
+@media (max-width: 768px) {
+  /* Sidebar rejtve alapból */
+  .sidebar { transform: translateX(-100%) !important; transition: transform 0.25s !important; }
+  .sidebar.open { transform: translateX(0) !important; }
+  .main { margin-left: 0 !important; }
+
+  /* Stat grid 2 oszlop mobilon */
+  .stat-grid { grid-template-columns: 1fr 1fr !important; }
+
+  /* Two col → one col */
+  .content > div[style*="grid-template-columns:1fr 380px"],
+  .content > div[style*="grid-template-columns: 1fr 380px"],
+  .content > div[style*="grid-template-columns:1fr 340px"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Billing grid */
+  #page-billing > div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Settings grid */
+  #page-settings > div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Content padding */
+  .content { padding: 16px !important; }
+  .topbar { padding: 0 14px !important; }
+}
+
+/* ── GAMES OLDAL — kártya grid ── */
+@media (max-width: 640px) {
+  .grid.grid-cols-1.sm\\:grid-cols-2.lg\\:grid-cols-3 {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── AFFILIATE KALKULÁTOR ── */
+@media (max-width: 768px) {
+  .grid.md\\:grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+  /* Sticky sidebar az affiliate-on */
+  .sticky { position: relative !important; top: auto !important; }
+}
+
+/* ── SERVER.HTML HERO ── */
+@media (max-width: 640px) {
+  .hero-section { min-height: 300px !important; }
+  .hero-content { padding: 90px 16px 32px !important; }
+  .page-wrap { padding: 24px 16px 60px !important; }
+  .info-grid { grid-template-columns: 1fr 1fr !important; }
+}
+
+/* ── STATUS OLDAL ── */
+@media (max-width: 640px) {
+  .uptime-bar { flex-direction: column !important; align-items: flex-start !important; }
+}
+
+/* ── FOOTER ── */
+@media (max-width: 768px) {
+  footer .grid { grid-template-columns: 1fr !important; }
+  footer .col-span-5, footer .col-span-4 { grid-column: span 1 !important; }
+  footer .col-span-7, footer .col-span-6 { grid-column: span 1 !important; }
+  footer .grid-cols-2, footer .grid-cols-3 { grid-template-columns: 1fr 1fr !important; }
+}
+
+/* ── ABOUT OLDAL — team grid ── */
+@media (max-width: 640px) {
+  .grid.sm\\:grid-cols-2.lg\\:grid-cols-3,
+  .grid.sm\\:grid-cols-2.lg\\:grid-cols-4 {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── GAME DETAIL OLDALAK — pricing kártyák ── */
+@media (max-width: 640px) {
+  .grid.md\\:grid-cols-3,
+  .grid.lg\\:grid-cols-3 {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── DISCORD / WEB OLDALAK ── */
+@media (max-width: 768px) {
+  .grid.md\\:grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+  .flex.flex-col.md\\:flex-row {
+    flex-direction: column !important;
+  }
+}
+
+/* ── GOMBOK mobilon ── */
+@media (max-width: 480px) {
+  .flex.flex-col.sm\\:flex-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .flex.flex-col.sm\\:flex-row > * {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+}
+
+/* ── MIGRATION OLDAL ── */
+@media (max-width: 768px) {
+  #page-migration > div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── TOUCH TARGETS — min 44px tap area ── */
+@media (max-width: 768px) {
+  button, a[href], [role="button"] {
+    min-height: 36px;
+  }
+  .nav-item { min-height: 40px !important; }
+}
